@@ -163,15 +163,53 @@ const INITIAL_DRAWS: Draw[] = [
   },
 ];
 
+export interface PrizeConfig {
+  first: {
+    title: string;
+    highlight: string;
+    warranty: string;
+  };
+  second: {
+    title: string;
+    highlight: string;
+    warranty: string;
+  };
+  third: {
+    title: string;
+    highlight: string;
+    warranty: string;
+  };
+}
+
+const DEFAULT_PRIZES: PrizeConfig = {
+  first: {
+    title: "Smart 4K UHD LED TV (55\")",
+    highlight: "Grand Champion Prize",
+    warranty: "Official Brand Warranty Included",
+  },
+  second: {
+    title: "Microwave Oven & Air Fryer Combo",
+    highlight: "1st Runner-Up Mega Prize",
+    warranty: "Official Brand Warranty Included",
+  },
+  third: {
+    title: "Wireless ANC Soundbar & Subwoofer",
+    highlight: "2nd Runner-Up Premium Audio",
+    warranty: "Official Brand Warranty Included",
+  },
+};
+
 const STORAGE_KEYS = {
   CUSTOMERS: "idk_raffle_customers_v1",
   DRAWS: "idk_raffle_draws_v1",
   NEXT_DRAW: "idk_raffle_next_draw_v1",
+  PRIZES: "idk_raffle_prizes_v1",
 };
 
 let memoryCustomers: Customer[] = [...INITIAL_CUSTOMERS];
 let memoryDraws: Draw[] = [...INITIAL_DRAWS];
 let memoryNextDrawDate: string = new Date(Date.now() + 6 * 24 * 60 * 60 * 1000 + 4 * 60 * 60 * 1000).toISOString();
+let memoryPrizes: PrizeConfig = { ...DEFAULT_PRIZES };
 
 function isBrowser(): boolean {
   return typeof window !== "undefined" && typeof window.localStorage !== "undefined";
@@ -200,6 +238,13 @@ function loadState() {
       } else {
         localStorage.setItem(STORAGE_KEYS.NEXT_DRAW, memoryNextDrawDate);
       }
+
+      const storedPrizes = localStorage.getItem(STORAGE_KEYS.PRIZES);
+      if (storedPrizes) {
+        memoryPrizes = JSON.parse(storedPrizes);
+      } else {
+        localStorage.setItem(STORAGE_KEYS.PRIZES, JSON.stringify(memoryPrizes));
+      }
     } catch {
       // Fallback gracefully to memory
     }
@@ -212,6 +257,7 @@ function persistState() {
       localStorage.setItem(STORAGE_KEYS.CUSTOMERS, JSON.stringify(memoryCustomers));
       localStorage.setItem(STORAGE_KEYS.DRAWS, JSON.stringify(memoryDraws));
       localStorage.setItem(STORAGE_KEYS.NEXT_DRAW, memoryNextDrawDate);
+      localStorage.setItem(STORAGE_KEYS.PRIZES, JSON.stringify(memoryPrizes));
     } catch {
       // ignore
     }
@@ -293,7 +339,7 @@ export async function runDrawSelection(): Promise<DrawWinner[]> {
   }
 
   const selected = shuffled.slice(0, 3);
-  const prizes = siteConfig.defaultPrizes;
+  const prizes = memoryPrizes;
 
   const winners: DrawWinner[] = [
     {
@@ -301,21 +347,21 @@ export async function runDrawSelection(): Promise<DrawWinner[]> {
       customerId: selected[0].id,
       name: selected[0].name,
       code: selected[0].code,
-      prize: prizes.first,
+      prize: prizes.first.title,
     },
     {
       position: 2,
       customerId: selected[1].id,
       name: selected[1].name,
       code: selected[1].code,
-      prize: prizes.second,
+      prize: prizes.second.title,
     },
     {
       position: 3,
       customerId: selected[2].id,
       name: selected[2].name,
       code: selected[2].code,
-      prize: prizes.third,
+      prize: prizes.third.title,
     },
   ];
 
@@ -359,9 +405,35 @@ export async function getNextDrawDate(): Promise<string> {
   return memoryNextDrawDate;
 }
 
+export async function saveNextDrawDate(isoString: string): Promise<string> {
+  loadState();
+  memoryNextDrawDate = isoString;
+  persistState();
+  return memoryNextDrawDate;
+}
+
+export async function getPrizes(): Promise<PrizeConfig> {
+  loadState();
+  return { ...memoryPrizes };
+}
+
+export async function savePrizes(newPrizes: PrizeConfig): Promise<PrizeConfig> {
+  loadState();
+  memoryPrizes = { ...newPrizes };
+  persistState();
+  return memoryPrizes;
+}
+
 export async function resetToDefaultData(): Promise<void> {
   memoryCustomers = [...INITIAL_CUSTOMERS];
   memoryDraws = [...INITIAL_DRAWS];
+  memoryPrizes = { ...DEFAULT_PRIZES };
   memoryNextDrawDate = new Date(Date.now() + 6 * 24 * 60 * 60 * 1000 + 4 * 60 * 60 * 1000).toISOString();
+  persistState();
+}
+
+export async function deleteCustomer(id: string): Promise<void> {
+  loadState();
+  memoryCustomers = memoryCustomers.filter(c => c.id !== id);
   persistState();
 }

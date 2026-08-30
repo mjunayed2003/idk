@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { siteConfig } from "@/lib/site-config";
-import { getNextDrawDate, getActiveCustomers } from "@/lib/data";
+import { getNextDrawDate, getActiveCustomers, getPrizes, PrizeConfig } from "@/lib/data";
 import { useLanguage } from "@/context/LanguageContext";
 import CountdownCard from "@/components/CountdownCard";
 import Link from "next/link";
@@ -15,6 +15,7 @@ import {
   HiShieldCheck,
   HiGift,
   HiCheckBadge,
+  HiCheckCircle,
   HiDevicePhoneMobile,
   HiTv,
 } from "react-icons/hi2";
@@ -23,13 +24,16 @@ export default function HomePage() {
   const { language, t } = useLanguage();
   const [nextDrawDate, setNextDrawDate] = useState<string>(new Date().toISOString());
   const [activeCount, setActiveCount] = useState<number>(0);
+  const [prizeData, setPrizeData] = useState<PrizeConfig | null>(null);
 
   useEffect(() => {
     const load = async () => {
       const date = await getNextDrawDate();
       const active = await getActiveCustomers();
+      const p = await getPrizes();
       setNextDrawDate(date);
       setActiveCount(active.length);
+      setPrizeData(p);
     };
     load();
   }, []);
@@ -67,8 +71,8 @@ export default function HomePage() {
   const prizes = [
     {
       place: t.firstPrizeBadge,
-      title: t.firstPrizeTitle,
-      highlight: t.firstPrizeHighlight,
+      title: prizeData?.first.title || t.firstPrizeTitle,
+      highlight: prizeData?.first.highlight || t.firstPrizeHighlight,
       badgeBg: "bg-amber-500 text-white",
       tag: language === "bn" ? "১ম পুরস্কার" : "1st Prize",
       icon: HiTv,
@@ -76,8 +80,8 @@ export default function HomePage() {
     },
     {
       place: t.secondPrizeBadge,
-      title: t.secondPrizeTitle,
-      highlight: t.secondPrizeHighlight,
+      title: prizeData?.second.title || t.secondPrizeTitle,
+      highlight: prizeData?.second.highlight || t.secondPrizeHighlight,
       badgeBg: "bg-blue-600 text-white",
       tag: language === "bn" ? "২য় পুরস্কার" : "2nd Prize",
       icon: HiGift,
@@ -85,8 +89,8 @@ export default function HomePage() {
     },
     {
       place: t.thirdPrizeBadge,
-      title: t.thirdPrizeTitle,
-      highlight: t.thirdPrizeHighlight,
+      title: prizeData?.third.title || t.thirdPrizeTitle,
+      highlight: prizeData?.third.highlight || t.thirdPrizeHighlight,
       badgeBg: "bg-emerald-600 text-white",
       tag: language === "bn" ? "৩য় পুরস্কার" : "3rd Prize",
       icon: HiDevicePhoneMobile,
@@ -130,18 +134,11 @@ export default function HomePage() {
             <div className="flex flex-wrap items-center gap-3 pt-1">
               <Link
                 href="/results"
-                className="inline-flex items-center gap-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 text-sm font-semibold transition-colors shadow-xs"
+                className="inline-flex items-center gap-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 text-sm font-bold transition-colors shadow-xs"
               >
-                <HiTrophy className="h-4 w-4 text-amber-300" />
+                <HiTrophy className="h-4.5 w-4.5 text-amber-300" />
                 <span>{t.browseWinnersBtn}</span>
                 <HiArrowRight className="h-4 w-4" />
-              </Link>
-
-              <Link
-                href="/admin"
-                className="inline-flex items-center gap-2 rounded-xl border border-slate-300 hover:bg-slate-50 text-slate-700 px-5 py-3 text-sm font-semibold transition-colors"
-              >
-                <span>{t.staffLoginBtn}</span>
               </Link>
             </div>
 
@@ -194,18 +191,20 @@ export default function HomePage() {
             return (
               <div
                 key={idx}
-                className="retail-card p-6 flex flex-col justify-between"
+                className="retail-card p-6 flex flex-col justify-between hover:shadow-md transition-shadow"
               >
                 <div>
                   <div className="flex items-center justify-between">
-                    <span className={`px-3 py-1 rounded-md text-xs font-bold ${prize.badgeBg}`}>
+                    <span className={`px-3.5 py-1 rounded-lg text-xs font-bold ${prize.badgeBg} shadow-xs`}>
                       {prize.tag}
                     </span>
-                    <Icon className={`h-6 w-6 ${prize.color}`} />
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-50 border border-slate-200/80 shadow-xs">
+                      <Icon className={`h-7 w-7 ${prize.color}`} />
+                    </div>
                   </div>
 
-                  <div className="mt-4">
-                    <span className="text-xs font-medium text-slate-400">
+                  <div className="mt-5">
+                    <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
                       {prize.highlight}
                     </span>
                     <h3 className="text-xl font-bold text-slate-900 mt-1 leading-snug">
@@ -214,9 +213,15 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                <div className="mt-6 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-medium">
-                  <span>{t.brandWarranty}</span>
-                  <span className="text-emerald-600 font-semibold">{t.genuineProduct}</span>
+                <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-medium">
+                  <div className="flex items-center gap-1.5">
+                    <HiShieldCheck className="h-4 w-4 text-indigo-500" />
+                    <span>{t.brandWarranty}</span>
+                  </div>
+                  <div className="flex items-center gap-1 font-semibold text-emerald-600">
+                    <HiCheckBadge className="h-4 w-4 text-emerald-500" />
+                    <span>{t.genuineProduct}</span>
+                  </div>
                 </div>
               </div>
             );
@@ -225,7 +230,7 @@ export default function HomePage() {
       </section>
 
       {/* ================= HOW TO PARTICIPATE ================= */}
-      <section className="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 space-y-6">
+      <section className="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 space-y-6 shadow-xs">
         <div className="text-center max-w-xl mx-auto">
           <span className="text-xs font-bold uppercase tracking-wider text-blue-600">
             {t.howItWorksHeading}
@@ -238,19 +243,21 @@ export default function HomePage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
           {steps.map((st) => {
             const Icon = st.icon;
             return (
               <div
                 key={st.step}
-                className="rounded-xl border border-slate-100 bg-slate-50/70 p-5 flex flex-col justify-between space-y-3"
+                className="rounded-2xl border border-slate-200/80 bg-slate-50/60 p-6 flex flex-col justify-between space-y-4 hover:bg-slate-50 transition-colors"
               >
                 <div className="flex items-center justify-between">
-                  <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-blue-600 text-white text-xs font-bold font-mono">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-xs">
+                    <Icon className="h-6 w-6 text-white" />
+                  </div>
+                  <span className="text-2xl font-black text-slate-300 font-mono">
                     {st.step}
                   </span>
-                  <Icon className="h-5 w-5 text-blue-600" />
                 </div>
 
                 <div>
@@ -262,8 +269,9 @@ export default function HomePage() {
                   </p>
                 </div>
 
-                <div className="pt-2 border-t border-slate-200/60 text-[11px] text-slate-400 font-medium">
-                  ✓ {t.automatedSystem}
+                <div className="pt-3 border-t border-slate-200/60 text-xs text-slate-500 font-medium flex items-center gap-1.5">
+                  <HiCheckCircle className="h-4 w-4 text-emerald-500" />
+                  <span>{t.automatedSystem}</span>
                 </div>
               </div>
             );

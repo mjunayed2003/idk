@@ -3,7 +3,7 @@
 import { DrawWinner } from "@/lib/types";
 import TicketStub from "./TicketStub";
 import { useLanguage } from "@/context/LanguageContext";
-import { HiTrophy, HiSparkles, HiGift, HiTicket } from "react-icons/hi2";
+import { HiOutlineTrophy, HiOutlineSparkles, HiOutlineGift, HiOutlineTicket } from "react-icons/hi2";
 
 interface WinnerTicketProps {
   winner: DrawWinner;
@@ -54,7 +54,7 @@ export default function WinnerTicket({
   const customStubBadge = (
     <div className="flex flex-col items-center justify-center text-center space-y-1">
       <div className={`flex h-8 w-8 items-center justify-center rounded-xl ${positionConfig.badgeColor}`}>
-        <HiTrophy className="h-4 w-4" />
+        <HiOutlineTrophy className="h-4.5 w-4.5" />
       </div>
       <span className="font-display text-xl tracking-wider text-slate-900">
         #{positionConfig.posText}
@@ -76,7 +76,7 @@ export default function WinnerTicket({
         {/* Header Ribbon */}
         <div className="flex items-center justify-between border-b border-slate-200 pb-2.5">
           <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-sans font-bold uppercase ${positionConfig.badgeColor}`}>
-            {winner.position === 1 && <HiSparkles className="h-3.5 w-3.5" />}
+            {winner.position === 1 && <HiOutlineSparkles className="h-3.5 w-3.5" />}
             {positionConfig.label}
           </span>
 
@@ -95,7 +95,7 @@ export default function WinnerTicket({
           </h4>
 
           <div className="mt-2 inline-flex items-center gap-1.5 rounded-xl bg-slate-900 px-3.5 py-1.5 text-white shadow-xs">
-            <HiTicket className="h-4 w-4 text-amber-400" />
+            <HiOutlineTicket className="h-4 w-4 text-amber-400" />
             <span className="font-mono text-xs sm:text-sm font-black tracking-widest text-amber-300 uppercase">
               {winner.code}
             </span>
@@ -105,7 +105,7 @@ export default function WinnerTicket({
         {/* Awarded Prize */}
         <div className={`p-3 rounded-xl border ${positionConfig.borderAccent} ${positionConfig.accentBg}`}>
           <div className="flex items-center gap-1.5 text-slate-600">
-            <HiGift className={`h-4 w-4 ${positionConfig.iconColor}`} />
+            <HiOutlineGift className={`h-4 w-4 ${positionConfig.iconColor}`} />
             <span className="text-[11px] font-sans font-bold text-slate-700">
               {t.prizeWon}
             </span>

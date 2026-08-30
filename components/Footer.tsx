@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { siteConfig } from "@/lib/site-config";
 import { useLanguage } from "@/context/LanguageContext";
-import { HiTicket, HiShieldCheck, HiSparkles } from "react-icons/hi2";
+import { HiOutlineTicket, HiOutlineShieldCheck, HiOutlineSparkles } from "react-icons/hi2";
 
 export default function Footer() {
   const { t } = useLanguage();
@@ -13,11 +13,11 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl flex flex-col sm:flex-row items-center justify-between gap-6">
         
         <div className="flex items-center gap-3 text-center sm:text-left">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-600 to-violet-600 text-white font-bold shadow-md shadow-indigo-500/20">
-            <HiTicket className="h-5 w-5" />
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 text-white font-bold shadow-sm">
+            <HiOutlineTicket className="h-5 w-5" />
           </div>
           <div>
-            <span className="font-display text-xl tracking-wider text-slate-900 uppercase">
+            <span className="font-bold text-xl tracking-wider text-slate-900 uppercase">
               {siteConfig.shopName}
             </span>
             <p className="text-xs text-slate-500 font-sans mt-0.5">
@@ -26,13 +26,13 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center justify-center gap-6 text-xs font-mono text-slate-500">
+        <div className="flex flex-wrap items-center justify-center gap-6 text-xs text-slate-500">
           <div className="flex items-center gap-1.5 font-medium">
-            <HiShieldCheck className="h-4 w-4 text-emerald-600" />
+            <HiOutlineShieldCheck className="h-4.5 w-4.5 text-emerald-600" />
             <span>{t.footerFair}</span>
           </div>
           <div className="flex items-center gap-1.5 font-medium">
-            <HiSparkles className="h-4 w-4 text-amber-500" />
+            <HiOutlineSparkles className="h-4.5 w-4.5 text-amber-500" />
             <span>{t.footerResults}</span>
           </div>
           <Link

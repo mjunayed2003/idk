@@ -5,13 +5,12 @@ import { usePathname } from "next/navigation";
 import { siteConfig } from "@/lib/site-config";
 import { useLanguage } from "@/context/LanguageContext";
 import { 
-  HiTicket, 
-  HiTrophy, 
-  HiLockClosed, 
-  HiSparkles,
-  HiBars3,
-  HiXMark,
-  HiLanguage,
+  HiOutlineTicket, 
+  HiOutlineTrophy, 
+  HiOutlineLockClosed, 
+  HiOutlineBars3, 
+  HiOutlineXMark, 
+  HiOutlineLanguage,
 } from "react-icons/hi2";
 import { useState } from "react";
 
@@ -21,9 +20,8 @@ export default function Navbar() {
   const { language, toggleLanguage, t } = useLanguage();
 
   const navLinks = [
-    { href: "/", label: t.navRaffleArena, icon: HiTicket },
-    { href: "/results", label: t.navPastWinners, icon: HiTrophy },
-    { href: "/admin", label: t.navAdminPortal, icon: HiLockClosed },
+    { href: "/", label: t.navRaffleArena, icon: HiOutlineTicket },
+    { href: "/results", label: t.navPastWinners, icon: HiOutlineTrophy },
   ];
 
   return (
@@ -60,26 +58,17 @@ export default function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`flex items-center gap-2 rounded-lg px-3.5 py-2 text-sm font-medium transition-colors ${
+                  className={`flex items-center gap-2 rounded-xl px-3.5 py-2 text-sm font-semibold transition-colors ${
                     isActive
-                      ? "bg-slate-100 text-blue-600 font-semibold"
+                      ? "bg-blue-50 text-blue-700"
                       : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
                   }`}
                 >
-                  <Icon className={`h-4 w-4 ${isActive ? "text-blue-600" : "text-slate-400"}`} />
+                  <Icon className={`h-5 w-5 ${isActive ? "text-blue-600" : "text-slate-400"}`} />
                   <span>{link.label}</span>
                 </Link>
               );
             })}
-
-            {/* Live Draw Action Link */}
-            <Link
-              href="/admin/draw"
-              className="ml-2 flex items-center gap-1.5 rounded-lg bg-red-600 hover:bg-red-700 text-white px-3.5 py-2 text-sm font-semibold transition-colors shadow-xs"
-            >
-              <HiSparkles className="h-4 w-4" />
-              <span>{t.navDrawBooth}</span>
-            </Link>
           </nav>
 
           {/* Language Switcher */}
@@ -87,9 +76,9 @@ export default function Navbar() {
             <button
               type="button"
               onClick={toggleLanguage}
-              className="flex items-center gap-1.5 rounded-lg border border-slate-200 bg-slate-50 hover:bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-700 transition-colors"
+              className="flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 px-3.5 py-2 text-xs font-bold text-slate-700 transition-colors shadow-2xs"
             >
-              <HiLanguage className="h-4 w-4 text-blue-600" />
+              <HiOutlineLanguage className="h-4.5 w-4.5 text-blue-600" />
               <span>{language === "bn" ? "English" : "বাংলা"}</span>
             </button>
           </div>
@@ -100,26 +89,26 @@ export default function Navbar() {
           <button
             type="button"
             onClick={toggleLanguage}
-            className="flex items-center gap-1 rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs font-semibold text-slate-700"
+            className="flex items-center gap-1.5 rounded-xl border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-bold text-slate-700"
           >
-            <HiLanguage className="h-3.5 w-3.5 text-blue-600" />
+            <HiOutlineLanguage className="h-4 w-4 text-blue-600" />
             <span>{language === "bn" ? "EN" : "বাং"}</span>
           </button>
 
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 transition"
-            aria-label="Toggle menu"
+            className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50"
+            aria-label="Toggle navigation menu"
           >
-            {mobileMenuOpen ? <HiXMark className="h-5 w-5" /> : <HiBars3 className="h-5 w-5" />}
+            {mobileMenuOpen ? <HiOutlineXMark className="h-5 w-5" /> : <HiOutlineBars3 className="h-5 w-5" />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Drawer */}
+      {/* Mobile Menu Drawer */}
       {mobileMenuOpen && (
-        <div className="border-b border-slate-200 bg-white px-4 pt-2 pb-4 md:hidden shadow-lg">
+        <div className="border-b border-slate-200 bg-white px-4 pt-2 pb-4 md:hidden">
           <div className="flex flex-col space-y-1">
             {navLinks.map((link) => {
               const Icon = link.icon;
@@ -130,10 +119,10 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
+                  className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium ${
                     isActive
-                      ? "bg-blue-50 text-blue-600 font-semibold"
-                      : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                      ? "bg-blue-50 text-blue-700 font-semibold"
+                      : "text-slate-600 hover:bg-slate-50"
                   }`}
                 >
                   <Icon className={`h-5 w-5 ${isActive ? "text-blue-600" : "text-slate-400"}`} />
@@ -141,15 +130,6 @@ export default function Navbar() {
                 </Link>
               );
             })}
-
-            <Link
-              href="/admin/draw"
-              onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center justify-center gap-2 rounded-lg bg-red-600 text-white px-3 py-2.5 text-sm font-semibold shadow-xs mt-2"
-            >
-              <HiSparkles className="h-4 w-4" />
-              <span>{t.navDrawBooth}</span>
-            </Link>
           </div>
         </div>
       )}

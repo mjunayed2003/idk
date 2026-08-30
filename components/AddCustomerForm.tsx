@@ -81,15 +81,15 @@ export default function AddCustomerForm({ onCustomerAdded }: AddCustomerFormProp
 
   return (
     <div className="relative rounded-3xl bg-white p-6 sm:p-8 border border-slate-200 shadow-sm">
-      <div className="flex items-center gap-3 border-b border-slate-100 pb-4 mb-6">
-        <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-indigo-600 text-white font-bold shadow-md shadow-indigo-500/20">
+      <div className="flex items-center gap-3 border-b border-slate-100 pb-5">
+        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-xs">
           <HiUserPlus className="h-6 w-6" />
         </div>
         <div>
-          <h2 className="font-display text-xl sm:text-2xl uppercase tracking-wider text-slate-900">
+          <h2 className="text-xl font-bold text-slate-900 tracking-tight">
             {t.issueTicketTitle}
           </h2>
-          <p className="text-xs text-slate-500 font-sans">
+          <p className="text-xs text-slate-500 font-sans mt-0.5">
             {t.issueTicketSub}
           </p>
         </div>
@@ -100,7 +100,7 @@ export default function AddCustomerForm({ onCustomerAdded }: AddCustomerFormProp
         <div className="mb-6 overflow-hidden rounded-2xl border border-emerald-300 bg-emerald-50/70 p-5 text-slate-900 shadow-sm animate-in fade-in slide-in-from-top-4 duration-300">
           <div className="flex items-start justify-between">
             <div className="flex items-center gap-2">
-              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-600 text-white">
+              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-emerald-600 text-white shadow-xs">
                 <HiCheckCircle className="h-5 w-5" />
               </span>
               <span className="font-sans text-xs font-bold text-emerald-900">
@@ -123,7 +123,7 @@ export default function AddCustomerForm({ onCustomerAdded }: AddCustomerFormProp
                 {latestCustomer.name} ({latestCustomer.phone})
               </span>
               <div className="flex items-center gap-2 mt-1">
-                <span className="font-mono text-xl sm:text-2xl font-black text-slate-900 tracking-widest bg-slate-900 text-amber-300 px-3 py-1 rounded-lg shadow-xs">
+                <span className="font-mono text-xl sm:text-2xl font-black text-slate-900 tracking-widest bg-slate-900 text-amber-300 px-3.5 py-1.5 rounded-xl shadow-xs">
                   {latestCustomer.code}
                 </span>
               </div>
@@ -143,7 +143,7 @@ export default function AddCustomerForm({ onCustomerAdded }: AddCustomerFormProp
                     : "bg-rose-600 hover:bg-rose-700 text-white shadow-rose-500/20"
                 }`}
               >
-                <HiPaperAirplane className="h-4 w-4" />
+                <HiPaperAirplane className="h-4.5 w-4.5" />
                 <span>
                   {smsSending
                     ? t.sendingSms
@@ -165,9 +165,9 @@ export default function AddCustomerForm({ onCustomerAdded }: AddCustomerFormProp
           <div>
             <label
               htmlFor="customerName"
-              className="mb-1.5 flex items-center gap-1.5 text-xs font-sans font-bold text-slate-700"
+              className="mb-1.5 flex items-center gap-2 text-xs font-sans font-bold text-slate-700"
             >
-              <HiUser className="h-4 w-4 text-indigo-600" />
+              <HiUser className="h-4.5 w-4.5 text-blue-600" />
               {t.customerNameLabel}
             </label>
             <input
@@ -177,17 +177,17 @@ export default function AddCustomerForm({ onCustomerAdded }: AddCustomerFormProp
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder={t.customerNamePlaceholder}
-              className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 placeholder-slate-400 transition focus:border-indigo-600 focus:outline-none"
+              className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 placeholder-slate-400 transition focus:border-blue-600 focus:outline-none shadow-xs"
             />
           </div>
 
-          {/* Phone Number */}
+          {/* Customer Phone */}
           <div>
             <label
               htmlFor="customerPhone"
-              className="mb-1.5 flex items-center gap-1.5 text-xs font-sans font-bold text-slate-700"
+              className="mb-1.5 flex items-center gap-2 text-xs font-sans font-bold text-slate-700"
             >
-              <HiPhone className="h-4 w-4 text-indigo-600" />
+              <HiPhone className="h-4.5 w-4.5 text-blue-600" />
               {t.phoneLabel}
             </label>
             <input
@@ -197,60 +197,60 @@ export default function AddCustomerForm({ onCustomerAdded }: AddCustomerFormProp
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               placeholder={t.phonePlaceholder}
-              className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 font-mono placeholder-slate-400 transition focus:border-indigo-600 focus:outline-none"
-            />
-          </div>
-
-          {/* Product Name */}
-          <div>
-            <label
-              htmlFor="customerProduct"
-              className="mb-1.5 flex items-center gap-1.5 text-xs font-sans font-bold text-slate-700"
-            >
-              <HiShoppingBag className="h-4 w-4 text-indigo-600" />
-              {t.productLabel}
-            </label>
-            <input
-              id="customerProduct"
-              type="text"
-              required
-              value={product}
-              onChange={(e) => setProduct(e.target.value)}
-              placeholder={t.productPlaceholder}
-              className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 placeholder-slate-400 transition focus:border-indigo-600 focus:outline-none"
-            />
-          </div>
-
-          {/* Address */}
-          <div>
-            <label
-              htmlFor="customerAddress"
-              className="mb-1.5 flex items-center gap-1.5 text-xs font-sans font-bold text-slate-700"
-            >
-              <HiMapPin className="h-4 w-4 text-indigo-600" />
-              {t.addressLabel}
-            </label>
-            <input
-              id="customerAddress"
-              type="text"
-              required
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              placeholder={t.addressPlaceholder}
-              className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 placeholder-slate-400 transition focus:border-indigo-600 focus:outline-none"
+              className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm font-mono text-slate-900 placeholder-slate-400 transition focus:border-blue-600 focus:outline-none shadow-xs"
             />
           </div>
         </div>
 
-        {/* Submit Action */}
-        <div className="pt-2 flex justify-end">
+        {/* Product Purchased */}
+        <div>
+          <label
+            htmlFor="productPurchased"
+            className="mb-1.5 flex items-center gap-2 text-xs font-sans font-bold text-slate-700"
+          >
+            <HiShoppingBag className="h-4.5 w-4.5 text-blue-600" />
+            {t.productLabel}
+          </label>
+          <input
+            id="productPurchased"
+            type="text"
+            required
+            value={product}
+            onChange={(e) => setProduct(e.target.value)}
+            placeholder={t.productPlaceholder}
+            className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 placeholder-slate-400 transition focus:border-blue-600 focus:outline-none shadow-xs"
+          />
+        </div>
+
+        {/* Customer Address */}
+        <div>
+          <label
+            htmlFor="customerAddress"
+            className="mb-1.5 flex items-center gap-2 text-xs font-sans font-bold text-slate-700"
+          >
+            <HiMapPin className="h-4.5 w-4.5 text-blue-600" />
+            {t.addressLabel}
+          </label>
+          <input
+            id="customerAddress"
+            type="text"
+            required
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+            placeholder={t.addressPlaceholder}
+            className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 placeholder-slate-400 transition focus:border-blue-600 focus:outline-none shadow-xs"
+          />
+        </div>
+
+        {/* Action Button */}
+        <div className="pt-2">
           <button
             type="submit"
             disabled={isSubmitting}
-            className="flex items-center gap-2 rounded-2xl bg-indigo-600 hover:bg-indigo-700 px-6 py-3 font-sans text-xs font-bold uppercase tracking-wider text-white shadow-md shadow-indigo-500/20 transition-all hover:scale-105 disabled:opacity-50"
+            className="flex w-full items-center justify-center gap-2 rounded-2xl bg-blue-600 hover:bg-blue-700 active:scale-[0.99] py-3.5 text-sm font-bold font-sans text-white shadow-md shadow-blue-500/20 transition-all disabled:opacity-50"
           >
-            <HiTicket className="h-5 w-5" />
-            <span>{isSubmitting ? "..." : t.createTicketBtn}</span>
+            <HiTicket className="h-5 w-5 text-amber-300" />
+            <span>{isSubmitting ? "Generating Ticket..." : t.createTicketBtn}</span>
           </button>
         </div>
       </form>

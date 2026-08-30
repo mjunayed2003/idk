@@ -8,14 +8,14 @@ import { useLanguage } from "@/context/LanguageContext";
 import WinnerTicket from "@/components/WinnerTicket";
 import Link from "next/link";
 import {
-  HiSparkles,
-  HiTrophy,
-  HiTicket,
-  HiArrowPath,
-  HiCheckCircle,
-  HiArrowLeft,
-  HiLockClosed,
-  HiEye,
+  HiOutlineSparkles,
+  HiOutlineTrophy,
+  HiOutlineTicket,
+  HiOutlineArrowPath,
+  HiOutlineCheckCircle,
+  HiOutlineArrowLeft,
+  HiOutlineLockClosed,
+  HiOutlineEye,
 } from "react-icons/hi2";
 
 export default function DrawBoothPage() {
@@ -108,7 +108,7 @@ export default function DrawBoothPage() {
       <div className="mx-auto max-w-md px-4 py-16 sm:py-24">
         <div className="rounded-2xl bg-white p-8 border border-slate-200 shadow-sm text-center space-y-6">
           <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-600 text-white font-bold shadow-xs mx-auto">
-            <HiLockClosed className="h-6 w-6" />
+            <HiOutlineLockClosed className="h-6 w-6" />
           </div>
           <div>
             <h1 className="text-2xl font-bold tracking-tight text-slate-900">
@@ -169,12 +169,12 @@ export default function DrawBoothPage() {
             href="/admin"
             className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-blue-600 transition-colors mb-2"
           >
-            <HiArrowLeft className="h-3.5 w-3.5" />
+            <HiOutlineArrowLeft className="h-3.5 w-3.5" />
             <span>{language === "bn" ? "অ্যাডমিন পোর্টালে ফিরুন" : "Return to Admin Portal"}</span>
           </Link>
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-red-600 text-white font-bold shadow-xs">
-              <HiSparkles className="h-5 w-5" />
+              <HiOutlineSparkles className="h-5 w-5" />
             </div>
             <div>
               <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">
@@ -189,7 +189,7 @@ export default function DrawBoothPage() {
 
         <div className="flex items-center gap-2.5">
           <div className="flex items-center gap-2 rounded-xl bg-white px-3.5 py-2 border border-slate-200 shadow-xs">
-            <HiTicket className="h-4 w-4 text-blue-600" />
+            <HiOutlineTicket className="h-4 w-4 text-blue-600" />
             <span className="text-xs font-medium text-slate-600">
               {t.activePoolMetric}: <strong className="text-blue-600 font-bold">{toBnNum(activeCustomers.length)}</strong>
             </span>
@@ -201,7 +201,7 @@ export default function DrawBoothPage() {
             className="rounded-xl border border-slate-200 bg-white p-2 text-slate-500 hover:text-blue-600 transition shadow-xs"
             title="Refresh count"
           >
-            <HiArrowPath className={`h-4 w-4 ${loading ? "animate-spin text-blue-600" : ""}`} />
+            <HiOutlineArrowPath className={`h-4 w-4 ${loading ? "animate-spin text-blue-600" : ""}`} />
           </button>
         </div>
       </div>
@@ -242,7 +242,7 @@ export default function DrawBoothPage() {
                 : "bg-red-600 hover:bg-red-700 text-white shadow-red-500/20 hover:scale-102"
             }`}
           >
-            <HiSparkles className={`h-5 w-5 ${isDrawing ? "animate-spin" : ""}`} />
+            <HiOutlineSparkles className={`h-5 w-5 ${isDrawing ? "animate-spin" : ""}`} />
             <span>{isDrawing ? t.spinningBtn : t.spinBtn}</span>
           </button>
 
@@ -278,7 +278,7 @@ export default function DrawBoothPage() {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-3">
             <div className="flex items-center gap-3">
               <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-500 text-white font-bold">
-                <HiTrophy className="h-5 w-5" />
+                <HiOutlineTrophy className="h-5 w-5" />
               </span>
               <div>
                 <h3 className="text-xl font-bold text-slate-900">
@@ -319,7 +319,7 @@ export default function DrawBoothPage() {
           <div className="rounded-2xl border border-blue-200 bg-blue-50/50 p-6 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xs">
             <div className="space-y-0.5 text-center sm:text-left">
               <div className="text-lg font-bold text-slate-900 flex items-center justify-center sm:justify-start gap-2">
-                <HiCheckCircle className="h-5 w-5 text-emerald-600" />
+                <HiOutlineCheckCircle className="h-5 w-5 text-emerald-600" />
                 <span>{t.readyToSaveTitle}</span>
               </div>
               <p className="text-xs text-slate-600 max-w-lg">
@@ -337,7 +337,7 @@ export default function DrawBoothPage() {
                     href="/results"
                     className="inline-flex items-center gap-1.5 rounded-xl bg-blue-600 px-4 py-2 text-xs font-bold text-white hover:bg-blue-700 transition"
                   >
-                    <HiEye className="h-4 w-4" />
+                    <HiOutlineEye className="h-4 w-4" />
                     <span>{t.viewArchiveBtn}</span>
                   </Link>
                 </div>

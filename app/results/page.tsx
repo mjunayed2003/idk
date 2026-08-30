@@ -8,13 +8,13 @@ import { useLanguage } from "@/context/LanguageContext";
 import WinnerTicket from "@/components/WinnerTicket";
 import Link from "next/link";
 import {
-  HiTrophy,
-  HiCalendarDays,
-  HiTicket,
-  HiSparkles,
-  HiArrowLeft,
-  HiArrowPath,
-  HiShieldCheck,
+  HiOutlineTrophy,
+  HiOutlineCalendarDays,
+  HiOutlineTicket,
+  HiOutlineSparkles,
+  HiOutlineArrowLeft,
+  HiOutlineArrowPath,
+  HiOutlineShieldCheck,
 } from "react-icons/hi2";
 
 export default function ResultsPage() {
@@ -57,12 +57,12 @@ export default function ResultsPage() {
             href="/"
             className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-blue-600 transition-colors mb-2"
           >
-            <HiArrowLeft className="h-3.5 w-3.5" />
+            <HiOutlineArrowLeft className="h-3.5 w-3.5" />
             <span>{t.backToArena}</span>
           </Link>
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 text-white font-bold shadow-xs">
-              <HiTrophy className="h-5 w-5" />
+              <HiOutlineTrophy className="h-5 w-5" />
             </div>
             <div>
               <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">
@@ -80,7 +80,7 @@ export default function ResultsPage() {
           onClick={loadDraws}
           className="inline-flex items-center gap-2 rounded-xl bg-white border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition shadow-xs"
         >
-          <HiArrowPath className={`h-4 w-4 ${loading ? "animate-spin text-blue-600" : ""}`} />
+          <HiOutlineArrowPath className={`h-4 w-4 ${loading ? "animate-spin text-blue-600" : ""}`} />
           <span>{t.refreshRecords}</span>
         </button>
       </div>
@@ -88,12 +88,12 @@ export default function ResultsPage() {
       {/* Draws List */}
       {loading ? (
         <div className="py-20 text-center text-slate-400 font-medium">
-          <HiSparkles className="h-6 w-6 text-blue-600 animate-spin mx-auto mb-2" />
+          <HiOutlineSparkles className="h-6 w-6 text-blue-600 animate-spin mx-auto mb-2" />
           <p>{language === "bn" ? "ড্র ফলাফল লোড হচ্ছে..." : "Loading draw records..."}</p>
         </div>
       ) : draws.length === 0 ? (
         <div className="rounded-2xl border border-slate-200 bg-white p-10 text-center text-slate-500 space-y-3 shadow-xs">
-          <HiTicket className="h-10 w-10 text-slate-300 mx-auto" />
+          <HiOutlineTicket className="h-10 w-10 text-slate-300 mx-auto" />
           <h3 className="text-xl font-bold text-slate-900">{t.noDrawsTitle}</h3>
           <p className="text-xs sm:text-sm max-w-md mx-auto text-slate-500">
             {t.noDrawsDesc}
@@ -126,7 +126,7 @@ export default function ResultsPage() {
                     </h2>
                   </div>
                   <div className="flex items-center gap-2 text-xs text-slate-500 font-medium">
-                    <HiCalendarDays className="h-4 w-4 text-blue-600" />
+                    <HiOutlineCalendarDays className="h-4 w-4 text-blue-600" />
                     <span>
                       {t.conductedOn}:{" "}
                       {new Date(draw.date).toLocaleDateString(language === "bn" ? "bn-BD" : "en-US", {
@@ -140,7 +140,7 @@ export default function ResultsPage() {
                 </div>
 
                 <div className="flex items-center gap-1.5 rounded-lg bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700 border border-emerald-200">
-                  <HiShieldCheck className="h-4 w-4 text-emerald-600" />
+                  <HiOutlineShieldCheck className="h-4 w-4 text-emerald-600" />
                   <span>{t.threeWinnersConfirmed}</span>
                 </div>
               </div>
