@@ -96,7 +96,7 @@ export default function CustomerTable({
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder={t.searchPlaceholder}
-            className="w-full rounded-2xl border border-slate-200 bg-white pl-10 pr-4 py-2.5 text-xs text-[#140000] placeholder-[#950101]/60 focus:border-[#FF0000] focus:outline-none shadow-xs"
+            className="w-full rounded-2xl border border-slate-200 bg-white pl-10 pr-4 py-2.5 text-base sm:text-xs text-[#140000] placeholder-[#950101]/60 focus:border-[#FF0000] focus:outline-none shadow-xs"
           />
         </div>
 

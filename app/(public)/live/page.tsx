@@ -69,10 +69,10 @@ export default function LiveDrawPage() {
 
       <div className="w-full max-w-5xl luxury-card bg-white/50 backdrop-blur-md p-8 sm:p-12 lg:p-16 relative overflow-hidden shadow-[0_0_50px_rgba(255,0,0,0.1)] border border-[#FF0000]/20 min-h-[600px]">
         {/* Glow */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#FF0000]/10 blur-[120px] rounded-[100%] pointer-events-none"></div>
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-full max-w-[800px] h-[400px] bg-[#FF0000]/10 blur-[120px] rounded-[100%] pointer-events-none"></div>
         
         {/* Wheel Display */}
-        <div className="flex flex-col items-center justify-center relative z-10 scale-125 origin-top mb-32 mt-8">
+        <div className="flex flex-col items-center justify-center relative z-10 scale-100 sm:scale-125 origin-top mb-32 mt-8">
           <CasinoWheel
             isSpinning={isDrawing}
             winner={selectedWinners.length > 0 && !isDrawing ? { name: selectedWinners[selectedWinners.length - 1].name, code: selectedWinners[selectedWinners.length - 1].code } : null}

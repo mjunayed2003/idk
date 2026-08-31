@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Anton, Manrope, Space_Mono } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "@/context/LanguageContext";
@@ -24,6 +24,13 @@ const spaceMono = Space_Mono({
   display: "swap",
 });
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+};
+
 export const metadata: Metadata = {
   title: `${siteConfig.shopName} - Customer Loyalty Scheme & Mega Raffle Draw`,
   description:
@@ -38,7 +45,7 @@ export default function RootLayout({
   return (
     <html lang="bn" className="scroll-smooth">
       <body
-        className={`${anton.variable} ${manrope.variable} ${spaceMono.variable} font-sans min-h-screen flex flex-col antialiased relative`}
+        className={`${anton.variable} ${manrope.variable} ${spaceMono.variable} font-sans min-h-[100dvh] flex flex-col antialiased relative`}
       >
         <LanguageProvider>
           {children}

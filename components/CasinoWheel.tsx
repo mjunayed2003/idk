@@ -34,7 +34,7 @@ export default function CasinoWheel({
       <div className="relative flex items-center justify-center">
         
         {/* Outer Glow behind the wheel */}
-        <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 sm:w-96 sm:h-96 rounded-full bg-[#FF0000]/30 blur-3xl transition-opacity duration-1000 ${isSpinning ? 'opacity-100 animate-pulse' : 'opacity-60 group-hover:opacity-100'}`}></div>
+        <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 sm:w-96 sm:h-96 rounded-full bg-[#FF0000]/30 blur-3xl transition-opacity duration-1000 ${isSpinning ? 'opacity-100 animate-pulse' : 'opacity-60 group-hover:opacity-100'}`}></div>
 
         {/* The pointer (triangle) */}
         <div className="absolute top-[-25px] z-20 animate-bounce">

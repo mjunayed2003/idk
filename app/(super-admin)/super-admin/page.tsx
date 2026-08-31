@@ -268,7 +268,7 @@ export default function AdminPage() {
     : "--";
 
   return (
-    <div className="min-h-screen pb-16">
+    <div className="min-h-[100dvh] pb-16">
       
       {/* Header Actions & Tab Navigation Menu */}
       <div className="border-b border-[#950101]/20 bg-white/95 backdrop-blur-xl sticky top-0 z-40 pt-2 pb-2">
