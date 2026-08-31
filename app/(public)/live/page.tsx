@@ -94,7 +94,6 @@ export default function LiveDrawPage() {
                 <WinnerTicket
                   key={winner.position}
                   winner={winner}
-                  language={language}
                 />
               ))}
             </div>
