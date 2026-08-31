@@ -13,6 +13,7 @@ import {
   HiOutlineLanguage,
   HiOutlineSun,
   HiOutlineMoon,
+  HiOutlinePlay,
 } from "react-icons/hi2";
 import { useState } from "react";
 
@@ -25,6 +26,7 @@ export default function Navbar() {
   const navLinks = [
     { href: "/", label: t.navRaffleArena, icon: HiOutlineTicket },
     { href: "/results", label: t.navPastWinners, icon: HiOutlineTrophy },
+    { href: "/live", label: language === "bn" ? "লাইভ ড্র" : "Live Draw", icon: HiOutlinePlay },
   ];
 
   return (

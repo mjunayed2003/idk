@@ -321,6 +321,34 @@ export async function addCustomer(params: {
   return newCustomer;
 }
 
+export async function runSingleDrawSelection(position: 1 | 2 | 3, excludeCustomerIds: string[]): Promise<DrawWinner> {
+  loadState();
+  const activeList = memoryCustomers.filter(
+    (c) => c.status === "active" && !excludeCustomerIds.includes(c.id)
+  );
+
+  if (activeList.length === 0) {
+    throw new Error("No eligible customers left to draw.");
+  }
+
+  // Pick one random customer
+  const randomIndex = Math.floor(Math.random() * activeList.length);
+  const selected = activeList[randomIndex];
+  const prizes = memoryPrizes;
+
+  let prize = prizes.third.title;
+  if (position === 1) prize = prizes.first.title;
+  if (position === 2) prize = prizes.second.title;
+
+  return {
+    position,
+    customerId: selected.id,
+    name: selected.name,
+    code: selected.code,
+    prize,
+  };
+}
+
 export async function runDrawSelection(): Promise<DrawWinner[]> {
   loadState();
   const activeList = memoryCustomers.filter((c) => c.status === "active");

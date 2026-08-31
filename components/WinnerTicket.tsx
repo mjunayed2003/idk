@@ -61,65 +61,65 @@ export default function WinnerTicket({
 
   return (
     <div
-      className={`rounded-3xl border ${posInfo.cardBorder} p-5 sm:p-6 transition-all duration-300 relative overflow-hidden flex flex-col justify-between shadow-xl ${
-        highlight ? "scale-102 ring-2 ring-[#FF0000]/50" : ""
+      className={`rounded-2xl border ${posInfo.cardBorder} p-4 transition-all duration-300 relative overflow-hidden flex flex-col justify-between shadow-lg ${
+        highlight ? "scale-[1.02] ring-2 ring-[#FF0000]/50" : ""
       }`}
     >
       {/* Top Banner: Position Pill & Verified Seal */}
-      <div className="flex items-center justify-between gap-2 border-b border-slate-100 dark:border-[#950101]/30 pb-3.5">
+      <div className="flex items-center justify-between gap-2 border-b border-slate-100 dark:border-[#950101]/30 pb-2.5">
         <div className="flex items-center gap-2">
-          <span className={`flex h-8 w-8 items-center justify-center rounded-xl text-xs ${posInfo.badgeColor}`}>
+          <span className={`flex h-6 w-6 items-center justify-center rounded-lg text-[10px] ${posInfo.badgeColor}`}>
             {posInfo.num}
           </span>
-          <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#FF0000]">
+          <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-[#FF0000]">
             {posInfo.title}
           </span>
         </div>
 
-        <div className="flex items-center gap-1 rounded-full bg-[#FF0000]/15 dark:bg-white/[0.05] border border-[#FF0000]/30 px-2.5 py-1 text-[11px] font-bold text-[#FF0000]">
-          <HiOutlineShieldCheck className="h-3.5 w-3.5" />
+        <div className="flex items-center gap-1 rounded-full bg-[#FF0000]/15 dark:bg-white/[0.05] border border-[#FF0000]/30 px-2 py-0.5 text-[9px] font-bold text-[#FF0000]">
+          <HiOutlineShieldCheck className="h-3 w-3" />
           <span>{t.threeWinnersConfirmed}</span>
         </div>
       </div>
 
       {/* Center: Awarded Prize Showcase */}
-      <div className="my-4 space-y-1.5">
-        <div className="flex items-center gap-1.5 text-xs text-[#950101] dark:text-[#ffffff]/70 font-semibold uppercase tracking-wider">
-          <HiOutlineTrophy className={`h-4 w-4 ${posInfo.iconColor}`} />
+      <div className="my-3 space-y-1">
+        <div className="flex items-center gap-1 text-[10px] text-[#950101] dark:text-[#ffffff]/70 font-semibold uppercase tracking-wider">
+          <HiOutlineTrophy className={`h-3.5 w-3.5 ${posInfo.iconColor}`} />
           <span>{t.prizeWon}</span>
         </div>
-        <h4 className="text-xl sm:text-2xl font-black text-[#140000] dark:text-[#ffffff] tracking-tight leading-snug">
+        <h4 className="text-lg font-black text-[#140000] dark:text-[#ffffff] tracking-tight leading-tight line-clamp-2">
           {winner.prize}
         </h4>
       </div>
 
       {/* Ticket Details Box */}
-      <div className="rounded-2xl bg-slate-50 dark:bg-[#000000]/80 border border-slate-200 dark:border-[#950101]/40 p-4 space-y-3 shadow-inner">
+      <div className="rounded-xl bg-slate-50 dark:bg-[#000000]/80 border border-slate-200 dark:border-[#950101]/40 p-3 space-y-2.5 shadow-inner">
         {/* Ticket Serial Slot */}
-        <div className="flex items-center justify-between border-b border-slate-200 dark:border-white/[0.06] pb-2">
-          <span className="text-[10px] font-bold uppercase tracking-wider text-[#950101] dark:text-[#ffffff]/70 flex items-center gap-1">
-            <HiOutlineTicket className="h-3.5 w-3.5" />
+        <div className="flex items-center justify-between border-b border-slate-200 dark:border-white/[0.06] pb-1.5">
+          <span className="text-[9px] font-bold uppercase tracking-wider text-[#950101] dark:text-[#ffffff]/70 flex items-center gap-1">
+            <HiOutlineTicket className="h-3 w-3" />
             <span>{t.ticketCode}</span>
           </span>
-          <span className="font-mono text-sm sm:text-base font-black text-[#FF0000] tracking-wider px-2.5 py-0.5 rounded-lg bg-[#FF0000]/15 border border-[#FF0000]/30">
+          <span className="font-mono text-xs font-black text-[#FF0000] tracking-wider px-2 py-0.5 rounded-md bg-[#FF0000]/15 border border-[#FF0000]/30">
             {winner.code}
           </span>
         </div>
 
         {/* Winner Name */}
-        <div className="space-y-1 text-xs">
+        <div className="space-y-1 text-[10px]">
           <div className="flex items-center justify-between">
             <span className="text-[#950101] dark:text-[#ffffff]/70 font-medium flex items-center gap-1">
-              <HiOutlineUser className="h-3.5 w-3.5 text-[#FF0000]" />
+              <HiOutlineUser className="h-3 w-3 text-[#FF0000]" />
               <span>{t.luckyWinner}:</span>
             </span>
-            <strong className="text-[#140000] dark:text-[#ffffff] font-bold text-sm">{winner.name}</strong>
+            <strong className="text-[#140000] dark:text-[#ffffff] font-bold text-xs truncate max-w-[120px]">{winner.name}</strong>
           </div>
         </div>
       </div>
 
       {/* Footer Verified Seal */}
-      <div className="mt-4 pt-3 border-t border-slate-100 dark:border-[#950101]/30 flex items-center justify-between text-[11px] text-[#950101] dark:text-[#ffffff]/70 font-medium">
+      <div className="mt-3 pt-2 border-t border-slate-100 dark:border-[#950101]/30 flex items-center justify-between text-[9px] text-[#950101] dark:text-[#ffffff]/70 font-medium">
         <span className="flex items-center gap-1 font-semibold">
           <HiOutlineShieldCheck className="h-3.5 w-3.5 text-[#FF0000]" />
           <span>{t.fairDraw}</span>
