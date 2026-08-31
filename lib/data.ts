@@ -437,3 +437,15 @@ export async function deleteCustomer(id: string): Promise<void> {
   memoryCustomers = memoryCustomers.filter(c => c.id !== id);
   persistState();
 }
+
+export async function sendTicketSmsNotification(
+  phone: string,
+  code: string,
+  name: string
+): Promise<boolean> {
+  // Simulate instant carrier SMS dispatch
+  await new Promise((resolve) => setTimeout(resolve, 600));
+  console.log(`[SMS GATEWAY] Dispatched ticket code ${code} to ${phone} for ${name}`);
+  return true;
+}
+

@@ -1,120 +1,134 @@
 "use client";
 
 import { DrawWinner } from "@/lib/types";
-import TicketStub from "./TicketStub";
 import { useLanguage } from "@/context/LanguageContext";
-import { HiOutlineTrophy, HiOutlineSparkles, HiOutlineGift, HiOutlineTicket } from "react-icons/hi2";
+import {
+  HiOutlineTrophy,
+  HiOutlineShieldCheck,
+  HiOutlineTicket,
+  HiOutlineUser,
+} from "react-icons/hi2";
 
 interface WinnerTicketProps {
   winner: DrawWinner;
-  rotation?: "left" | "right" | "left-lg" | "right-lg" | "none";
   highlight?: boolean;
 }
 
 export default function WinnerTicket({
   winner,
-  rotation = "none",
   highlight = false,
 }: WinnerTicketProps) {
   const { language, t } = useLanguage();
 
-  const positionConfig = {
-    1: {
-      label: t.firstPlace,
-      subLabel: t.grandWinner,
-      badgeColor: "bg-amber-500 text-slate-950 font-black",
-      iconColor: "text-amber-600",
-      pinColor: "amber" as const,
-      borderAccent: "border-amber-200",
-      accentBg: "bg-amber-50/80",
-      posText: language === "bn" ? "১" : "1",
-    },
-    2: {
-      label: t.secondPlace,
-      subLabel: t.runnerUp,
-      badgeColor: "bg-slate-200 text-slate-800 font-bold",
-      iconColor: "text-slate-600",
-      pinColor: "indigo" as const,
-      borderAccent: "border-slate-200",
-      accentBg: "bg-slate-50",
-      posText: language === "bn" ? "২" : "2",
-    },
-    3: {
-      label: t.thirdPlace,
-      subLabel: t.runnerUp,
-      badgeColor: "bg-orange-500 text-white font-bold",
-      iconColor: "text-orange-600",
-      pinColor: "rose" as const,
-      borderAccent: "border-orange-200",
-      accentBg: "bg-orange-50/80",
-      posText: language === "bn" ? "৩" : "3",
-    },
-  }[winner.position];
+  const getPositionDetails = (pos: number) => {
+    switch (pos) {
+      case 1:
+        return {
+          title: t.firstPlace,
+          badgeColor: "bg-[#FF0000] text-white font-black shadow-lg shadow-[#FF0000]/40",
+          cardBorder: "border-[#FF0000] crimson-glow bg-white dark:bg-[#3D0000]",
+          iconColor: "text-[#FF0000]",
+          num: language === "bn" ? "১" : "1",
+        };
+      case 2:
+        return {
+          title: t.secondPlace,
+          badgeColor: "bg-[#950101] text-white font-black shadow-lg shadow-[#950101]/30",
+          cardBorder: "border-[#950101]/70 bg-white dark:bg-[#3D0000]/90",
+          iconColor: "text-[#FF0000]",
+          num: language === "bn" ? "২" : "2",
+        };
+      case 3:
+        return {
+          title: t.thirdPlace,
+          badgeColor: "bg-[#3D0000] text-white font-black shadow-lg shadow-[#3D0000]/40 border border-[#950101]",
+          cardBorder: "border-[#950101]/50 bg-white dark:bg-[#3D0000]/80",
+          iconColor: "text-[#FF0000]",
+          num: language === "bn" ? "৩" : "3",
+        };
+      default:
+        return {
+          title: `${pos}`,
+          badgeColor: "bg-[#3D0000] text-white",
+          cardBorder: "border-[#950101]/40 bg-white dark:bg-[#3D0000]/80",
+          iconColor: "text-[#FF0000]",
+          num: `${pos}`,
+        };
+    }
+  };
 
-  const customStubBadge = (
-    <div className="flex flex-col items-center justify-center text-center space-y-1">
-      <div className={`flex h-8 w-8 items-center justify-center rounded-xl ${positionConfig.badgeColor}`}>
-        <HiOutlineTrophy className="h-4.5 w-4.5" />
-      </div>
-      <span className="font-display text-xl tracking-wider text-slate-900">
-        #{positionConfig.posText}
-      </span>
-      <span className="font-sans text-[9px] font-bold text-slate-400">
-        {language === "bn" ? "বিজয়ী" : "WINNER"}
-      </span>
-    </div>
-  );
+  const posInfo = getPositionDetails(winner.position);
 
   return (
-    <TicketStub
-      rotation={rotation}
-      pinBadge={false}
-      stubBadge={customStubBadge}
-      className={`h-full ${highlight ? "scale-105 shadow-md" : ""}`}
+    <div
+      className={`rounded-3xl border ${posInfo.cardBorder} p-5 sm:p-6 transition-all duration-300 relative overflow-hidden flex flex-col justify-between shadow-xl ${
+        highlight ? "scale-102 ring-2 ring-[#FF0000]/50" : ""
+      }`}
     >
-      <div className="flex flex-col justify-between h-full space-y-3.5">
-        {/* Header Ribbon */}
-        <div className="flex items-center justify-between border-b border-slate-200 pb-2.5">
-          <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-sans font-bold uppercase ${positionConfig.badgeColor}`}>
-            {winner.position === 1 && <HiOutlineSparkles className="h-3.5 w-3.5" />}
-            {positionConfig.label}
+      {/* Top Banner: Position Pill & Verified Seal */}
+      <div className="flex items-center justify-between gap-2 border-b border-slate-100 dark:border-[#950101]/30 pb-3.5">
+        <div className="flex items-center gap-2">
+          <span className={`flex h-8 w-8 items-center justify-center rounded-xl text-xs ${posInfo.badgeColor}`}>
+            {posInfo.num}
           </span>
-
-          <span className="font-sans text-[11px] font-semibold text-slate-400">
-            {positionConfig.subLabel}
+          <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#FF0000]">
+            {posInfo.title}
           </span>
         </div>
 
-        {/* Winner Name & Ticket Code (NO phone or address) */}
-        <div>
-          <span className="text-[11px] font-sans font-medium text-slate-400 block">
-            {t.luckyWinner}
-          </span>
-          <h4 className="font-display text-2xl text-slate-900 tracking-wide uppercase truncate">
-            {winner.name}
-          </h4>
-
-          <div className="mt-2 inline-flex items-center gap-1.5 rounded-xl bg-slate-900 px-3.5 py-1.5 text-white shadow-xs">
-            <HiOutlineTicket className="h-4 w-4 text-amber-400" />
-            <span className="font-mono text-xs sm:text-sm font-black tracking-widest text-amber-300 uppercase">
-              {winner.code}
-            </span>
-          </div>
-        </div>
-
-        {/* Awarded Prize */}
-        <div className={`p-3 rounded-xl border ${positionConfig.borderAccent} ${positionConfig.accentBg}`}>
-          <div className="flex items-center gap-1.5 text-slate-600">
-            <HiOutlineGift className={`h-4 w-4 ${positionConfig.iconColor}`} />
-            <span className="text-[11px] font-sans font-bold text-slate-700">
-              {t.prizeWon}
-            </span>
-          </div>
-          <p className="font-sans font-bold text-xs sm:text-sm text-slate-900 mt-1 line-clamp-2">
-            {winner.prize}
-          </p>
+        <div className="flex items-center gap-1 rounded-full bg-[#FF0000]/15 dark:bg-white/[0.05] border border-[#FF0000]/30 px-2.5 py-1 text-[11px] font-bold text-[#FF0000]">
+          <HiOutlineShieldCheck className="h-3.5 w-3.5" />
+          <span>{t.threeWinnersConfirmed}</span>
         </div>
       </div>
-    </TicketStub>
+
+      {/* Center: Awarded Prize Showcase */}
+      <div className="my-4 space-y-1.5">
+        <div className="flex items-center gap-1.5 text-xs text-[#950101] dark:text-[#ffffff]/70 font-semibold uppercase tracking-wider">
+          <HiOutlineTrophy className={`h-4 w-4 ${posInfo.iconColor}`} />
+          <span>{t.prizeWon}</span>
+        </div>
+        <h4 className="text-xl sm:text-2xl font-black text-[#140000] dark:text-[#ffffff] tracking-tight leading-snug">
+          {winner.prize}
+        </h4>
+      </div>
+
+      {/* Ticket Details Box */}
+      <div className="rounded-2xl bg-slate-50 dark:bg-[#000000]/80 border border-slate-200 dark:border-[#950101]/40 p-4 space-y-3 shadow-inner">
+        {/* Ticket Serial Slot */}
+        <div className="flex items-center justify-between border-b border-slate-200 dark:border-white/[0.06] pb-2">
+          <span className="text-[10px] font-bold uppercase tracking-wider text-[#950101] dark:text-[#ffffff]/70 flex items-center gap-1">
+            <HiOutlineTicket className="h-3.5 w-3.5" />
+            <span>{t.ticketCode}</span>
+          </span>
+          <span className="font-mono text-sm sm:text-base font-black text-[#FF0000] tracking-wider px-2.5 py-0.5 rounded-lg bg-[#FF0000]/15 border border-[#FF0000]/30">
+            {winner.code}
+          </span>
+        </div>
+
+        {/* Winner Name */}
+        <div className="space-y-1 text-xs">
+          <div className="flex items-center justify-between">
+            <span className="text-[#950101] dark:text-[#ffffff]/70 font-medium flex items-center gap-1">
+              <HiOutlineUser className="h-3.5 w-3.5 text-[#FF0000]" />
+              <span>{t.luckyWinner}:</span>
+            </span>
+            <strong className="text-[#140000] dark:text-[#ffffff] font-bold text-sm">{winner.name}</strong>
+          </div>
+        </div>
+      </div>
+
+      {/* Footer Verified Seal */}
+      <div className="mt-4 pt-3 border-t border-slate-100 dark:border-[#950101]/30 flex items-center justify-between text-[11px] text-[#950101] dark:text-[#ffffff]/70 font-medium">
+        <span className="flex items-center gap-1 font-semibold">
+          <HiOutlineShieldCheck className="h-3.5 w-3.5 text-[#FF0000]" />
+          <span>{t.fairDraw}</span>
+        </span>
+
+        <span className="font-mono text-[#FF0000] font-bold uppercase tracking-wider">
+          VERIFIED
+        </span>
+      </div>
+    </div>
   );
 }

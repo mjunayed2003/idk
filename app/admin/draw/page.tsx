@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { Customer, DrawWinner } from "@/lib/types";
 import { getActiveCustomers, runDrawSelection, saveDrawResult } from "@/lib/data";
-import { siteConfig } from "@/lib/site-config";
 import { useLanguage } from "@/context/LanguageContext";
 import WinnerTicket from "@/components/WinnerTicket";
 import Link from "next/link";
@@ -106,15 +105,15 @@ export default function DrawBoothPage() {
   if (!isAuthenticated) {
     return (
       <div className="mx-auto max-w-md px-4 py-16 sm:py-24">
-        <div className="rounded-2xl bg-white p-8 border border-slate-200 shadow-sm text-center space-y-6">
-          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-600 text-white font-bold shadow-xs mx-auto">
-            <HiOutlineLockClosed className="h-6 w-6" />
+        <div className="luxury-card p-8 text-center space-y-6">
+          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#FF0000] text-white font-bold shadow-lg shadow-[#FF0000]/40 border border-[#FF0000] mx-auto">
+            <HiOutlineLockClosed className="h-7 w-7" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+            <h1 className="text-2xl font-bold tracking-tight text-[#140000] dark:text-[#ffffff]">
               {t.restrictedTitle}
             </h1>
-            <p className="text-xs text-slate-500 mt-1">
+            <p className="text-xs text-[#950101] dark:text-[#ffffff]/70 mt-1">
               {t.restrictedSub}
             </p>
           </div>
@@ -134,11 +133,11 @@ export default function DrawBoothPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Passcode (admin123)"
-              className="w-full rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm text-slate-900 font-mono focus:border-blue-600 focus:outline-none"
+              className="w-full rounded-2xl border border-[#950101]/30 dark:border-white/10 bg-[#faf8f8] dark:bg-[#000000] px-4 py-3 text-sm text-[#140000] dark:text-[#ffffff] font-mono placeholder-[#950101]/60 dark:placeholder-slate-500 focus:border-[#FF0000] focus:outline-none shadow-inner"
             />
             <button
               type="submit"
-              className="w-full rounded-xl bg-blue-600 hover:bg-blue-700 py-2.5 text-xs font-bold uppercase text-white shadow-xs transition-colors"
+              className="w-full rounded-2xl bg-[#FF0000] hover:bg-[#d60000] py-3 text-xs font-black uppercase text-white shadow-lg shadow-[#FF0000]/40 transition-all border border-[#FF0000]"
             >
               {t.enterBtn}
             </button>
@@ -150,7 +149,7 @@ export default function DrawBoothPage() {
               setIsAuthenticated(true);
               sessionStorage.setItem("idk_admin_auth", "true");
             }}
-            className="text-xs text-blue-600 hover:text-blue-800 underline font-medium"
+            className="text-xs text-[#FF0000] hover:underline font-semibold"
           >
             {t.demoUnlockBtn}
           </button>
@@ -163,24 +162,24 @@ export default function DrawBoothPage() {
     <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 space-y-8">
       
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-5">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#950101]/20 dark:border-white/10 pb-5">
         <div>
           <Link
             href="/admin"
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-blue-600 transition-colors mb-2"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#950101] dark:text-[#ffffff]/70 hover:text-[#FF0000] dark:hover:text-white transition-colors mb-2"
           >
             <HiOutlineArrowLeft className="h-3.5 w-3.5" />
             <span>{language === "bn" ? "অ্যাডমিন পোর্টালে ফিরুন" : "Return to Admin Portal"}</span>
           </Link>
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-red-600 text-white font-bold shadow-xs">
-              <HiOutlineSparkles className="h-5 w-5" />
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#FF0000] text-white font-bold shadow-lg shadow-[#FF0000]/40 border border-[#FF0000]">
+              <HiOutlineSparkles className="h-6 w-6 text-white" />
             </div>
             <div>
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">
+              <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#140000] dark:text-[#ffffff]">
                 {t.drawBoothHeading}
               </h1>
-              <p className="text-xs sm:text-sm text-slate-500">
+              <p className="text-xs sm:text-sm text-[#950101] dark:text-[#ffffff]/70">
                 {t.drawBoothSub}
               </p>
             </div>
@@ -188,83 +187,85 @@ export default function DrawBoothPage() {
         </div>
 
         <div className="flex items-center gap-2.5">
-          <div className="flex items-center gap-2 rounded-xl bg-white px-3.5 py-2 border border-slate-200 shadow-xs">
-            <HiOutlineTicket className="h-4 w-4 text-blue-600" />
-            <span className="text-xs font-medium text-slate-600">
-              {t.activePoolMetric}: <strong className="text-blue-600 font-bold">{toBnNum(activeCustomers.length)}</strong>
+          <div className="flex items-center gap-2 rounded-2xl bg-[#FF0000]/15 dark:bg-white/[0.04] px-4 py-2 border border-[#FF0000]/30 dark:border-white/10 shadow-xs">
+            <HiOutlineTicket className="h-4.5 w-4.5 text-[#FF0000]" />
+            <span className="text-xs font-medium text-[#140000] dark:text-[#ffffff]">
+              {t.activePoolMetric}: <strong className="text-[#FF0000] font-bold font-mono">{toBnNum(activeCustomers.length)}</strong>
             </span>
           </div>
 
           <button
             type="button"
             onClick={loadActive}
-            className="rounded-xl border border-slate-200 bg-white p-2 text-slate-500 hover:text-blue-600 transition shadow-xs"
+            className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/[0.05] hover:bg-slate-50 dark:hover:bg-white/[0.1] p-2.5 text-[#140000] dark:text-[#ffffff] transition shadow-xs"
             title="Refresh count"
           >
-            <HiOutlineArrowPath className={`h-4 w-4 ${loading ? "animate-spin text-blue-600" : ""}`} />
+            <HiOutlineArrowPath className={`h-4 w-4 ${loading ? "animate-spin text-[#FF0000]" : "text-[#FF0000]"}`} />
           </button>
         </div>
       </div>
 
       {/* Error Banner */}
       {errorMsg && (
-        <div className="rounded-xl border border-rose-200 bg-rose-50 p-4 text-xs text-rose-700 font-medium">
+        <div className="rounded-2xl border border-[#950101]/50 bg-[#3D0000]/50 p-4 text-xs text-white font-medium">
           ⚠️ {errorMsg}
         </div>
       )}
 
       {/* ================= DRAW ACTION ARENA ================= */}
-      <div className="rounded-2xl border border-slate-200 bg-white p-8 sm:p-10 text-center shadow-xs space-y-6">
+      <div className="luxury-card p-8 sm:p-12 text-center space-y-6 relative overflow-hidden">
+        {/* Ambient glowing arena */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-80 w-80 rounded-full bg-[#FF0000]/15 blur-3xl pointer-events-none" />
         
-        <div className="max-w-xl mx-auto space-y-2">
-          <span className="text-xs font-bold uppercase tracking-wider text-blue-600">
+        <div className="max-w-xl mx-auto space-y-2 relative z-10">
+          <span className="text-xs font-black uppercase tracking-widest text-[#FF0000]">
             {t.fairDraw}
           </span>
-          <h2 className="text-2xl sm:text-4xl font-bold text-slate-900">
+          <h2 className="text-2xl sm:text-4xl font-extrabold text-[#140000] dark:text-[#ffffff]">
             {t.drawBoothHeading}
           </h2>
-          <p className="text-xs sm:text-sm text-slate-500">
+          <p className="text-xs sm:text-sm text-[#950101] dark:text-[#ffffff]/70 font-sans">
             {t.drawInstruction}
           </p>
         </div>
 
         {/* Big Action Button */}
-        <div className="flex flex-col items-center justify-center gap-3">
+        <div className="flex flex-col items-center justify-center gap-3 relative z-10">
           <button
             type="button"
             onClick={handleRunDraw}
             disabled={isDrawing || activeCustomers.length < 3}
-            className={`inline-flex items-center justify-center gap-2 rounded-xl px-8 py-4 text-base font-bold transition-all shadow-xs ${
+            className={`inline-flex items-center justify-center gap-2.5 rounded-2xl px-10 py-5 text-lg font-black uppercase tracking-wider transition-all shadow-2xl ${
               isDrawing
-                ? "bg-slate-100 text-slate-400 cursor-wait border border-slate-200"
+                ? "bg-[#3D0000] text-white/50 cursor-wait border border-[#950101]"
                 : activeCustomers.length < 3
-                ? "bg-slate-100 text-slate-400 cursor-not-allowed border border-slate-200"
-                : "bg-red-600 hover:bg-red-700 text-white shadow-red-500/20 hover:scale-102"
+                ? "bg-[#3D0000] text-white/50 cursor-not-allowed border border-[#950101]"
+                : "bg-[#FF0000] hover:bg-[#d60000] text-white shadow-[#FF0000]/40 hover:scale-105 border border-[#FF0000]"
             }`}
           >
-            <HiOutlineSparkles className={`h-5 w-5 ${isDrawing ? "animate-spin" : ""}`} />
+            <HiOutlineSparkles className={`h-6 w-6 ${isDrawing ? "animate-spin text-white" : "text-white"}`} />
             <span>{isDrawing ? t.spinningBtn : t.spinBtn}</span>
           </button>
 
           {activeCustomers.length < 3 && (
-            <p className="text-xs text-rose-600 font-medium">
+            <p className="text-xs text-[#FF0000] font-medium">
               * {t.needMinCustomers}
             </p>
           )}
         </div>
 
         {/* Active tickets preview ticker */}
-        <div className="pt-5 border-t border-slate-100">
-          <span className="text-xs font-semibold text-slate-400 block mb-2">
+        <div className="pt-6 border-t border-[#950101]/20 dark:border-white/10 relative z-10">
+          <span className="text-xs font-bold text-[#950101] dark:text-[#ffffff]/70 uppercase tracking-wider block mb-3">
             {t.qualifyingTickets}
           </span>
-          <div className="flex flex-wrap items-center justify-center gap-2 max-h-28 overflow-y-auto p-1">
+          <div className="flex flex-wrap items-center justify-center gap-2 max-h-32 overflow-y-auto p-1">
             {activeCustomers.map((cust) => (
               <span
                 key={cust.id}
-                className="rounded-lg bg-slate-50 px-2.5 py-1 text-xs font-mono text-slate-700 border border-slate-200"
+                className="rounded-xl bg-white dark:bg-[#000000]/80 px-3 py-1.5 text-xs font-mono text-[#140000] dark:text-[#ffffff] border border-slate-200 dark:border-[#950101]/40 shadow-xs hover:border-[#FF0000] transition-colors"
               >
-                {cust.code} ({cust.name.split(" ")[0]})
+                <strong className="text-[#FF0000]">{cust.code}</strong> ({cust.name.split(" ")[0]})
               </span>
             ))}
           </div>
@@ -275,16 +276,16 @@ export default function DrawBoothPage() {
       {selectedWinners && (
         <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-300">
           
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-3">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#950101]/20 dark:border-white/10 pb-3">
             <div className="flex items-center gap-3">
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-500 text-white font-bold">
+              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#FF0000] text-white font-black shadow-lg shadow-[#FF0000]/40">
                 <HiOutlineTrophy className="h-5 w-5" />
               </span>
               <div>
-                <h3 className="text-xl font-bold text-slate-900">
+                <h3 className="text-xl font-bold text-[#140000] dark:text-[#ffffff]">
                   {t.winnersRevealedHeading}
                 </h3>
-                <p className="text-xs text-slate-500">
+                <p className="text-xs text-[#950101] dark:text-[#ffffff]/70">
                   {t.winnersRevealedSub}
                 </p>
               </div>
@@ -297,7 +298,7 @@ export default function DrawBoothPage() {
                 value={drawTitle}
                 onChange={(e) => setDrawTitle(e.target.value)}
                 placeholder="Draw Title"
-                className="rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs text-slate-900 font-medium focus:border-blue-600 focus:outline-none"
+                className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#000000] px-4 py-2 text-xs text-[#140000] dark:text-[#ffffff] font-medium focus:border-[#FF0000] focus:outline-none shadow-inner"
               />
             </div>
           </div>
@@ -316,13 +317,13 @@ export default function DrawBoothPage() {
           </div>
 
           {/* PERSIST & FINALIZE ACTION BANNER */}
-          <div className="rounded-2xl border border-blue-200 bg-blue-50/50 p-6 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xs">
+          <div className="rounded-3xl border border-[#FF0000]/40 bg-[#3D0000]/80 p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xl">
             <div className="space-y-0.5 text-center sm:text-left">
-              <div className="text-lg font-bold text-slate-900 flex items-center justify-center sm:justify-start gap-2">
-                <HiOutlineCheckCircle className="h-5 w-5 text-emerald-600" />
+              <div className="text-lg font-bold text-white flex items-center justify-center sm:justify-start gap-2">
+                <HiOutlineCheckCircle className="h-5 w-5 text-[#FF0000]" />
                 <span>{t.readyToSaveTitle}</span>
               </div>
-              <p className="text-xs text-slate-600 max-w-lg">
+              <p className="text-xs text-white/80 max-w-lg font-sans">
                 {t.readyToSaveSub}
               </p>
             </div>
@@ -330,12 +331,12 @@ export default function DrawBoothPage() {
             <div className="flex flex-wrap items-center gap-3">
               {savedSuccess ? (
                 <div className="flex items-center gap-2">
-                  <span className="rounded-xl bg-emerald-100 border border-emerald-300 px-3.5 py-2 text-xs font-bold text-emerald-800">
+                  <span className="rounded-2xl bg-[#FF0000]/20 border border-[#FF0000]/40 px-4 py-2.5 text-xs font-bold text-[#FF0000]">
                     {t.drawPersistedNotice}
                   </span>
                   <Link
                     href="/results"
-                    className="inline-flex items-center gap-1.5 rounded-xl bg-blue-600 px-4 py-2 text-xs font-bold text-white hover:bg-blue-700 transition"
+                    className="inline-flex items-center gap-1.5 rounded-2xl bg-[#FF0000] hover:bg-[#d60000] px-5 py-2.5 text-xs font-bold text-white transition shadow-md shadow-[#FF0000]/30 border border-[#FF0000]"
                   >
                     <HiOutlineEye className="h-4 w-4" />
                     <span>{t.viewArchiveBtn}</span>
@@ -345,7 +346,7 @@ export default function DrawBoothPage() {
                 <button
                   type="button"
                   onClick={handleSaveDraw}
-                  className="rounded-xl bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 text-xs font-bold transition-colors shadow-xs"
+                  className="rounded-2xl bg-[#FF0000] hover:bg-[#d60000] text-white px-6 py-3 text-xs font-black uppercase tracking-wider transition-all shadow-lg shadow-[#FF0000]/40 border border-[#FF0000]"
                 >
                   {t.saveDrawBtn}
                 </button>

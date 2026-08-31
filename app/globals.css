@@ -7,36 +7,137 @@
 }
 
 :root {
-  --background: #f8fafc;
-  --foreground: #0f172a;
+  --color-gold: #E5A93C;
+  --color-gold-light: #FCD34D;
+  --color-slate-dark: #0F172A;
+  --color-slate-card: #1E293B;
+  --color-slate-border: #334155;
+
+  --background: #0F172A;
+  --foreground: #F8FAFC;
+}
+
+html.light {
+  --background: #F8FAFC;
+  --foreground: #0F172A;
 }
 
 body {
-  background-color: #f8fafc;
-  color: #0f172a;
+  background-color: var(--background);
+  color: var(--foreground);
   font-family: var(--font-manrope), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   min-height: 100vh;
   overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Subtle clean professional retail pattern */
-.retail-bg {
-  background-color: #f8fafc;
-  background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
-  background-size: 24px 24px;
+/* =========================================================================
+   DARK THEME: OBSIDIAN MIDNIGHT SLATE WITH RADIANT GOLD AURORA
+   ========================================================================= */
+.luxury-bg {
+  background-color: #0F172A;
+  background-image: 
+    radial-gradient(at 0% 0%, #E5A93C25 0px, transparent 50%),
+    radial-gradient(at 100% 0%, #3B82F620 0px, transparent 50%),
+    radial-gradient(at 50% 50%, #E5A93C15 0px, transparent 55%),
+    radial-gradient(at 100% 100%, #E5A93C20 0px, transparent 50%),
+    radial-gradient(at 0% 100%, #1E293B50 0px, transparent 50%),
+    linear-gradient(to right, #E5A93C10 1px, transparent 1px),
+    linear-gradient(to bottom, #E5A93C10 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 48px 48px, 48px 48px;
+  background-attachment: fixed;
 }
 
-/* Clean border utilities */
-.retail-card {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 1rem;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+/* =========================================================================
+   LIGHT THEME: CRISP PORCELAIN PEARL WITH REFINED GOLD & SLATE MESH
+   ========================================================================= */
+html.light .luxury-bg {
+  background-color: #F8FAFC;
+  background-image: 
+    radial-gradient(at 0% 0%, #E5A93C15 0px, transparent 50%),
+    radial-gradient(at 100% 0%, #3B82F610 0px, transparent 50%),
+    radial-gradient(at 50% 50%, #E5A93C0A 0px, transparent 55%),
+    radial-gradient(at 100% 100%, #E5A93C10 0px, transparent 50%),
+    radial-gradient(at 0% 100%, #3B82F60A 0px, transparent 50%),
+    linear-gradient(to right, #33415510 1px, transparent 1px),
+    linear-gradient(to bottom, #33415510 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 48px 48px, 48px 48px;
+  background-attachment: fixed;
 }
 
-.retail-card:hover {
-  border-color: #cbd5e1;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+/* =========================================================================
+   CARDS & SURFACES
+   ========================================================================= */
+.luxury-card {
+  background: #1E293BE6;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid #334155;
+  border-radius: 1.25rem;
+  box-shadow: 0 10px 30px -10px #00000080, 0 0 1px 1px #E5A93C15 inset;
+  transition: all 0.25s ease;
+}
+
+.luxury-card:hover {
+  border-color: #E5A93C80;
+  box-shadow: 0 20px 40px -15px #00000099, 0 0 20px #E5A93C25;
+}
+
+html.light .luxury-card {
+  background: #FFFFFF;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 10px 25px -5px #0F172A10, 0 4px 6px -2px #0F172A05;
+}
+
+html.light .luxury-card:hover {
+  border-color: #E5A93C99;
+  box-shadow: 0 20px 35px -10px #E5A93C20, 0 4px 10px -2px #0F172A08;
+}
+
+/* Light mode card headings */
+html.light .luxury-card h1,
+html.light .luxury-card h2,
+html.light .luxury-card h3,
+html.light .luxury-card h4 {
+  color: #0F172A;
+}
+
+/* Glow Utilities */
+.gold-glow {
+  box-shadow: 0 0 35px -5px #E5A93C55, 0 0 1px 1px #E5A93C4D inset;
+}
+
+html.light .gold-glow {
+  box-shadow: 0 10px 30px -5px #E5A93C30, 0 0 0 1px #E5A93C50;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #E5A93C;
+}
+
+html.light ::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+}
+
+html.light ::-webkit-scrollbar-thumb:hover {
+  background: #E5A93C;
 }
 
 /* Accessible focus states */
@@ -45,12 +146,12 @@ button:focus-visible,
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible {
-  outline: 2px solid #2563eb;
+  outline: 2px solid #E5A93C;
   outline-offset: 2px;
 }
 
 /* Text selections */
 ::selection {
-  background-color: #dbeafe;
-  color: #1e3a8a;
+  background-color: #E5A93C;
+  color: #0F172A;
 }

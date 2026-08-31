@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Customer, Draw, DrawWinner } from "@/lib/types";
+import { Customer, Draw } from "@/lib/types";
 import { 
   getCustomers, 
   resetToDefaultData, 
@@ -11,8 +11,6 @@ import {
   savePrizes, 
   PrizeConfig,
   getPastDraws,
-  deleteCustomer,
-  addCustomer
 } from "@/lib/data";
 import { siteConfig } from "@/lib/site-config";
 import { useLanguage } from "@/context/LanguageContext";
@@ -22,7 +20,6 @@ import WinnerTicket from "@/components/WinnerTicket";
 import Link from "next/link";
 import {
   HiOutlineLockClosed,
-  HiOutlineKey,
   HiOutlineUsers,
   HiOutlineTicket,
   HiOutlineSparkles,
@@ -32,13 +29,10 @@ import {
   HiOutlineArrowRight,
   HiOutlineArrowLeftOnRectangle,
   HiOutlineCalendarDays,
-  HiOutlineClock,
   HiOutlineGift,
   HiOutlineCheckCircle,
   HiOutlineEye,
-  HiOutlineTrash,
   HiOutlineTv,
-  HiOutlineCog6Tooth,
 } from "react-icons/hi2";
 
 type AdminTab = "overview" | "customers" | "schedule" | "prizes" | "history";
@@ -55,7 +49,6 @@ export default function AdminPage() {
   const [pastDraws, setPastDraws] = useState<Draw[]>([]);
   const [nextDrawDate, setNextDrawDate] = useState<string>("");
   const [prizes, setPrizes] = useState<PrizeConfig | null>(null);
-  const [loading, setLoading] = useState(true);
 
   // Form states
   const [customDateInput, setCustomDateInput] = useState("");
@@ -105,30 +98,20 @@ export default function AdminPage() {
   };
 
   const loadData = async () => {
-    setLoading(true);
     try {
-      const [custList, draws, nextDate, prizeData] = await Promise.all([
-        getCustomers(),
-        getPastDraws(),
-        getNextDrawDate(),
-        getPrizes(),
-      ]);
-      setCustomers(custList);
+      const custs = await getCustomers();
+      const draws = await getPastDraws();
+      const targetDate = await getNextDrawDate();
+      const p = await getPrizes();
+
+      setCustomers(custs);
       setPastDraws(draws);
-      setNextDrawDate(nextDate);
-      setPrizes(prizeData);
-      setPrizeForm(prizeData);
-      
-      // initialize date input with current ISO slice
-      if (nextDate) {
-        const d = new Date(nextDate);
-        const localIso = new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
-        setCustomDateInput(localIso);
-      }
+      setNextDrawDate(targetDate);
+      setCustomDateInput(targetDate ? new Date(targetDate).toISOString().slice(0, 16) : "");
+      setPrizes(p);
+      setPrizeForm(p);
     } catch (err) {
-      console.error("Error loading admin data:", err);
-    } finally {
-      setLoading(false);
+      console.error("Failed to load admin data:", err);
     }
   };
 
@@ -143,39 +126,38 @@ export default function AdminPage() {
   }, []);
 
   const handleResetData = async () => {
-    if (confirm(language === "bn" ? "সকল ডাটা ও সেটিংস ডিফল্টে রিসেট করতে চান?" : "Reset all customers, draws, schedule, and prizes to default?")) {
+    if (confirm("Reset all data to sample records? This cannot be undone.")) {
       await resetToDefaultData();
       await loadData();
     }
   };
 
-  const handleCustomerAdded = (newCust: Customer) => {
-    setCustomers((prev) => [newCust, ...prev]);
-  };
-
-  // Schedule updates
-  const handleSaveCustomDate = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!customDateInput) return;
-    const iso = new Date(customDateInput).toISOString();
-    const updated = await saveNextDrawDate(iso);
-    setNextDrawDate(updated);
-    setDateSaveSuccess(true);
-    setTimeout(() => setDateSaveSuccess(false), 3000);
+  const handleCustomerAdded = () => {
+    loadData();
   };
 
   const handleApplyPresetDays = async (days: number) => {
-    const target = new Date(Date.now() + days * 24 * 60 * 60 * 1000);
-    const iso = target.toISOString();
-    const updated = await saveNextDrawDate(iso);
-    setNextDrawDate(updated);
-    const localIso = new Date(target.getTime() - target.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
-    setCustomDateInput(localIso);
+    const d = new Date();
+    d.setDate(d.getDate() + days);
+    d.setHours(20, 0, 0, 0); // 8:00 PM
+    const isoString = d.toISOString();
+    await saveNextDrawDate(isoString);
+    setNextDrawDate(isoString);
+    setCustomDateInput(d.toISOString().slice(0, 16));
     setDateSaveSuccess(true);
     setTimeout(() => setDateSaveSuccess(false), 3000);
   };
 
-  // Prize updates
+  const handleSaveCustomDate = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!customDateInput) return;
+    const isoString = new Date(customDateInput).toISOString();
+    await saveNextDrawDate(isoString);
+    setNextDrawDate(isoString);
+    setDateSaveSuccess(true);
+    setTimeout(() => setDateSaveSuccess(false), 3000);
+  };
+
   const handleSavePrizes = async (e: React.FormEvent) => {
     e.preventDefault();
     const updated = await savePrizes(prizeForm);
@@ -188,24 +170,24 @@ export default function AdminPage() {
   if (!isAuthenticated) {
     return (
       <div className="mx-auto max-w-md px-4 py-16 sm:py-24">
-        <div className="rounded-3xl bg-white p-8 border border-slate-200 shadow-sm space-y-6">
+        <div className="luxury-card p-8 text-center space-y-6">
           <div className="flex flex-col items-center text-center space-y-2">
-            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-600 text-white font-bold shadow-xs">
+            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#FF0000] text-white font-bold shadow-lg shadow-[#FF0000]/40 border border-[#FF0000]">
               <HiOutlineLockClosed className="h-7 w-7" />
             </div>
-            <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+            <h1 className="text-2xl font-bold tracking-tight text-[#140000] dark:text-[#ffffff]">
               {t.adminAuthHeading}
             </h1>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-[#950101] dark:text-[#ffffff]/70">
               {t.adminAuthSub}
             </p>
           </div>
 
           <form onSubmit={handleLogin} className="space-y-4">
-            <div>
+            <div className="text-left">
               <label
                 htmlFor="adminPassword"
-                className="mb-1.5 block text-xs font-semibold text-slate-700"
+                className="mb-1.5 block text-xs font-semibold text-[#140000] dark:text-[#ffffff]"
               >
                 {t.passcodeLabel}
               </label>
@@ -218,12 +200,12 @@ export default function AdminPage() {
                   setAuthError(false);
                 }}
                 placeholder={t.passcodePlaceholder}
-                className={`w-full rounded-2xl border bg-white px-4 py-3 text-sm text-slate-900 placeholder-slate-400 transition focus:outline-none ${
-                  authError ? "border-rose-500 focus:border-rose-500" : "border-slate-300 focus:border-blue-600 shadow-xs"
+                className={`w-full rounded-2xl border bg-[#faf8f8] dark:bg-[#000000] px-4 py-3 text-sm text-[#140000] dark:text-[#ffffff] placeholder-[#950101]/60 dark:placeholder-slate-500 transition focus:outline-none shadow-inner ${
+                  authError ? "border-rose-500 focus:border-rose-500" : "border-[#950101]/30 dark:border-white/10 focus:border-[#FF0000]"
                 }`}
               />
               {authError && (
-                <p className="mt-1 text-xs text-rose-600">
+                <p className="mt-1 text-xs text-[#FF0000]">
                   {language === "bn" ? "ভুল পাসকোড! admin123 লিখুন বা নিচের বাটনে ক্লিক করুন।" : "Incorrect passcode. Try `admin123`."}
                 </p>
               )}
@@ -231,23 +213,23 @@ export default function AdminPage() {
 
             <button
               type="submit"
-              className="w-full rounded-2xl bg-blue-600 hover:bg-blue-700 py-3 text-center text-sm font-bold text-white transition-colors shadow-xs"
+              className="w-full rounded-2xl bg-[#FF0000] hover:bg-[#d60000] py-3 text-center text-xs font-black uppercase text-white transition-all shadow-lg shadow-[#FF0000]/40 border border-[#FF0000]"
             >
               {t.enterBtn}
             </button>
           </form>
 
           {/* Quick Demo Bypass */}
-          <div className="pt-3 border-t border-slate-100 text-center space-y-1">
+          <div className="pt-3 border-t border-[#950101]/20 dark:border-white/10 text-center space-y-1">
             <button
               type="button"
               onClick={handleQuickDemoUnlock}
-              className="text-xs text-blue-600 hover:text-blue-800 transition-colors underline font-semibold"
+              className="text-xs text-[#FF0000] hover:underline font-semibold"
             >
               {t.demoUnlockBtn}
             </button>
-            <p className="text-[11px] text-slate-400">
-              Default: <span className="font-semibold text-slate-700">admin123</span>
+            <p className="text-[11px] text-[#950101] dark:text-[#ffffff]/70">
+              Default: <span className="font-semibold text-[#140000] dark:text-[#ffffff]">admin123</span>
             </p>
           </div>
         </div>
@@ -271,26 +253,26 @@ export default function AdminPage() {
     : "--";
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen pb-16">
       
       {/* Top Admin Navigation Header */}
-      <div className="border-b border-slate-200 bg-white sticky top-0 z-40">
+      <div className="border-b border-[#950101]/20 dark:border-[#3D0000] bg-white/95 dark:bg-[#000000]/85 backdrop-blur-xl sticky top-0 z-40">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-3.5 flex flex-wrap items-center justify-between gap-4">
           
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 text-white font-bold shadow-xs">
+            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#FF0000] text-white font-bold shadow-lg shadow-[#FF0000]/40 border border-[#FF0000]">
               <HiOutlineShieldCheck className="h-6 w-6" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-bold text-base sm:text-lg text-slate-900">
+                <span className="font-bold text-base sm:text-lg text-[#140000] dark:text-[#ffffff]">
                   {siteConfig.shopName} Admin Center
                 </span>
-                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">
+                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#FF0000]/15 border border-[#FF0000]/30 text-[#FF0000]">
                   ● Authenticated
                 </span>
               </div>
-              <span className="text-xs text-slate-500 font-medium hidden sm:inline">
+              <span className="text-xs text-[#950101] dark:text-[#ffffff]/70 font-medium hidden sm:inline">
                 Manage Customers, Grand Prizes, Draw Schedule & Live Tumbler
               </span>
             </div>
@@ -299,7 +281,7 @@ export default function AdminPage() {
           <div className="flex items-center gap-2">
             <Link
               href="/admin/draw"
-              className="inline-flex items-center gap-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 text-xs font-bold transition-all shadow-xs"
+              className="inline-flex items-center gap-2 rounded-xl bg-[#FF0000] hover:bg-[#d60000] text-white px-4 py-2 text-xs font-bold transition-all shadow-md shadow-[#FF0000]/30 border border-[#FF0000]"
             >
               <HiOutlineSparkles className="h-4.5 w-4.5 text-white" />
               <span>{t.navDrawBooth}</span>
@@ -308,7 +290,7 @@ export default function AdminPage() {
             <Link
               href="/"
               target="_blank"
-              className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 px-3 py-2 text-xs font-semibold text-slate-700 transition"
+              className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/[0.05] hover:bg-slate-50 dark:hover:bg-white/[0.1] px-3 py-2 text-xs font-semibold text-[#140000] dark:text-[#ffffff] transition"
               title="View Public Store"
             >
               <HiOutlineEye className="h-4 w-4" />
@@ -319,16 +301,16 @@ export default function AdminPage() {
               type="button"
               onClick={handleResetData}
               title="Reset mock data"
-              className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 px-3 py-2 text-xs font-semibold text-slate-700 transition"
+              className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/[0.05] hover:bg-slate-50 dark:hover:bg-white/[0.1] px-3 py-2 text-xs font-semibold text-[#140000] dark:text-[#ffffff] transition"
             >
-              <HiOutlineArrowPath className="h-4 w-4 text-slate-500" />
+              <HiOutlineArrowPath className="h-4 w-4 text-[#FF0000]" />
               <span className="hidden sm:inline">Reset</span>
             </button>
 
             <button
               type="button"
               onClick={handleLogout}
-              className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white hover:bg-rose-50 hover:border-rose-200 hover:text-rose-600 px-3 py-2 text-xs font-semibold text-slate-700 transition"
+              className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/[0.05] hover:bg-rose-500/20 hover:border-rose-500 hover:text-rose-400 px-3 py-2 text-xs font-semibold text-[#140000] dark:text-[#ffffff] transition"
               title="Logout"
             >
               <HiOutlineArrowLeftOnRectangle className="h-4 w-4" />
@@ -338,7 +320,7 @@ export default function AdminPage() {
         </div>
 
         {/* Tab Navigation Menu */}
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex overflow-x-auto space-x-1 sm:space-x-2 border-t border-slate-100 pt-1.5 pb-2">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex overflow-x-auto space-x-1 sm:space-x-2 border-t border-[#950101]/20 dark:border-[#3D0000] pt-1.5 pb-2">
           {[
             { id: "overview", label: language === "bn" ? "ড্যাশবোর্ড ওভারভিউ" : "Overview", icon: HiOutlineTv },
             { id: "customers", label: language === "bn" ? "কাস্টমার ও টিকেট" : "Customers & Tickets", icon: HiOutlineUsers },
@@ -355,11 +337,11 @@ export default function AdminPage() {
                 onClick={() => setActiveTab(tab.id as AdminTab)}
                 className={`flex items-center gap-2 whitespace-nowrap rounded-xl px-4 py-2 text-xs sm:text-sm font-semibold transition ${
                   isActive
-                    ? "bg-blue-600 text-white shadow-xs"
-                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+                    ? "bg-[#FF0000] text-white shadow-md shadow-[#FF0000]/30 border border-[#FF0000]"
+                    : "text-[#140000] dark:text-[#ffffff]/70 hover:text-[#FF0000] dark:hover:text-[#ffffff] hover:bg-slate-100 dark:hover:bg-white/[0.05]"
                 }`}
               >
-                <Icon className={`h-4.5 w-4.5 ${isActive ? "text-white" : "text-slate-400"}`} />
+                <Icon className={`h-4.5 w-4.5 ${isActive ? "text-white" : "text-[#FF0000]"}`} />
                 <span>{tab.label}</span>
               </button>
             );
@@ -376,58 +358,58 @@ export default function AdminPage() {
             
             {/* Top Metric Stats */}
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              <div className="rounded-3xl border border-slate-200 bg-white p-5 flex items-center justify-between shadow-xs">
+              <div className="luxury-card p-5 flex items-center justify-between">
                 <div>
-                  <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                  <span className="text-xs font-bold uppercase tracking-wider text-[#950101] dark:text-[#ffffff]/70">
                     Total Registered
                   </span>
-                  <div className="text-3xl font-black text-slate-900 mt-1">
+                  <div className="text-3xl font-black text-[#140000] dark:text-[#ffffff] mt-1 font-mono">
                     {toBnNum(customers.length)}
                   </div>
                 </div>
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-blue-600 border border-blue-100">
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#FF0000]/15 text-[#FF0000] border border-[#FF0000]/30">
                   <HiOutlineUsers className="h-6 w-6" />
                 </div>
               </div>
 
-              <div className="rounded-3xl border border-slate-200 bg-white p-5 flex items-center justify-between shadow-xs">
+              <div className="luxury-card p-5 flex items-center justify-between border-[#FF0000]/50 dark:border-[#FF0000]/30">
                 <div>
-                  <span className="text-xs font-bold uppercase tracking-wider text-emerald-600">
+                  <span className="text-xs font-bold uppercase tracking-wider text-[#FF0000]">
                     Active In Pool
                   </span>
-                  <div className="text-3xl font-black text-emerald-700 mt-1">
+                  <div className="text-3xl font-black text-[#FF0000] mt-1 font-mono">
                     {toBnNum(activeCount)}
                   </div>
                 </div>
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600 border border-emerald-100">
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#FF0000]/15 text-[#FF0000] border border-[#FF0000]/30">
                   <HiOutlineTicket className="h-6 w-6" />
                 </div>
               </div>
 
-              <div className="rounded-3xl border border-slate-200 bg-white p-5 flex items-center justify-between shadow-xs">
+              <div className="luxury-card p-5 flex items-center justify-between border-[#950101]/50 dark:border-[#950101]/30">
                 <div>
-                  <span className="text-xs font-bold uppercase tracking-wider text-amber-600">
+                  <span className="text-xs font-bold uppercase tracking-wider text-[#950101]">
                     Awarded Winners
                   </span>
-                  <div className="text-3xl font-black text-amber-700 mt-1">
+                  <div className="text-3xl font-black text-[#950101] mt-1 font-mono">
                     {toBnNum(wonCount)}
                   </div>
                 </div>
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-50 text-amber-600 border border-amber-100">
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#950101]/15 text-[#950101] border border-[#950101]/30">
                   <HiOutlineTrophy className="h-6 w-6" />
                 </div>
               </div>
 
-              <div className="rounded-3xl border border-slate-200 bg-white p-5 flex items-center justify-between shadow-xs">
+              <div className="luxury-card p-5 flex items-center justify-between border-[#3D0000]/50 dark:border-[#3D0000]/30">
                 <div>
-                  <span className="text-xs font-bold uppercase tracking-wider text-purple-600">
+                  <span className="text-xs font-bold uppercase tracking-wider text-[#FF0000]">
                     Completed Draws
                   </span>
-                  <div className="text-3xl font-black text-purple-700 mt-1">
+                  <div className="text-3xl font-black text-[#FF0000] mt-1 font-mono">
                     {toBnNum(pastDraws.length)}
                   </div>
                 </div>
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-purple-50 text-purple-600 border border-purple-100">
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#FF0000]/15 text-[#FF0000] border border-[#FF0000]/30">
                   <HiOutlineSparkles className="h-6 w-6" />
                 </div>
               </div>
@@ -437,71 +419,71 @@ export default function AdminPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               
               {/* Draw Schedule Status Card */}
-              <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-xs flex flex-col justify-between space-y-4">
+              <div className="luxury-card p-6 flex flex-col justify-between space-y-4">
                 <div>
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold uppercase tracking-wider text-blue-600 flex items-center gap-1.5">
+                    <span className="text-xs font-bold uppercase tracking-wider text-[#FF0000] flex items-center gap-1.5">
                       <HiOutlineCalendarDays className="h-4.5 w-4.5" />
                       Current Raffle Schedule
                     </span>
                     <button
                       type="button"
                       onClick={() => setActiveTab("schedule")}
-                      className="text-xs font-bold text-blue-600 hover:text-blue-800 underline"
+                      className="text-xs font-bold text-[#FF0000] hover:underline"
                     >
                       Change Date
                     </button>
                   </div>
-                  <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mt-2">
+                  <h3 className="text-xl sm:text-2xl font-bold text-[#140000] dark:text-[#ffffff] mt-2">
                     {formattedDrawDate}
                   </h3>
-                  <p className="text-xs text-slate-500 mt-1">
+                  <p className="text-xs text-[#950101] dark:text-[#ffffff]/70 mt-1 font-sans">
                     This countdown date is actively displayed on the storefront hero section.
                   </p>
                 </div>
 
-                <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
-                  <span className="text-xs text-slate-500">
-                    Eligible Active Tickets: <strong className="text-slate-900">{toBnNum(activeCount)}</strong>
+                <div className="pt-4 border-t border-[#950101]/20 dark:border-white/10 flex items-center justify-between">
+                  <span className="text-xs text-[#950101] dark:text-[#ffffff]/70">
+                    Eligible Active Tickets: <strong className="text-[#140000] dark:text-[#ffffff] font-mono">{toBnNum(activeCount)}</strong>
                   </span>
                   <Link
                     href="/admin/draw"
-                    className="inline-flex items-center gap-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 text-xs font-bold transition shadow-xs"
+                    className="inline-flex items-center gap-1.5 rounded-xl bg-[#FF0000] hover:bg-[#d60000] text-white px-4 py-2 text-xs font-bold transition shadow-xs border border-[#FF0000]"
                   >
-                    <HiOutlineSparkles className="h-4 w-4" />
+                    <HiOutlineSparkles className="h-4 w-4 text-white" />
                     <span>Launch Live Tumbler</span>
                   </Link>
                 </div>
               </div>
 
               {/* Grand Prizes Showcase Status */}
-              <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-xs flex flex-col justify-between space-y-4">
+              <div className="luxury-card p-6 flex flex-col justify-between space-y-4">
                 <div>
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold uppercase tracking-wider text-amber-600 flex items-center gap-1.5">
+                    <span className="text-xs font-bold uppercase tracking-wider text-[#FF0000] flex items-center gap-1.5">
                       <HiOutlineGift className="h-4.5 w-4.5" />
                       Grand Prizes Configured
                     </span>
                     <button
                       type="button"
                       onClick={() => setActiveTab("prizes")}
-                      className="text-xs font-bold text-blue-600 hover:text-blue-800 underline"
+                      className="text-xs font-bold text-[#FF0000] hover:underline"
                     >
                       Edit Prizes
                     </button>
                   </div>
                   <div className="mt-3 space-y-2">
-                    <div className="flex items-center justify-between text-xs py-1 border-b border-slate-100">
-                      <span className="font-bold text-slate-900">🥇 1st Prize:</span>
-                      <span className="font-medium text-slate-700">{prizes?.first.title}</span>
+                    <div className="flex items-center justify-between text-xs py-1 border-b border-[#950101]/20 dark:border-white/10">
+                      <span className="font-bold text-[#FF0000]">🥇 1st Prize:</span>
+                      <span className="font-medium text-[#140000] dark:text-[#ffffff]">{prizes?.first.title}</span>
                     </div>
-                    <div className="flex items-center justify-between text-xs py-1 border-b border-slate-100">
-                      <span className="font-bold text-slate-900">🥈 2nd Prize:</span>
-                      <span className="font-medium text-slate-700">{prizes?.second.title}</span>
+                    <div className="flex items-center justify-between text-xs py-1 border-b border-[#950101]/20 dark:border-white/10">
+                      <span className="font-bold text-[#950101]">🥈 2nd Prize:</span>
+                      <span className="font-medium text-[#140000] dark:text-[#ffffff]">{prizes?.second.title}</span>
                     </div>
                     <div className="flex items-center justify-between text-xs py-1">
-                      <span className="font-bold text-slate-900">🥉 3rd Prize:</span>
-                      <span className="font-medium text-slate-700">{prizes?.third.title}</span>
+                      <span className="font-bold text-[#3D0000] dark:text-[#FF0000]">🥉 3rd Prize:</span>
+                      <span className="font-medium text-[#140000] dark:text-[#ffffff]">{prizes?.third.title}</span>
                     </div>
                   </div>
                 </div>
@@ -510,7 +492,7 @@ export default function AdminPage() {
                   <button
                     type="button"
                     onClick={() => setActiveTab("prizes")}
-                    className="w-full rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 py-2 text-xs font-bold transition text-center"
+                    className="w-full rounded-xl border border-[#950101]/30 dark:border-white/10 bg-white dark:bg-white/[0.05] hover:bg-slate-50 dark:hover:bg-white/[0.1] text-[#140000] dark:text-[#ffffff] py-2 text-xs font-bold transition text-center"
                   >
                     Modify Prize Titles & Warranties
                   </button>
@@ -520,20 +502,20 @@ export default function AdminPage() {
             </div>
 
             {/* Quick Customer Register & Table View */}
-            <div className="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 shadow-xs space-y-6">
+            <div className="luxury-card p-6 sm:p-8 space-y-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="text-lg font-bold text-slate-900">
+                  <h3 className="text-lg font-bold text-[#140000] dark:text-[#ffffff]">
                     Latest Customer Registrations
                   </h3>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs text-[#950101] dark:text-[#ffffff]/70">
                     Overview of recent raffle entries issued to customers.
                   </p>
                 </div>
                 <button
                   type="button"
                   onClick={() => setActiveTab("customers")}
-                  className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-800 underline"
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#FF0000] hover:underline"
                 >
                   <span>Open Full Management</span>
                   <HiOutlineArrowRight className="h-3.5 w-3.5" />
@@ -555,7 +537,7 @@ export default function AdminPage() {
             <div className="lg:col-span-8 space-y-6">
               <CustomerTable 
                 customers={customers} 
-                onRefresh={loadData} 
+                onCustomerUpdated={loadData} 
               />
             </div>
           </div>
@@ -564,39 +546,39 @@ export default function AdminPage() {
         {/* ================= TAB 3: DRAW SCHEDULE & COUNTDOWN ================= */}
         {activeTab === "schedule" && (
           <div className="max-w-3xl mx-auto space-y-8">
-            <div className="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 shadow-xs space-y-6">
-              <div className="flex items-center gap-3 border-b border-slate-100 pb-5">
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-xs">
+            <div className="luxury-card p-6 sm:p-8 space-y-6">
+              <div className="flex items-center gap-3 border-b border-[#950101]/20 dark:border-white/10 pb-5">
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#FF0000] text-white shadow-lg shadow-[#FF0000]/40 border border-[#FF0000]">
                   <HiOutlineCalendarDays className="h-6 w-6" />
                 </div>
                 <div>
-                  <h2 className="text-xl font-bold text-slate-900">
+                  <h2 className="text-xl font-bold text-[#140000] dark:text-[#ffffff]">
                     Raffle Draw Schedule & Live Timer
                   </h2>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs text-[#950101] dark:text-[#ffffff]/70 font-sans">
                     Set exactly when the live raffle draw takes place. This directly controls the countdown on the homepage.
                   </p>
                 </div>
               </div>
 
               {/* Current Active Date Box */}
-              <div className="rounded-2xl border border-blue-200 bg-blue-50/60 p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="rounded-2xl border border-[#FF0000]/40 bg-[#FF0000]/15 dark:bg-[#3D0000]/50 p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div>
-                  <span className="text-xs font-bold uppercase tracking-wider text-blue-700">
+                  <span className="text-xs font-bold uppercase tracking-wider text-[#FF0000]">
                     Current Scheduled Draw
                   </span>
-                  <div className="text-xl sm:text-2xl font-black text-slate-900 mt-0.5">
+                  <div className="text-xl sm:text-2xl font-black text-[#140000] dark:text-[#ffffff] mt-0.5">
                     {formattedDrawDate}
                   </div>
                 </div>
-                <span className="px-3 py-1 bg-white border border-blue-200 rounded-full text-xs font-mono font-bold text-blue-700 shadow-2xs">
+                <span className="px-3.5 py-1 bg-white/80 dark:bg-white/[0.08] border border-[#FF0000]/40 rounded-full text-xs font-mono font-bold text-[#FF0000] shadow-xs">
                   Live on Homepage
                 </span>
               </div>
 
               {/* Quick Presets */}
               <div>
-                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2.5">
+                <label className="block text-xs font-bold text-[#140000] dark:text-[#ffffff] uppercase tracking-wider mb-2.5">
                   Quick Preset Schedules
                 </label>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
@@ -610,7 +592,7 @@ export default function AdminPage() {
                       key={preset.days}
                       type="button"
                       onClick={() => handleApplyPresetDays(preset.days)}
-                      className="rounded-2xl border border-slate-200 bg-slate-50 hover:bg-blue-50 hover:border-blue-300 hover:text-blue-700 p-3 text-xs font-bold text-slate-700 transition text-center shadow-2xs"
+                      className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/[0.04] hover:border-[#FF0000] p-3 text-xs font-bold text-[#140000] dark:text-[#ffffff] transition text-center shadow-xs"
                     >
                       {preset.label}
                     </button>
@@ -619,9 +601,9 @@ export default function AdminPage() {
               </div>
 
               {/* Custom Date Time Form */}
-              <form onSubmit={handleSaveCustomDate} className="space-y-4 pt-4 border-t border-slate-100">
+              <form onSubmit={handleSaveCustomDate} className="space-y-4 pt-4 border-t border-[#950101]/20 dark:border-white/10">
                 <div>
-                  <label htmlFor="customDateTime" className="block text-xs font-bold text-slate-700 mb-1.5">
+                  <label htmlFor="customDateTime" className="block text-xs font-bold text-[#140000] dark:text-[#ffffff] mb-1.5">
                     Select Specific Date & Time
                   </label>
                   <input
@@ -630,13 +612,13 @@ export default function AdminPage() {
                     required
                     value={customDateInput}
                     onChange={(e) => setCustomDateInput(e.target.value)}
-                    className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm font-medium text-slate-900 focus:border-blue-600 focus:outline-none shadow-xs"
+                    className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-[#faf8f8] dark:bg-[#000000] px-4 py-3 text-sm font-medium text-[#140000] dark:text-[#ffffff] focus:border-[#FF0000] focus:outline-none shadow-inner"
                   />
                 </div>
 
                 <div className="flex items-center justify-between pt-2">
                   {dateSaveSuccess ? (
-                    <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-600">
+                    <div className="flex items-center gap-1.5 text-xs font-bold text-[#FF0000]">
                       <HiOutlineCheckCircle className="h-5 w-5" />
                       <span>Draw schedule updated successfully!</span>
                     </div>
@@ -646,7 +628,7 @@ export default function AdminPage() {
 
                   <button
                     type="submit"
-                    className="rounded-2xl bg-blue-600 hover:bg-blue-700 px-6 py-3 text-sm font-bold text-white shadow-xs transition"
+                    className="rounded-2xl bg-[#FF0000] hover:bg-[#d60000] px-6 py-3 text-sm font-bold text-white shadow-lg shadow-[#FF0000]/40 transition border border-[#FF0000]"
                   >
                     Save Draw Schedule
                   </button>
@@ -659,16 +641,16 @@ export default function AdminPage() {
         {/* ================= TAB 4: GRAND PRIZE POOL CONFIGURATION ================= */}
         {activeTab === "prizes" && (
           <div className="max-w-4xl mx-auto space-y-8">
-            <div className="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 shadow-xs space-y-6">
-              <div className="flex items-center gap-3 border-b border-slate-100 pb-5">
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-xs">
+            <div className="luxury-card p-6 sm:p-8 space-y-6">
+              <div className="flex items-center gap-3 border-b border-[#950101]/20 dark:border-white/10 pb-5">
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#FF0000] text-white shadow-lg shadow-[#FF0000]/40 border border-[#FF0000]">
                   <HiOutlineGift className="h-6 w-6" />
                 </div>
                 <div>
-                  <h2 className="text-xl font-bold text-slate-900">
+                  <h2 className="text-xl font-bold text-[#140000] dark:text-[#ffffff]">
                     Grand Prizes Configuration
                   </h2>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs text-[#950101] dark:text-[#ffffff]/70 font-sans">
                     Customize the 1st, 2nd, and 3rd grand prizes. These titles and descriptions dynamically appear on the public storefront, live draw booth, and winner tickets.
                   </p>
                 </div>
@@ -677,19 +659,19 @@ export default function AdminPage() {
               <form onSubmit={handleSavePrizes} className="space-y-6">
                 
                 {/* 1st Prize (Grand Champion) */}
-                <div className="rounded-2xl border border-amber-200 bg-amber-50/40 p-5 space-y-4">
+                <div className="rounded-2xl border border-[#FF0000]/50 bg-[#FF0000]/15 dark:bg-[#3D0000]/50 p-5 space-y-4">
                   <div className="flex items-center gap-2">
-                    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-amber-500 text-white text-xs font-bold">
+                    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#FF0000] text-white text-xs font-black shadow-xs">
                       1
                     </span>
-                    <span className="font-bold text-sm text-slate-900">
+                    <span className="font-bold text-sm text-[#140000] dark:text-[#ffffff]">
                       1st Prize — Grand Champion
                     </span>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-bold text-slate-700 mb-1">
+                      <label className="block text-xs font-bold text-[#140000] dark:text-[#ffffff] mb-1">
                         Prize Name / Model Title
                       </label>
                       <input
@@ -701,12 +683,12 @@ export default function AdminPage() {
                           first: { ...prizeForm.first, title: e.target.value }
                         })}
                         placeholder="e.g. Smart 4K UHD LED TV (55&quot;)"
-                        className="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-xs text-slate-900 focus:border-blue-600 focus:outline-none shadow-xs"
+                        className="w-full rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#000000] px-3.5 py-2.5 text-xs text-[#140000] dark:text-[#ffffff] focus:border-[#FF0000] focus:outline-none shadow-inner"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-xs font-bold text-slate-700 mb-1">
+                      <label className="block text-xs font-bold text-[#140000] dark:text-[#ffffff] mb-1">
                         Highlight / Tagline
                       </label>
                       <input
@@ -718,26 +700,26 @@ export default function AdminPage() {
                           first: { ...prizeForm.first, highlight: e.target.value }
                         })}
                         placeholder="e.g. Grand Champion Mega Prize"
-                        className="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-xs text-slate-900 focus:border-blue-600 focus:outline-none shadow-xs"
+                        className="w-full rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#000000] px-3.5 py-2.5 text-xs text-[#140000] dark:text-[#ffffff] focus:border-[#FF0000] focus:outline-none shadow-inner"
                       />
                     </div>
                   </div>
                 </div>
 
                 {/* 2nd Prize */}
-                <div className="rounded-2xl border border-blue-200 bg-blue-50/40 p-5 space-y-4">
+                <div className="rounded-2xl border border-[#950101]/50 bg-[#950101]/15 dark:bg-[#3D0000]/40 p-5 space-y-4">
                   <div className="flex items-center gap-2">
-                    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-blue-600 text-white text-xs font-bold">
+                    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#950101] text-white text-xs font-black shadow-xs">
                       2
                     </span>
-                    <span className="font-bold text-sm text-slate-900">
+                    <span className="font-bold text-sm text-[#140000] dark:text-[#ffffff]">
                       2nd Prize — 1st Runner Up
                     </span>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-bold text-slate-700 mb-1">
+                      <label className="block text-xs font-bold text-[#140000] dark:text-[#ffffff] mb-1">
                         Prize Name / Model Title
                       </label>
                       <input
@@ -749,12 +731,12 @@ export default function AdminPage() {
                           second: { ...prizeForm.second, title: e.target.value }
                         })}
                         placeholder="e.g. Microwave Oven & Air Fryer Combo"
-                        className="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-xs text-slate-900 focus:border-blue-600 focus:outline-none shadow-xs"
+                        className="w-full rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#000000] px-3.5 py-2.5 text-xs text-[#140000] dark:text-[#ffffff] focus:border-[#950101] focus:outline-none shadow-inner"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-xs font-bold text-slate-700 mb-1">
+                      <label className="block text-xs font-bold text-[#140000] dark:text-[#ffffff] mb-1">
                         Highlight / Tagline
                       </label>
                       <input
@@ -766,26 +748,26 @@ export default function AdminPage() {
                           second: { ...prizeForm.second, highlight: e.target.value }
                         })}
                         placeholder="e.g. 1st Runner-Up Prize"
-                        className="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-xs text-slate-900 focus:border-blue-600 focus:outline-none shadow-xs"
+                        className="w-full rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#000000] px-3.5 py-2.5 text-xs text-[#140000] dark:text-[#ffffff] focus:border-[#950101] focus:outline-none shadow-inner"
                       />
                     </div>
                   </div>
                 </div>
 
                 {/* 3rd Prize */}
-                <div className="rounded-2xl border border-emerald-200 bg-emerald-50/40 p-5 space-y-4">
+                <div className="rounded-2xl border border-[#3D0000]/50 bg-[#3D0000]/15 dark:bg-[#3D0000]/30 p-5 space-y-4">
                   <div className="flex items-center gap-2">
-                    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-emerald-600 text-white text-xs font-bold">
+                    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#3D0000] text-white text-xs font-black shadow-xs border border-[#950101]">
                       3
                     </span>
-                    <span className="font-bold text-sm text-slate-900">
+                    <span className="font-bold text-sm text-[#140000] dark:text-[#ffffff]">
                       3rd Prize — 2nd Runner Up
                     </span>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-bold text-slate-700 mb-1">
+                      <label className="block text-xs font-bold text-[#140000] dark:text-[#ffffff] mb-1">
                         Prize Name / Model Title
                       </label>
                       <input
@@ -797,12 +779,12 @@ export default function AdminPage() {
                           third: { ...prizeForm.third, title: e.target.value }
                         })}
                         placeholder="e.g. Wireless ANC Soundbar & Subwoofer"
-                        className="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-xs text-slate-900 focus:border-blue-600 focus:outline-none shadow-xs"
+                        className="w-full rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#000000] px-3.5 py-2.5 text-xs text-[#140000] dark:text-[#ffffff] focus:border-[#FF0000] focus:outline-none shadow-inner"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-xs font-bold text-slate-700 mb-1">
+                      <label className="block text-xs font-bold text-[#140000] dark:text-[#ffffff] mb-1">
                         Highlight / Tagline
                       </label>
                       <input
@@ -814,15 +796,15 @@ export default function AdminPage() {
                           third: { ...prizeForm.third, highlight: e.target.value }
                         })}
                         placeholder="e.g. Premium Audio Prize"
-                        className="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-xs text-slate-900 focus:border-blue-600 focus:outline-none shadow-xs"
+                        className="w-full rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#000000] px-3.5 py-2.5 text-xs text-[#140000] dark:text-[#ffffff] focus:border-[#FF0000] focus:outline-none shadow-inner"
                       />
                     </div>
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between pt-4 border-t border-slate-100">
+                <div className="flex items-center justify-between pt-4 border-t border-[#950101]/20 dark:border-white/10">
                   {prizeSaveSuccess ? (
-                    <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-600">
+                    <div className="flex items-center gap-1.5 text-xs font-bold text-[#FF0000]">
                       <HiOutlineCheckCircle className="h-5 w-5" />
                       <span>Prize configurations saved & synced with Storefront!</span>
                     </div>
@@ -832,7 +814,7 @@ export default function AdminPage() {
 
                   <button
                     type="submit"
-                    className="rounded-2xl bg-blue-600 hover:bg-blue-700 px-6 py-3 text-sm font-bold text-white shadow-xs transition"
+                    className="rounded-2xl bg-[#FF0000] hover:bg-[#d60000] px-6 py-3 text-sm font-bold text-white shadow-lg shadow-[#FF0000]/40 transition border border-[#FF0000]"
                   >
                     Save & Update All Prizes
                   </button>
@@ -848,38 +830,38 @@ export default function AdminPage() {
           <div className="space-y-6 max-w-5xl mx-auto">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-xl font-bold text-slate-900">
+                <h2 className="text-xl font-bold text-[#140000] dark:text-[#ffffff]">
                   Past Draw Sessions Archive
                 </h2>
-                <p className="text-xs text-slate-500">
+                <p className="text-xs text-[#950101] dark:text-[#ffffff]/70">
                   Historical log of all completed raffle draw winners.
                 </p>
               </div>
               <Link
                 href="/admin/draw"
-                className="inline-flex items-center gap-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 text-xs font-bold shadow-xs transition"
+                className="inline-flex items-center gap-2 rounded-2xl bg-[#FF0000] hover:bg-[#d60000] text-white px-5 py-2.5 text-xs font-bold shadow-md shadow-[#FF0000]/30 transition border border-[#FF0000]"
               >
-                <HiOutlineSparkles className="h-4 w-4" />
+                <HiOutlineSparkles className="h-4 w-4 text-white" />
                 <span>Start New Live Draw</span>
               </Link>
             </div>
 
             {pastDraws.length === 0 ? (
-              <div className="rounded-3xl border border-slate-200 bg-white p-12 text-center text-slate-500">
-                <HiOutlineTrophy className="h-10 w-10 mx-auto text-slate-400 mb-2" />
+              <div className="luxury-card p-12 text-center text-[#950101] dark:text-[#ffffff]/70">
+                <HiOutlineTrophy className="h-10 w-10 mx-auto text-[#FF0000] mb-2" />
                 <p className="font-semibold text-sm">No past draws recorded yet.</p>
               </div>
             ) : (
               <div className="space-y-6">
                 {pastDraws.map((draw) => (
-                  <div key={draw.id} className="rounded-3xl border border-slate-200 bg-white p-6 shadow-xs space-y-4">
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
+                  <div key={draw.id} className="luxury-card p-6 space-y-4">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#950101]/20 dark:border-white/10 pb-3">
                       <div>
-                        <h3 className="font-bold text-base text-slate-900">{draw.title}</h3>
-                        <span className="text-[11px] font-mono text-slate-400">ID: {draw.id}</span>
+                        <h3 className="font-bold text-base text-[#140000] dark:text-[#ffffff]">{draw.title}</h3>
+                        <span className="text-[11px] font-mono text-[#950101] dark:text-[#ffffff]/70">ID: {draw.id}</span>
                       </div>
-                      <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-600 bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-200">
-                        <HiOutlineCalendarDays className="h-4 w-4 text-blue-600" />
+                      <div className="flex items-center gap-1.5 text-xs font-semibold text-[#140000] dark:text-[#ffffff] bg-white dark:bg-white/[0.05] px-3 py-1.5 rounded-xl border border-slate-200 dark:border-white/10">
+                        <HiOutlineCalendarDays className="h-4 w-4 text-[#FF0000]" />
                         <span>{new Date(draw.date).toLocaleDateString()}</span>
                       </div>
                     </div>
