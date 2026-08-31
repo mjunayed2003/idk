@@ -74,27 +74,8 @@ export default function Navbar() {
             })}
           </nav>
 
-          {/* Theme Switcher */}
+          {/* Language Switcher Only (No Dark Button) */}
           <div className="ml-1 pl-2 border-l border-slate-200 dark:border-[#3D0000] flex items-center gap-1.5">
-            <button
-              type="button"
-              onClick={toggleTheme}
-              className="flex items-center gap-1.5 rounded-xl border border-slate-200 dark:border-[#950101]/30 bg-white dark:bg-[#3D0000]/50 hover:bg-slate-50 dark:hover:bg-[#3D0000] px-3 py-2 text-xs font-bold text-[#140000] dark:text-[#ffffff] transition-all shadow-xs"
-              title={theme === "dark" ? "Switch to White (Light) Theme" : "Switch to Dark Theme"}
-            >
-              {theme === "dark" ? (
-                <>
-                  <HiOutlineSun className="h-4 w-4 text-[#FF0000]" />
-                  <span className="hidden lg:inline text-[11px]">Light</span>
-                </>
-              ) : (
-                <>
-                  <HiOutlineMoon className="h-4 w-4 text-[#950101]" />
-                  <span className="hidden lg:inline text-[11px]">Dark</span>
-                </>
-              )}
-            </button>
-
             {/* Language Switcher */}
             <button
               type="button"
@@ -109,15 +90,6 @@ export default function Navbar() {
 
         {/* Mobile Actions */}
         <div className="flex items-center gap-1.5 md:hidden">
-          <button
-            type="button"
-            onClick={toggleTheme}
-            className="flex items-center justify-center h-9 w-9 rounded-xl border border-slate-200 dark:border-[#950101]/30 bg-white dark:bg-[#3D0000]/50 text-[#140000] dark:text-[#ffffff]"
-            aria-label="Toggle Theme"
-          >
-            {theme === "dark" ? <HiOutlineSun className="h-4 w-4 text-[#FF0000]" /> : <HiOutlineMoon className="h-4 w-4 text-[#950101]" />}
-          </button>
-
           <button
             type="button"
             onClick={toggleLanguage}
