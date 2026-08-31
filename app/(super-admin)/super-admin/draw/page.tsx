@@ -7,14 +7,15 @@ import { useLanguage } from "@/context/LanguageContext";
 import WinnerTicket from "@/components/WinnerTicket";
 import Link from "next/link";
 import {
-  HiOutlineSparkles,
+  HiOutlinePlay,
+  HiOutlineCheckCircle,
   HiOutlineTrophy,
   HiOutlineTicket,
   HiOutlineArrowPath,
-  HiOutlineCheckCircle,
   HiOutlineArrowLeft,
   HiOutlineLockClosed,
   HiOutlineEye,
+  HiOutlineEyeSlash,
 } from "react-icons/hi2";
 
 export default function DrawBoothPage() {
@@ -173,7 +174,7 @@ export default function DrawBoothPage() {
           </Link>
           <div className="flex items-center gap-3">
             <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#FF0000] text-white font-bold shadow-lg shadow-[#FF0000]/40 border border-[#FF0000]">
-              <HiOutlineSparkles className="h-6 w-6 text-white" />
+              <HiOutlinePlay className="h-6 w-6 text-white" />
             </div>
             <div>
               <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#140000] dark:text-[#ffffff]">
@@ -243,7 +244,7 @@ export default function DrawBoothPage() {
                 : "bg-[#FF0000] hover:bg-[#d60000] text-white shadow-[#FF0000]/40 hover:scale-105 border border-[#FF0000]"
             }`}
           >
-            <HiOutlineSparkles className={`h-6 w-6 ${isDrawing ? "animate-spin text-white" : "text-white"}`} />
+            <HiOutlinePlay className={`h-6 w-6 ${isDrawing ? "animate-spin text-white" : "text-white"}`} />
             <span>{isDrawing ? t.spinningBtn : t.spinBtn}</span>
           </button>
 

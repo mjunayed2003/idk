@@ -10,7 +10,7 @@ import {
   HiOutlineTrophy,
   HiOutlineCalendarDays,
   HiOutlineTicket,
-  HiOutlineSparkles,
+  HiOutlinePlay,
   HiOutlineArrowLeft,
   HiOutlineArrowPath,
   HiOutlineShieldCheck,
@@ -91,7 +91,7 @@ export default function ResultsPage() {
       {/* Draws List */}
       {loading ? (
         <div className="py-20 text-center text-[#950101] dark:text-[#ffffff]/70 font-medium">
-          <HiOutlineSparkles className="h-8 w-8 text-[#FF0000] animate-spin mx-auto mb-3" />
+          <HiOutlinePlay className="h-8 w-8 text-[#FF0000] animate-spin mx-auto mb-3" />
           <p>{language === "bn" ? "ড্র ফলাফল লোড হচ্ছে..." : "Loading draw records..."}</p>
         </div>
       ) : draws.length === 0 ? (

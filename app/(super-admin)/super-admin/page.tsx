@@ -22,7 +22,7 @@ import {
   HiOutlineLockClosed,
   HiOutlineUsers,
   HiOutlineTicket,
-  HiOutlineSparkles,
+  HiOutlinePlay,
   HiOutlineTrophy,
   HiOutlineArrowPath,
   HiOutlineShieldCheck,
@@ -32,6 +32,7 @@ import {
   HiOutlineGift,
   HiOutlineCheckCircle,
   HiOutlineEye,
+  HiOutlineEyeSlash,
   HiOutlineTv,
 } from "react-icons/hi2";
 
@@ -41,6 +42,7 @@ export default function AdminPage() {
   const { language, t } = useLanguage();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [authError, setAuthError] = useState(false);
   const [activeTab, setActiveTab] = useState<AdminTab>("overview");
   
@@ -191,22 +193,35 @@ export default function AdminPage() {
               >
                 {t.passcodeLabel}
               </label>
-              <input
-                id="adminPassword"
-                type="password"
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                  setAuthError(false);
-                }}
-                placeholder={t.passcodePlaceholder}
-                className={`w-full rounded-2xl border bg-[#faf8f8] dark:bg-[#000000] px-4 py-3 text-sm text-[#140000] dark:text-[#ffffff] placeholder-[#950101]/60 dark:placeholder-slate-500 transition focus:outline-none shadow-inner ${
-                  authError ? "border-rose-500 focus:border-rose-500" : "border-[#950101]/30 dark:border-white/10 focus:border-[#FF0000]"
-                }`}
-              />
+              <div className="relative">
+                <input
+                  id="adminPassword"
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    setAuthError(false);
+                  }}
+                  placeholder={t.passcodePlaceholder}
+                  className={`w-full rounded-2xl border bg-[#faf8f8] dark:bg-[#000000] px-4 py-3 text-sm text-[#140000] dark:text-[#ffffff] placeholder-[#950101]/60 dark:placeholder-slate-500 transition focus:outline-none shadow-inner ${
+                    authError ? "border-rose-500 focus:border-rose-500" : "border-[#950101]/30 dark:border-white/10 focus:border-[#FF0000]"
+                  }`}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-[#950101]/70 dark:text-white/50 hover:text-[#FF0000] dark:hover:text-[#FF0000] transition-colors"
+                >
+                  {showPassword ? (
+                    <HiOutlineEyeSlash className="h-5 w-5" />
+                  ) : (
+                    <HiOutlineEye className="h-5 w-5" />
+                  )}
+                </button>
+              </div>
               {authError && (
                 <p className="mt-1 text-xs text-[#FF0000]">
-                  {language === "bn" ? "ভুল পাসকোড! admin123 লিখুন বা নিচের বাটনে ক্লিক করুন।" : "Incorrect passcode. Try `admin123`."}
+                  {language === "bn" ? "ভুল পাসকোড! superadmin লিখুন বা নিচের বাটনে ক্লিক করুন।" : "Incorrect passcode. Try `superadmin`."}
                 </p>
               )}
             </div>
@@ -229,7 +244,7 @@ export default function AdminPage() {
               {t.demoUnlockBtn}
             </button>
             <p className="text-[11px] text-[#950101] dark:text-[#ffffff]/70">
-              Default: <span className="font-semibold text-[#140000] dark:text-[#ffffff]">admin123</span>
+              Default: <span className="font-semibold text-[#140000] dark:text-[#ffffff]">superadmin</span>
             </p>
           </div>
         </div>
@@ -361,7 +376,7 @@ export default function AdminPage() {
                   </div>
                 </div>
                 <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#FF0000]/15 text-[#FF0000] border border-[#FF0000]/30">
-                  <HiOutlineSparkles className="h-6 w-6" />
+                  <HiOutlinePlay className="h-6 w-6" />
                 </div>
               </div>
             </div>
@@ -401,7 +416,7 @@ export default function AdminPage() {
                     href="/admin/draw"
                     className="inline-flex items-center gap-1.5 rounded-xl bg-[#FF0000] hover:bg-[#d60000] text-white px-4 py-2 text-xs font-bold transition shadow-xs border border-[#FF0000]"
                   >
-                    <HiOutlineSparkles className="h-4 w-4 text-white" />
+                    <HiOutlinePlay className="h-4 w-4 text-white" />
                     <span>Launch Live Tumbler</span>
                   </Link>
                 </div>
@@ -481,11 +496,11 @@ export default function AdminPage() {
 
         {/* ================= TAB 2: CUSTOMERS & TICKETS ================= */}
         {activeTab === "customers" && (
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            <div className="lg:col-span-4 sticky top-28">
+          <div className="flex flex-col items-center gap-8">
+            <div className="w-full max-w-2xl">
               <AddCustomerForm onCustomerAdded={handleCustomerAdded} />
             </div>
-            <div className="lg:col-span-8 space-y-6">
+            <div className="w-full">
               <CustomerTable 
                 customers={customers} 
                 onCustomerUpdated={loadData} 
@@ -789,10 +804,10 @@ export default function AdminPage() {
                 </p>
               </div>
               <Link
-                href="/admin/draw"
+                href="/super-admin/draw"
                 className="inline-flex items-center gap-2 rounded-2xl bg-[#FF0000] hover:bg-[#d60000] text-white px-5 py-2.5 text-xs font-bold shadow-md shadow-[#FF0000]/30 transition border border-[#FF0000]"
               >
-                <HiOutlineSparkles className="h-4 w-4 text-white" />
+                <HiOutlinePlay className="h-4 w-4 text-white" />
                 <span>Start New Live Draw</span>
               </Link>
             </div>

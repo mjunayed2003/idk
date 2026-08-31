@@ -10,7 +10,7 @@ import {
   HiShoppingBag,
   HiMapPin,
   HiPaperAirplane,
-  HiOutlineSparkles,
+  HiOutlineCheckCircle,
 } from "react-icons/hi2";
 
 interface AddCustomerFormProps {
@@ -110,7 +110,7 @@ export default function AddCustomerForm({
           <div className="flex items-start justify-between gap-2">
             <div className="space-y-1">
               <span className="flex items-center gap-1.5 text-xs font-bold text-[#FF0000]">
-                <HiOutlineSparkles className="h-4 w-4" />
+                <HiOutlineCheckCircle className="h-4 w-4" />
                 {t.ticketGeneratedSuccess}
               </span>
               <div className="font-mono text-xl sm:text-2xl font-black text-[#FF0000]">

@@ -6,13 +6,14 @@ import { getCustomers } from "@/lib/data";
 import { useLanguage } from "@/context/LanguageContext";
 import AddCustomerForm from "@/components/AddCustomerForm";
 import CustomerTable from "@/components/CustomerTable";
-import { HiOutlineLockClosed, HiOutlineUserPlus } from "react-icons/hi2";
+import { HiOutlineLockClosed, HiOutlineUserPlus, HiOutlineEye, HiOutlineEyeSlash } from "react-icons/hi2";
 
 export default function AdminPage() {
   const { language, t } = useLanguage();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState("");
   const [authError, setAuthError] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [customers, setCustomers] = useState<Customer[]>([]);
 
   const handleLogin = (e: React.FormEvent) => {
@@ -69,13 +70,26 @@ export default function AdminPage() {
 
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Password"
-                className="w-full rounded-2xl border bg-[#faf8f8] dark:bg-[#000000] px-4 py-3 text-sm text-[#140000] dark:text-[#ffffff] placeholder-[#950101]/60 dark:placeholder-slate-500 transition focus:outline-none shadow-inner border-[#950101]/30 dark:border-white/10 focus:border-[#FF0000]"
-              />
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Password"
+                  className="w-full rounded-2xl border bg-[#faf8f8] dark:bg-[#000000] px-4 py-3 text-sm text-[#140000] dark:text-[#ffffff] placeholder-[#950101]/60 dark:placeholder-slate-500 transition focus:outline-none shadow-inner border-[#950101]/30 dark:border-white/10 focus:border-[#FF0000]"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-[#950101]/70 hover:text-[#FF0000] transition-colors"
+                >
+                  {showPassword ? (
+                    <HiOutlineEyeSlash className="h-5 w-5" />
+                  ) : (
+                    <HiOutlineEye className="h-5 w-5" />
+                  )}
+                </button>
+              </div>
               {authError && (
                 <p className="mt-2 text-sm text-[#FF0000]">
                   Invalid password. Please try again.
@@ -112,11 +126,11 @@ export default function AdminPage() {
         </button>
       </div>
 
-      <div className="grid lg:grid-cols-3 gap-6 lg:gap-8">
-        <div className="lg:col-span-1">
+      <div className="flex flex-col items-center gap-6 lg:gap-8">
+        <div className="w-full max-w-2xl">
           <AddCustomerForm onCustomerAdded={loadData} />
         </div>
-        <div className="lg:col-span-2">
+        <div className="w-full">
           <div className="rounded-2xl border border-slate-200 dark:border-[#950101]/30 bg-white dark:bg-[#000000]/85 backdrop-blur-xl shadow-xl overflow-hidden flex flex-col h-full">
             <div className="p-4 sm:p-5 border-b border-slate-200 dark:border-[#950101]/30 bg-slate-50 dark:bg-[#3D0000]/40">
               <h3 className="font-bold text-[#140000] dark:text-[#ffffff] flex items-center gap-2">

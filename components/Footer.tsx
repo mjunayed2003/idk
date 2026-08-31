@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { siteConfig } from "@/lib/site-config";
 import { useLanguage } from "@/context/LanguageContext";
-import { HiOutlineTicket, HiOutlineShieldCheck, HiOutlineSparkles } from "react-icons/hi2";
+import { HiOutlineTicket, HiOutlineShieldCheck, HiOutlinePlay } from "react-icons/hi2";
 
 export default function Footer() {
   const { t } = useLanguage();
@@ -32,7 +32,7 @@ export default function Footer() {
             <span>{t.footerFair}</span>
           </div>
           <div className="flex items-center gap-1.5 font-medium">
-            <HiOutlineSparkles className="h-4.5 w-4.5 text-[#FF0000]" />
+            <HiOutlinePlay className="h-4.5 w-4.5 text-[#FF0000]" />
             <span>{t.footerResults}</span>
           </div>
           <Link
