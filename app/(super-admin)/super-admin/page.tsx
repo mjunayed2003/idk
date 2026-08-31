@@ -189,7 +189,7 @@ export default function AdminPage() {
             <div className="text-left">
               <label
                 htmlFor="adminPassword"
-                className="mb-1.5 block text-xs font-semibold text-[#140000] dark:text-[#ffffff]"
+                className="mb-1.5 block text-xs font-semibold text-[#140000] "
               >
                 {t.passcodeLabel}
               </label>
@@ -203,14 +203,14 @@ export default function AdminPage() {
                     setAuthError(false);
                   }}
                   placeholder={t.passcodePlaceholder}
-                  className={`w-full rounded-2xl border bg-[#faf8f8] dark:bg-[#000000] px-4 py-3 text-sm text-[#140000] dark:text-[#ffffff] placeholder-[#950101]/60 dark:placeholder-slate-500 transition focus:outline-none shadow-inner ${
-                    authError ? "border-rose-500 focus:border-rose-500" : "border-[#950101]/30 dark:border-white/10 focus:border-[#FF0000]"
+                  className={`w-full rounded-2xl border bg-[#faf8f8] px-4 py-3 text-sm text-[#140000] placeholder-[#950101]/60 transition focus:outline-none shadow-inner ${
+                    authError ? "border-rose-500 focus:border-rose-500" : "border-[#950101]/30 focus:border-[#FF0000]"
                   }`}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-[#950101]/70 dark:text-white/50 hover:text-[#FF0000] dark:hover:text-[#FF0000] transition-colors"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-[#950101]/70 hover:text-[#FF0000] :text-[#FF0000] transition-colors"
                 >
                   {showPassword ? (
                     <HiOutlineEyeSlash className="h-5 w-5" />
@@ -235,7 +235,7 @@ export default function AdminPage() {
           </form>
 
           {/* Quick Demo Bypass */}
-          <div className="pt-3 border-t border-[#950101]/20 dark:border-white/10 text-center space-y-1">
+          <div className="pt-3 border-t border-[#950101]/20 text-center space-y-1">
             <button
               type="button"
               onClick={handleQuickDemoUnlock}
@@ -243,8 +243,8 @@ export default function AdminPage() {
             >
               {t.demoUnlockBtn}
             </button>
-            <p className="text-[11px] text-[#950101] dark:text-[#ffffff]/70">
-              Default: <span className="font-semibold text-[#140000] dark:text-[#ffffff]">superadmin</span>
+            <p className="text-[11px] text-[#950101] ">
+              Default: <span className="font-semibold text-[#140000] ">superadmin</span>
             </p>
           </div>
         </div>
@@ -271,7 +271,7 @@ export default function AdminPage() {
     <div className="min-h-screen pb-16">
       
       {/* Header Actions & Tab Navigation Menu */}
-      <div className="border-b border-[#950101]/20 dark:border-[#3D0000] bg-white/95 dark:bg-[#000000]/85 backdrop-blur-xl sticky top-0 z-40 pt-2 pb-2">
+      <div className="border-b border-[#950101]/20 bg-white/95 backdrop-blur-xl sticky top-0 z-40 pt-2 pb-2">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex overflow-x-auto space-x-1 sm:space-x-2 scrollbar-hide">
           {[
@@ -291,7 +291,7 @@ export default function AdminPage() {
                 className={`flex items-center gap-2 whitespace-nowrap rounded-xl px-4 py-2 text-xs sm:text-sm font-semibold transition ${
                   isActive
                     ? "bg-[#FF0000] text-white shadow-md shadow-[#FF0000]/30 border border-[#FF0000]"
-                    : "text-[#140000] dark:text-[#ffffff]/70 hover:text-[#FF0000] dark:hover:text-[#ffffff] hover:bg-slate-100 dark:hover:bg-white/[0.05]"
+                    : "text-[#140000] hover:text-[#FF0000] :text-[#ffffff] hover:bg-slate-100 :bg-white/[0.05]"
                 }`}
               >
                 <Icon className={`h-4.5 w-4.5 ${isActive ? "text-white" : "text-[#FF0000]"}`} />
@@ -306,7 +306,7 @@ export default function AdminPage() {
               type="button"
               onClick={handleResetData}
               title="Reset mock data"
-              className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/[0.05] hover:bg-slate-50 dark:hover:bg-white/[0.1] px-3 py-2 text-xs font-semibold text-[#140000] dark:text-[#ffffff] transition"
+              className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 :bg-white/[0.1] px-3 py-2 text-xs font-semibold text-[#140000] transition"
             >
               <HiOutlineArrowPath className="h-4 w-4 text-[#FF0000]" />
               <span className="hidden sm:inline">Reset System Data</span>
@@ -326,10 +326,10 @@ export default function AdminPage() {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
               <div className="luxury-card p-5 flex items-center justify-between">
                 <div>
-                  <span className="text-xs font-bold uppercase tracking-wider text-[#950101] dark:text-[#ffffff]/70">
+                  <span className="text-xs font-bold uppercase tracking-wider text-[#950101] ">
                     Total Registered
                   </span>
-                  <div className="text-3xl font-black text-[#140000] dark:text-[#ffffff] mt-1 font-mono">
+                  <div className="text-3xl font-black text-[#140000] mt-1 font-mono">
                     {toBnNum(customers.length)}
                   </div>
                 </div>
@@ -338,7 +338,7 @@ export default function AdminPage() {
                 </div>
               </div>
 
-              <div className="luxury-card p-5 flex items-center justify-between border-[#FF0000]/50 dark:border-[#FF0000]/30">
+              <div className="luxury-card p-5 flex items-center justify-between border-[#FF0000]/50 ">
                 <div>
                   <span className="text-xs font-bold uppercase tracking-wider text-[#FF0000]">
                     Active In Pool
@@ -352,7 +352,7 @@ export default function AdminPage() {
                 </div>
               </div>
 
-              <div className="luxury-card p-5 flex items-center justify-between border-[#950101]/50 dark:border-[#950101]/30">
+              <div className="luxury-card p-5 flex items-center justify-between border-[#950101]/50 ">
                 <div>
                   <span className="text-xs font-bold uppercase tracking-wider text-[#950101]">
                     Awarded Winners
@@ -366,7 +366,7 @@ export default function AdminPage() {
                 </div>
               </div>
 
-              <div className="luxury-card p-5 flex items-center justify-between border-[#3D0000]/50 dark:border-[#3D0000]/30">
+              <div className="luxury-card p-5 flex items-center justify-between border-[#3D0000]/50 ">
                 <div>
                   <span className="text-xs font-bold uppercase tracking-wider text-[#FF0000]">
                     Completed Draws
@@ -400,17 +400,17 @@ export default function AdminPage() {
                       Change Date
                     </button>
                   </div>
-                  <h3 className="text-xl sm:text-2xl font-bold text-[#140000] dark:text-[#ffffff] mt-2">
+                  <h3 className="text-xl sm:text-2xl font-bold text-[#140000] mt-2">
                     {formattedDrawDate}
                   </h3>
-                  <p className="text-xs text-[#950101] dark:text-[#ffffff]/70 mt-1 font-sans">
+                  <p className="text-xs text-[#950101] mt-1 font-sans">
                     This countdown date is actively displayed on the storefront hero section.
                   </p>
                 </div>
 
-                <div className="pt-4 border-t border-[#950101]/20 dark:border-white/10 flex items-center justify-between">
-                  <span className="text-xs text-[#950101] dark:text-[#ffffff]/70">
-                    Eligible Active Tickets: <strong className="text-[#140000] dark:text-[#ffffff] font-mono">{toBnNum(activeCount)}</strong>
+                <div className="pt-4 border-t border-[#950101]/20 flex items-center justify-between">
+                  <span className="text-xs text-[#950101] ">
+                    Eligible Active Tickets: <strong className="text-[#140000] font-mono">{toBnNum(activeCount)}</strong>
                   </span>
                   <Link
                     href="/admin/draw"
@@ -439,17 +439,17 @@ export default function AdminPage() {
                     </button>
                   </div>
                   <div className="mt-3 space-y-2">
-                    <div className="flex items-center justify-between text-xs py-1 border-b border-[#950101]/20 dark:border-white/10">
+                    <div className="flex items-center justify-between text-xs py-1 border-b border-[#950101]/20 ">
                       <span className="font-bold text-[#FF0000]">🥇 1st Prize:</span>
-                      <span className="font-medium text-[#140000] dark:text-[#ffffff]">{prizes?.first.title}</span>
+                      <span className="font-medium text-[#140000] ">{prizes?.first.title}</span>
                     </div>
-                    <div className="flex items-center justify-between text-xs py-1 border-b border-[#950101]/20 dark:border-white/10">
+                    <div className="flex items-center justify-between text-xs py-1 border-b border-[#950101]/20 ">
                       <span className="font-bold text-[#950101]">🥈 2nd Prize:</span>
-                      <span className="font-medium text-[#140000] dark:text-[#ffffff]">{prizes?.second.title}</span>
+                      <span className="font-medium text-[#140000] ">{prizes?.second.title}</span>
                     </div>
                     <div className="flex items-center justify-between text-xs py-1">
-                      <span className="font-bold text-[#3D0000] dark:text-[#FF0000]">🥉 3rd Prize:</span>
-                      <span className="font-medium text-[#140000] dark:text-[#ffffff]">{prizes?.third.title}</span>
+                      <span className="font-bold text-[#3D0000] ">🥉 3rd Prize:</span>
+                      <span className="font-medium text-[#140000] ">{prizes?.third.title}</span>
                     </div>
                   </div>
                 </div>
@@ -458,7 +458,7 @@ export default function AdminPage() {
                   <button
                     type="button"
                     onClick={() => setActiveTab("prizes")}
-                    className="w-full rounded-xl border border-[#950101]/30 dark:border-white/10 bg-white dark:bg-white/[0.05] hover:bg-slate-50 dark:hover:bg-white/[0.1] text-[#140000] dark:text-[#ffffff] py-2 text-xs font-bold transition text-center"
+                    className="w-full rounded-xl border border-[#950101]/30 bg-white hover:bg-slate-50 :bg-white/[0.1] text-[#140000] py-2 text-xs font-bold transition text-center"
                   >
                     Modify Prize Titles & Warranties
                   </button>
@@ -471,10 +471,10 @@ export default function AdminPage() {
             <div className="luxury-card p-6 sm:p-8 space-y-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="text-lg font-bold text-[#140000] dark:text-[#ffffff]">
+                  <h3 className="text-lg font-bold text-[#140000] ">
                     Latest Customer Registrations
                   </h3>
-                  <p className="text-xs text-[#950101] dark:text-[#ffffff]/70">
+                  <p className="text-xs text-[#950101] ">
                     Overview of recent raffle entries issued to customers.
                   </p>
                 </div>
@@ -513,38 +513,38 @@ export default function AdminPage() {
         {activeTab === "schedule" && (
           <div className="max-w-3xl mx-auto space-y-8">
             <div className="luxury-card p-6 sm:p-8 space-y-6">
-              <div className="flex items-center gap-3 border-b border-[#950101]/20 dark:border-white/10 pb-5">
+              <div className="flex items-center gap-3 border-b border-[#950101]/20 pb-5">
                 <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#FF0000] text-white shadow-lg shadow-[#FF0000]/40 border border-[#FF0000]">
                   <HiOutlineCalendarDays className="h-6 w-6" />
                 </div>
                 <div>
-                  <h2 className="text-xl font-bold text-[#140000] dark:text-[#ffffff]">
+                  <h2 className="text-xl font-bold text-[#140000] ">
                     Raffle Draw Schedule & Live Timer
                   </h2>
-                  <p className="text-xs text-[#950101] dark:text-[#ffffff]/70 font-sans">
+                  <p className="text-xs text-[#950101] font-sans">
                     Set exactly when the live raffle draw takes place. This directly controls the countdown on the homepage.
                   </p>
                 </div>
               </div>
 
               {/* Current Active Date Box */}
-              <div className="rounded-2xl border border-[#FF0000]/40 bg-[#FF0000]/15 dark:bg-[#3D0000]/50 p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="rounded-2xl border border-[#FF0000]/40 bg-[#FF0000]/15 p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div>
                   <span className="text-xs font-bold uppercase tracking-wider text-[#FF0000]">
                     Current Scheduled Draw
                   </span>
-                  <div className="text-xl sm:text-2xl font-black text-[#140000] dark:text-[#ffffff] mt-0.5">
+                  <div className="text-xl sm:text-2xl font-black text-[#140000] mt-0.5">
                     {formattedDrawDate}
                   </div>
                 </div>
-                <span className="px-3.5 py-1 bg-white/80 dark:bg-white/[0.08] border border-[#FF0000]/40 rounded-full text-xs font-mono font-bold text-[#FF0000] shadow-xs">
+                <span className="px-3.5 py-1 bg-white/80 border border-[#FF0000]/40 rounded-full text-xs font-mono font-bold text-[#FF0000] shadow-xs">
                   Live on Homepage
                 </span>
               </div>
 
               {/* Quick Presets */}
               <div>
-                <label className="block text-xs font-bold text-[#140000] dark:text-[#ffffff] uppercase tracking-wider mb-2.5">
+                <label className="block text-xs font-bold text-[#140000] uppercase tracking-wider mb-2.5">
                   Quick Preset Schedules
                 </label>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
@@ -558,7 +558,7 @@ export default function AdminPage() {
                       key={preset.days}
                       type="button"
                       onClick={() => handleApplyPresetDays(preset.days)}
-                      className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/[0.04] hover:border-[#FF0000] p-3 text-xs font-bold text-[#140000] dark:text-[#ffffff] transition text-center shadow-xs"
+                      className="rounded-2xl border border-slate-200 bg-white hover:border-[#FF0000] p-3 text-xs font-bold text-[#140000] transition text-center shadow-xs"
                     >
                       {preset.label}
                     </button>
@@ -567,9 +567,9 @@ export default function AdminPage() {
               </div>
 
               {/* Custom Date Time Form */}
-              <form onSubmit={handleSaveCustomDate} className="space-y-4 pt-4 border-t border-[#950101]/20 dark:border-white/10">
+              <form onSubmit={handleSaveCustomDate} className="space-y-4 pt-4 border-t border-[#950101]/20 ">
                 <div>
-                  <label htmlFor="customDateTime" className="block text-xs font-bold text-[#140000] dark:text-[#ffffff] mb-1.5">
+                  <label htmlFor="customDateTime" className="block text-xs font-bold text-[#140000] mb-1.5">
                     Select Specific Date & Time
                   </label>
                   <input
@@ -578,7 +578,7 @@ export default function AdminPage() {
                     required
                     value={customDateInput}
                     onChange={(e) => setCustomDateInput(e.target.value)}
-                    className="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-[#faf8f8] dark:bg-[#000000] px-4 py-3 text-sm font-medium text-[#140000] dark:text-[#ffffff] focus:border-[#FF0000] focus:outline-none shadow-inner"
+                    className="w-full rounded-2xl border border-slate-200 bg-[#faf8f8] px-4 py-3 text-sm font-medium text-[#140000] focus:border-[#FF0000] focus:outline-none shadow-inner"
                   />
                 </div>
 
@@ -608,15 +608,15 @@ export default function AdminPage() {
         {activeTab === "prizes" && (
           <div className="max-w-4xl mx-auto space-y-8">
             <div className="luxury-card p-6 sm:p-8 space-y-6">
-              <div className="flex items-center gap-3 border-b border-[#950101]/20 dark:border-white/10 pb-5">
+              <div className="flex items-center gap-3 border-b border-[#950101]/20 pb-5">
                 <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#FF0000] text-white shadow-lg shadow-[#FF0000]/40 border border-[#FF0000]">
                   <HiOutlineGift className="h-6 w-6" />
                 </div>
                 <div>
-                  <h2 className="text-xl font-bold text-[#140000] dark:text-[#ffffff]">
+                  <h2 className="text-xl font-bold text-[#140000] ">
                     Grand Prizes Configuration
                   </h2>
-                  <p className="text-xs text-[#950101] dark:text-[#ffffff]/70 font-sans">
+                  <p className="text-xs text-[#950101] font-sans">
                     Customize the 1st, 2nd, and 3rd grand prizes. These titles and descriptions dynamically appear on the public storefront, live draw booth, and winner tickets.
                   </p>
                 </div>
@@ -625,19 +625,19 @@ export default function AdminPage() {
               <form onSubmit={handleSavePrizes} className="space-y-6">
                 
                 {/* 1st Prize (Grand Champion) */}
-                <div className="rounded-2xl border border-[#FF0000]/50 bg-[#FF0000]/15 dark:bg-[#3D0000]/50 p-5 space-y-4">
+                <div className="rounded-2xl border border-[#FF0000]/50 bg-[#FF0000]/15 p-5 space-y-4">
                   <div className="flex items-center gap-2">
                     <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#FF0000] text-white text-xs font-black shadow-xs">
                       1
                     </span>
-                    <span className="font-bold text-sm text-[#140000] dark:text-[#ffffff]">
+                    <span className="font-bold text-sm text-[#140000] ">
                       1st Prize — Grand Champion
                     </span>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-bold text-[#140000] dark:text-[#ffffff] mb-1">
+                      <label className="block text-xs font-bold text-[#140000] mb-1">
                         Prize Name / Model Title
                       </label>
                       <input
@@ -649,12 +649,12 @@ export default function AdminPage() {
                           first: { ...prizeForm.first, title: e.target.value }
                         })}
                         placeholder="e.g. Smart 4K UHD LED TV (55&quot;)"
-                        className="w-full rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#000000] px-3.5 py-2.5 text-xs text-[#140000] dark:text-[#ffffff] focus:border-[#FF0000] focus:outline-none shadow-inner"
+                        className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-xs text-[#140000] focus:border-[#FF0000] focus:outline-none shadow-inner"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-xs font-bold text-[#140000] dark:text-[#ffffff] mb-1">
+                      <label className="block text-xs font-bold text-[#140000] mb-1">
                         Highlight / Tagline
                       </label>
                       <input
@@ -666,26 +666,26 @@ export default function AdminPage() {
                           first: { ...prizeForm.first, highlight: e.target.value }
                         })}
                         placeholder="e.g. Grand Champion Mega Prize"
-                        className="w-full rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#000000] px-3.5 py-2.5 text-xs text-[#140000] dark:text-[#ffffff] focus:border-[#FF0000] focus:outline-none shadow-inner"
+                        className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-xs text-[#140000] focus:border-[#FF0000] focus:outline-none shadow-inner"
                       />
                     </div>
                   </div>
                 </div>
 
                 {/* 2nd Prize */}
-                <div className="rounded-2xl border border-[#950101]/50 bg-[#950101]/15 dark:bg-[#3D0000]/40 p-5 space-y-4">
+                <div className="rounded-2xl border border-[#950101]/50 bg-[#950101]/15 p-5 space-y-4">
                   <div className="flex items-center gap-2">
                     <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#950101] text-white text-xs font-black shadow-xs">
                       2
                     </span>
-                    <span className="font-bold text-sm text-[#140000] dark:text-[#ffffff]">
+                    <span className="font-bold text-sm text-[#140000] ">
                       2nd Prize — 1st Runner Up
                     </span>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-bold text-[#140000] dark:text-[#ffffff] mb-1">
+                      <label className="block text-xs font-bold text-[#140000] mb-1">
                         Prize Name / Model Title
                       </label>
                       <input
@@ -697,12 +697,12 @@ export default function AdminPage() {
                           second: { ...prizeForm.second, title: e.target.value }
                         })}
                         placeholder="e.g. Microwave Oven & Air Fryer Combo"
-                        className="w-full rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#000000] px-3.5 py-2.5 text-xs text-[#140000] dark:text-[#ffffff] focus:border-[#950101] focus:outline-none shadow-inner"
+                        className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-xs text-[#140000] focus:border-[#950101] focus:outline-none shadow-inner"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-xs font-bold text-[#140000] dark:text-[#ffffff] mb-1">
+                      <label className="block text-xs font-bold text-[#140000] mb-1">
                         Highlight / Tagline
                       </label>
                       <input
@@ -714,26 +714,26 @@ export default function AdminPage() {
                           second: { ...prizeForm.second, highlight: e.target.value }
                         })}
                         placeholder="e.g. 1st Runner-Up Prize"
-                        className="w-full rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#000000] px-3.5 py-2.5 text-xs text-[#140000] dark:text-[#ffffff] focus:border-[#950101] focus:outline-none shadow-inner"
+                        className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-xs text-[#140000] focus:border-[#950101] focus:outline-none shadow-inner"
                       />
                     </div>
                   </div>
                 </div>
 
                 {/* 3rd Prize */}
-                <div className="rounded-2xl border border-[#3D0000]/50 bg-[#3D0000]/15 dark:bg-[#3D0000]/30 p-5 space-y-4">
+                <div className="rounded-2xl border border-[#3D0000]/50 bg-[#3D0000]/15 p-5 space-y-4">
                   <div className="flex items-center gap-2">
                     <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#3D0000] text-white text-xs font-black shadow-xs border border-[#950101]">
                       3
                     </span>
-                    <span className="font-bold text-sm text-[#140000] dark:text-[#ffffff]">
+                    <span className="font-bold text-sm text-[#140000] ">
                       3rd Prize — 2nd Runner Up
                     </span>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-bold text-[#140000] dark:text-[#ffffff] mb-1">
+                      <label className="block text-xs font-bold text-[#140000] mb-1">
                         Prize Name / Model Title
                       </label>
                       <input
@@ -745,12 +745,12 @@ export default function AdminPage() {
                           third: { ...prizeForm.third, title: e.target.value }
                         })}
                         placeholder="e.g. Wireless ANC Soundbar & Subwoofer"
-                        className="w-full rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#000000] px-3.5 py-2.5 text-xs text-[#140000] dark:text-[#ffffff] focus:border-[#FF0000] focus:outline-none shadow-inner"
+                        className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-xs text-[#140000] focus:border-[#FF0000] focus:outline-none shadow-inner"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-xs font-bold text-[#140000] dark:text-[#ffffff] mb-1">
+                      <label className="block text-xs font-bold text-[#140000] mb-1">
                         Highlight / Tagline
                       </label>
                       <input
@@ -762,13 +762,13 @@ export default function AdminPage() {
                           third: { ...prizeForm.third, highlight: e.target.value }
                         })}
                         placeholder="e.g. Premium Audio Prize"
-                        className="w-full rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#000000] px-3.5 py-2.5 text-xs text-[#140000] dark:text-[#ffffff] focus:border-[#FF0000] focus:outline-none shadow-inner"
+                        className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-xs text-[#140000] focus:border-[#FF0000] focus:outline-none shadow-inner"
                       />
                     </div>
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between pt-4 border-t border-[#950101]/20 dark:border-white/10">
+                <div className="flex items-center justify-between pt-4 border-t border-[#950101]/20 ">
                   {prizeSaveSuccess ? (
                     <div className="flex items-center gap-1.5 text-xs font-bold text-[#FF0000]">
                       <HiOutlineCheckCircle className="h-5 w-5" />
@@ -796,10 +796,10 @@ export default function AdminPage() {
           <div className="space-y-6 max-w-5xl mx-auto">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-xl font-bold text-[#140000] dark:text-[#ffffff]">
+                <h2 className="text-xl font-bold text-[#140000] ">
                   Past Draw Sessions Archive
                 </h2>
-                <p className="text-xs text-[#950101] dark:text-[#ffffff]/70">
+                <p className="text-xs text-[#950101] ">
                   Historical log of all completed raffle draw winners.
                 </p>
               </div>
@@ -813,7 +813,7 @@ export default function AdminPage() {
             </div>
 
             {pastDraws.length === 0 ? (
-              <div className="luxury-card p-12 text-center text-[#950101] dark:text-[#ffffff]/70">
+              <div className="luxury-card p-12 text-center text-[#950101] ">
                 <HiOutlineTrophy className="h-10 w-10 mx-auto text-[#FF0000] mb-2" />
                 <p className="font-semibold text-sm">No past draws recorded yet.</p>
               </div>
@@ -821,12 +821,12 @@ export default function AdminPage() {
               <div className="space-y-6">
                 {pastDraws.map((draw) => (
                   <div key={draw.id} className="luxury-card p-6 space-y-4">
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#950101]/20 dark:border-white/10 pb-3">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#950101]/20 pb-3">
                       <div>
-                        <h3 className="font-bold text-base text-[#140000] dark:text-[#ffffff]">{draw.title}</h3>
-                        <span className="text-[11px] font-mono text-[#950101] dark:text-[#ffffff]/70">ID: {draw.id}</span>
+                        <h3 className="font-bold text-base text-[#140000] ">{draw.title}</h3>
+                        <span className="text-[11px] font-mono text-[#950101] ">ID: {draw.id}</span>
                       </div>
-                      <div className="flex items-center gap-1.5 text-xs font-semibold text-[#140000] dark:text-[#ffffff] bg-white dark:bg-white/[0.05] px-3 py-1.5 rounded-xl border border-slate-200 dark:border-white/10">
+                      <div className="flex items-center gap-1.5 text-xs font-semibold text-[#140000] bg-white px-3 py-1.5 rounded-xl border border-slate-200 ">
                         <HiOutlineCalendarDays className="h-4 w-4 text-[#FF0000]" />
                         <span>{new Date(draw.date).toLocaleDateString()}</span>
                       </div>

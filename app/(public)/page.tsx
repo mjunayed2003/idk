@@ -76,7 +76,7 @@ export default function HomePage() {
       tag: language === "bn" ? "১ম পুরস্কার" : "1st Prize",
       icon: HiTv,
       color: "text-[#FF0000]",
-      cardBorder: "border-[#FF0000]/70 crimson-glow bg-white dark:bg-[#3D0000]/90",
+      cardBorder: "border-[#FF0000]/70 crimson-glow bg-white ",
     },
     {
       place: t.secondPrizeBadge,
@@ -86,7 +86,7 @@ export default function HomePage() {
       tag: language === "bn" ? "২য় পুরস্কার" : "2nd Prize",
       icon: HiGift,
       color: "text-[#FF0000]",
-      cardBorder: "border-[#950101]/60 bg-white dark:bg-[#3D0000]/70 shadow-[#950101]/10",
+      cardBorder: "border-[#950101]/60 bg-white shadow-[#950101]/10",
     },
     {
       place: t.thirdPrizeBadge,
@@ -96,7 +96,7 @@ export default function HomePage() {
       tag: language === "bn" ? "৩য় পুরস্কার" : "3rd Prize",
       icon: HiDevicePhoneMobile,
       color: "text-[#FF0000]",
-      cardBorder: "border-[#950101]/40 bg-white dark:bg-[#3D0000]/70 shadow-[#3D0000]/10",
+      cardBorder: "border-[#950101]/40 bg-white shadow-[#3D0000]/10",
     },
   ];
 
@@ -120,7 +120,7 @@ export default function HomePage() {
               <span>{t.rewardSchemeBadge}</span>
             </div>
 
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-[#140000] dark:text-[#ffffff] leading-tight">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-[#140000] leading-tight">
               {language === "bn" ? (
                 <>
                   <span className="text-[#FF0000]">
@@ -139,7 +139,7 @@ export default function HomePage() {
               )}
             </h1>
 
-            <p className="text-sm sm:text-base text-[#950101] dark:text-[#ffffff]/85 leading-relaxed font-sans font-medium">
+            <p className="text-sm sm:text-base text-[#950101] leading-relaxed font-sans font-medium">
               {language === "bn" 
                 ? "আমাদের যেকোনো পণ্য কেনাকাটা করলেই স্বয়ংক্রিয়ভাবে একটি অফিসিয়াল ডিজিটাল র‌্যাফেল কোড আপনার মোবাইলে এসএমএস আকারে চলে যাবে। লাইভ ড্র-তে জিতে নিন ৫৫\" স্মার্ট ৪কে টিভি সহ দারুণ সব পুরস্কার!"
                 : "Every purchase at IDK automatically enrolls you with an official digital raffle code sent via SMS. Participate in our live scheduled draw to win premium 55\" Smart TVs and home appliances!"}
@@ -158,7 +158,7 @@ export default function HomePage() {
             </div>
 
             {/* Trust points */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4 border-t border-[#950101]/25 dark:border-white/10 text-xs text-[#140000] dark:text-[#ffffff]/80 font-sans">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4 border-t border-[#950101]/25 text-xs text-[#140000] font-sans">
               <div className="flex items-center gap-2 font-semibold">
                 <HiCheckBadge className="h-4.5 w-4.5 text-[#FF0000] shrink-0" />
                 <span>{t.fairDraw}</span>
@@ -184,17 +184,17 @@ export default function HomePage() {
 
       {/* ================= GRAND PRIZES SHOWCASE ================= */}
       <section className="space-y-6">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-[#950101]/20 dark:border-white/10 pb-4">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-[#950101]/20 pb-4">
           <div>
             <span className="text-xs font-black uppercase tracking-widest text-[#FF0000] flex items-center gap-1.5">
               <HiGift className="h-4 w-4 text-[#FF0000]" />
               {t.prizesHeading}
             </span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#140000] dark:text-[#ffffff] mt-1">
+            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#140000] mt-1">
               {t.prizesSubheading}
             </h2>
           </div>
-          <span className="text-xs font-semibold text-[#950101] dark:text-[#ffffff]/80">
+          <span className="text-xs font-semibold text-[#950101] ">
             {t.activePool}: <strong className="text-[#FF0000] font-bold font-mono">{toBnNum(activeCount)}</strong>
           </span>
         </div>
@@ -213,22 +213,22 @@ export default function HomePage() {
                     <span className={`px-3.5 py-1 rounded-xl text-xs font-black uppercase tracking-wider ${prize.badgeBg} shadow-sm`}>
                       {prize.tag}
                     </span>
-                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#FF0000]/15 dark:bg-white/[0.06] border border-[#FF0000]/30 dark:border-white/10 shadow-inner">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#FF0000]/15 border border-[#FF0000]/30 shadow-inner">
                       <Icon className={`h-7 w-7 ${prize.color}`} />
                     </div>
                   </div>
 
                   <div className="mt-5">
-                    <span className="text-[11px] font-bold text-[#950101] dark:text-[#ffffff]/70 uppercase tracking-widest block">
+                    <span className="text-[11px] font-bold text-[#950101] uppercase tracking-widest block">
                       {prize.highlight}
                     </span>
-                    <h3 className="text-xl font-bold text-[#140000] dark:text-[#ffffff] mt-1.5 leading-snug">
+                    <h3 className="text-xl font-bold text-[#140000] mt-1.5 leading-snug">
                       {prize.title}
                     </h3>
                   </div>
                 </div>
 
-                <div className="mt-6 pt-4 border-t border-[#950101]/20 dark:border-white/10 flex items-center justify-between text-xs text-[#950101] dark:text-[#ffffff]/70 font-medium">
+                <div className="mt-6 pt-4 border-t border-[#950101]/20 flex items-center justify-between text-xs text-[#950101] font-medium">
                   <div className="flex items-center gap-1.5">
                     <HiShieldCheck className="h-4 w-4 text-[#FF0000]" />
                     <span>{t.brandWarranty}</span>
@@ -250,10 +250,10 @@ export default function HomePage() {
           <span className="text-xs font-black uppercase tracking-widest text-[#FF0000]">
             {t.howItWorksHeading}
           </span>
-          <h2 className="text-2xl sm:text-3xl font-bold text-[#140000] dark:text-[#ffffff] mt-1">
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#140000] mt-1">
             {t.howItWorksSubheading}
           </h2>
-          <p className="text-xs sm:text-sm text-[#950101] dark:text-[#ffffff]/70 mt-1">
+          <p className="text-xs sm:text-sm text-[#950101] mt-1">
             {t.howItWorksDesc}
           </p>
         </div>
@@ -264,27 +264,27 @@ export default function HomePage() {
             return (
               <div
                 key={st.step}
-                className="rounded-2xl border border-[#950101]/25 dark:border-white/10 bg-[#faf8f8] dark:bg-white/[0.03] hover:bg-[#FF0000]/10 dark:hover:bg-white/[0.06] p-6 flex flex-col justify-between space-y-4 transition-all"
+                className="rounded-2xl border border-[#950101]/25 bg-[#faf8f8] hover:bg-[#FF0000]/10 :bg-white/[0.06] p-6 flex flex-col justify-between space-y-4 transition-all"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#FF0000] text-white shadow-md shadow-[#FF0000]/40 border border-[#FF0000]">
                     <Icon className="h-6 w-6 text-white" />
                   </div>
-                  <span className="font-mono text-2xl sm:text-3xl font-black text-[#FF0000] px-3.5 py-1 rounded-xl bg-[#FF0000]/15 dark:bg-white/[0.08] border border-[#FF0000]/30 dark:border-white/15 shadow-xs">
+                  <span className="font-mono text-2xl sm:text-3xl font-black text-[#FF0000] px-3.5 py-1 rounded-xl bg-[#FF0000]/15 border border-[#FF0000]/30 shadow-xs">
                     0{st.step}
                   </span>
                 </div>
 
                 <div>
-                  <h3 className="text-base font-bold text-[#140000] dark:text-[#ffffff]">
+                  <h3 className="text-base font-bold text-[#140000] ">
                     {st.title}
                   </h3>
-                  <p className="text-xs sm:text-sm text-[#950101] dark:text-[#ffffff]/80 mt-1.5 leading-relaxed font-sans">
+                  <p className="text-xs sm:text-sm text-[#950101] mt-1.5 leading-relaxed font-sans">
                     {st.desc}
                   </p>
                 </div>
 
-                <div className="pt-3 border-t border-[#950101]/20 dark:border-white/10 text-xs text-[#950101] dark:text-[#ffffff]/70 font-medium flex items-center gap-1.5">
+                <div className="pt-3 border-t border-[#950101]/20 text-xs text-[#950101] font-medium flex items-center gap-1.5">
                   <HiCheckCircle className="h-4 w-4 text-[#FF0000]" />
                   <span>{t.automatedSystem}</span>
                 </div>

@@ -55,16 +55,16 @@ export default function AdminPage() {
   if (!isAuthenticated) {
     return (
       <div className="flex min-h-[80vh] flex-col items-center justify-center p-4">
-        <div className="w-full max-w-md rounded-2xl border border-slate-200 dark:border-[#950101]/30 bg-white dark:bg-[#000000]/85 p-8 backdrop-blur-xl shadow-xl">
+        <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-8 backdrop-blur-xl shadow-xl">
           <div className="mb-6 flex justify-center">
             <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#FF0000]/10 text-[#FF0000] border border-[#FF0000]/20">
               <HiOutlineLockClosed className="h-8 w-8" />
             </div>
           </div>
-          <h1 className="mb-2 text-center text-2xl font-bold text-[#140000] dark:text-[#ffffff]">
+          <h1 className="mb-2 text-center text-2xl font-bold text-[#140000] ">
             Admin Login
           </h1>
-          <p className="mb-6 text-center text-sm text-[#950101] dark:text-[#ffffff]/70">
+          <p className="mb-6 text-center text-sm text-[#950101] ">
             Enter the admin password (admin) to access data entry.
           </p>
 
@@ -76,7 +76,7 @@ export default function AdminPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Password"
-                  className="w-full rounded-2xl border bg-[#faf8f8] dark:bg-[#000000] px-4 py-3 text-sm text-[#140000] dark:text-[#ffffff] placeholder-[#950101]/60 dark:placeholder-slate-500 transition focus:outline-none shadow-inner border-[#950101]/30 dark:border-white/10 focus:border-[#FF0000]"
+                  className="w-full rounded-2xl border bg-[#faf8f8] px-4 py-3 text-sm text-[#140000] placeholder-[#950101]/60 transition focus:outline-none shadow-inner border-[#950101]/30 focus:border-[#FF0000]"
                 />
                 <button
                   type="button"
@@ -112,15 +112,15 @@ export default function AdminPage() {
     <div className="mx-auto max-w-6xl p-4 sm:p-6 lg:p-8 space-y-8 animate-in fade-in duration-500">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-black text-[#140000] dark:text-[#ffffff] tracking-tight flex items-center gap-3">
+          <h1 className="text-2xl sm:text-3xl font-black text-[#140000] tracking-tight flex items-center gap-3">
             <HiOutlineUserPlus className="h-8 w-8 text-[#FF0000]" />
             Add New Contacts
           </h1>
-          <p className="text-[#950101] dark:text-[#ffffff]/80 mt-1">Enter customer details to generate raffle tickets.</p>
+          <p className="text-[#950101] mt-1">Enter customer details to generate raffle tickets.</p>
         </div>
         <button
           onClick={handleLogout}
-          className="text-sm text-[#950101] dark:text-[#ffffff]/80 hover:text-[#FF0000] dark:hover:text-white transition-colors border border-slate-200 dark:border-[#950101]/30 rounded-lg px-4 py-2 hover:bg-slate-50 dark:hover:bg-[#3D0000]/50"
+          className="text-sm text-[#950101] hover:text-[#FF0000] :text-white transition-colors border border-slate-200 rounded-lg px-4 py-2 hover:bg-slate-50 :bg-[#3D0000]/50"
         >
           Logout
         </button>
@@ -131,9 +131,9 @@ export default function AdminPage() {
           <AddCustomerForm onCustomerAdded={loadData} />
         </div>
         <div className="w-full">
-          <div className="rounded-2xl border border-slate-200 dark:border-[#950101]/30 bg-white dark:bg-[#000000]/85 backdrop-blur-xl shadow-xl overflow-hidden flex flex-col h-full">
-            <div className="p-4 sm:p-5 border-b border-slate-200 dark:border-[#950101]/30 bg-slate-50 dark:bg-[#3D0000]/40">
-              <h3 className="font-bold text-[#140000] dark:text-[#ffffff] flex items-center gap-2">
+          <div className="rounded-2xl border border-slate-200 bg-white backdrop-blur-xl shadow-xl overflow-hidden flex flex-col h-full">
+            <div className="p-4 sm:p-5 border-b border-slate-200 bg-slate-50 ">
+              <h3 className="font-bold text-[#140000] flex items-center gap-2">
                 Recently Added
               </h3>
             </div>

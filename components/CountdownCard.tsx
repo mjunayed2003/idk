@@ -96,7 +96,7 @@ export default function CountdownCard({
       <div className="flex flex-col space-y-4">
         
         {/* Header Ribbon with RED LIVE Indicator */}
-        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#950101]/30 dark:border-[#950101]/40 pb-3">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#950101]/30 pb-3">
           <div className="flex items-center gap-2 rounded-full bg-[#FF0000]/15 border border-[#FF0000]/40 px-3 py-1">
             <span className="flex h-2.5 w-2.5 relative">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FF0000] opacity-75"></span>
@@ -108,7 +108,7 @@ export default function CountdownCard({
           </div>
 
           {/* High Contrast Date Pill */}
-          <div className="flex items-center gap-1.5 rounded-full bg-white dark:bg-[#000000] border border-slate-200 dark:border-[#950101]/50 px-3.5 py-1.5 font-mono text-xs font-bold text-[#140000] dark:text-[#ffffff] shadow-xs">
+          <div className="flex items-center gap-1.5 rounded-full bg-white border border-slate-200 px-3.5 py-1.5 font-mono text-xs font-bold text-[#140000] shadow-xs">
             <HiOutlineCalendarDays className="h-4 w-4 text-[#FF0000]" />
             <span>{formattedDate}</span>
           </div>
@@ -116,10 +116,10 @@ export default function CountdownCard({
 
         {/* Big Display Title */}
         <div>
-          <h3 className="font-display text-3xl sm:text-4xl text-[#140000] dark:text-[#ffffff] tracking-wide uppercase leading-none">
+          <h3 className="font-display text-3xl sm:text-4xl text-[#140000] tracking-wide uppercase leading-none">
             {t.nextDrawTitle}
           </h3>
-          <p className="text-xs text-[#950101] dark:text-[#ffffff]/70 font-sans mt-1.5 font-medium">
+          <p className="text-xs text-[#950101] font-sans mt-1.5 font-medium">
             {t.countdownDesc}
           </p>
         </div>
@@ -138,17 +138,17 @@ export default function CountdownCard({
           ].map((item, index) => (
             <div
               key={index}
-              className="flex flex-col items-center justify-center rounded-2xl bg-white dark:bg-[#000000] border-2 border-slate-200 dark:border-[#950101]/50 p-3 sm:p-4 shadow-md shadow-[#3D0000]/10 dark:shadow-inner relative overflow-hidden group hover:border-[#FF0000] transition-colors"
+              className="flex flex-col items-center justify-center rounded-2xl bg-white border-2 border-slate-200 p-3 sm:p-4 shadow-md shadow-[#3D0000]/10 relative overflow-hidden group hover:border-[#FF0000] transition-colors"
             >
               <div className="absolute inset-0 bg-gradient-to-b from-[#FF0000]/10 to-transparent pointer-events-none" />
               
               {/* High Contrast Digits */}
-              <span className="font-mono text-2xl sm:text-4xl font-black tracking-tight text-[#FF0000] dark:drop-shadow-[0_0_15px_#FF000080]">
+              <span className="font-mono text-2xl sm:text-4xl font-black tracking-tight text-[#FF0000] ">
                 {mounted ? toBnNum(item.val) : "--"}
               </span>
               
               {/* High Contrast Label */}
-              <span className="font-sans text-[10px] sm:text-[11px] font-extrabold text-[#950101] dark:text-[#ffffff]/80 tracking-widest mt-1 uppercase">
+              <span className="font-sans text-[10px] sm:text-[11px] font-extrabold text-[#950101] tracking-widest mt-1 uppercase">
                 {item.label}
               </span>
             </div>
@@ -156,8 +156,8 @@ export default function CountdownCard({
         </div>
 
         {/* Footer info & CTA */}
-        <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-[#950101]/30 dark:border-[#950101]/40">
-          <div className="flex items-center gap-1.5 text-xs text-[#950101] dark:text-[#ffffff]/70 font-sans font-medium">
+        <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-[#950101]/30 ">
+          <div className="flex items-center gap-1.5 text-xs text-[#950101] font-sans font-medium">
             <HiOutlineClock className="h-4 w-4 text-[#FF0000] shrink-0" />
             <span>{t.drawNotice}</span>
           </div>

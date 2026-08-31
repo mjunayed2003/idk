@@ -53,21 +53,21 @@ export default function LiveDrawPage() {
           {language === "bn" ? "লাইভ কাস্টমার ড্র" : "Live Customer Draw"}
         </span>
         <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tighter drop-shadow-2xl">
-          <span className="text-[#140000] dark:text-transparent dark:bg-clip-text dark:bg-gradient-to-br dark:from-[#ffffff] dark:via-[#e6e6e6] dark:to-[#999999]">
+          <span className="text-[#140000] ">
             {language === "bn" ? "গ্র্যান্ড মেগা" : "GRAND MEGA"}{" "}
           </span>
           <span className="text-transparent bg-clip-text bg-gradient-to-br from-[#FF0000] via-[#FF3333] to-[#950101] filter drop-shadow-[0_0_20px_rgba(255,0,0,0.5)]">
             {language === "bn" ? "লটারি ড্র" : "LOTTERY DRAW"}
           </span>
         </h1>
-        <p className="text-[#950101] dark:text-[#a1a1aa] font-medium text-lg sm:text-xl tracking-wide max-w-2xl mx-auto">
+        <p className="text-[#950101] font-medium text-lg sm:text-xl tracking-wide max-w-2xl mx-auto">
           {language === "bn" 
             ? "আপনার টিকিটের দিকে চোখ রাখুন, বিজয়ী হতে পারেন আপনিও!"
             : "Keep an eye on your ticket, you could be the next winner!"}
         </p>
       </div>
 
-      <div className="w-full max-w-5xl luxury-card bg-white/50 dark:bg-[#0a0000]/80 backdrop-blur-md p-8 sm:p-12 lg:p-16 relative overflow-hidden shadow-[0_0_50px_rgba(255,0,0,0.1)] border border-[#FF0000]/20 min-h-[600px]">
+      <div className="w-full max-w-5xl luxury-card bg-white/50 backdrop-blur-md p-8 sm:p-12 lg:p-16 relative overflow-hidden shadow-[0_0_50px_rgba(255,0,0,0.1)] border border-[#FF0000]/20 min-h-[600px]">
         {/* Glow */}
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#FF0000]/10 blur-[120px] rounded-[100%] pointer-events-none"></div>
         

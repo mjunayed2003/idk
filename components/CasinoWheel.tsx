@@ -47,7 +47,7 @@ export default function CasinoWheel({
 
         {/* The wheel container */}
         <div
-          className="relative w-72 h-72 sm:w-[340px] sm:h-[340px] rounded-full border-[14px] border-[#111111] dark:border-[#1a1a1a] shadow-[0_0_50px_rgba(0,0,0,0.8),inset_0_0_30px_rgba(0,0,0,0.9)] overflow-hidden transition-transform will-change-transform"
+          className="relative w-72 h-72 sm:w-[340px] sm:h-[340px] rounded-full border-[14px] border-[#111111] shadow-[0_0_50px_rgba(0,0,0,0.8),inset_0_0_30px_rgba(0,0,0,0.9)] overflow-hidden transition-transform will-change-transform"
           style={{
             background: "conic-gradient(from 22.5deg, #FF0000 0deg 45deg, #111111 45deg 90deg, #950101 90deg 135deg, #111111 135deg 180deg, #FF0000 180deg 225deg, #111111 225deg 270deg, #950101 270deg 315deg, #111111 315deg 360deg)",
             transform: `rotate(${rotation}deg)`,
@@ -114,7 +114,7 @@ export default function CasinoWheel({
 
           {/* Text floating below the button */}
           {!winner && onSpinClick && (
-            <span className={`absolute -bottom-8 whitespace-nowrap text-[8px] sm:text-[10px] font-black uppercase tracking-widest text-center drop-shadow-md ${isSpinning ? "text-[#FFD700]/80" : "text-[#111] dark:text-[#ffffff]"}`}>
+            <span className={`absolute -bottom-8 whitespace-nowrap text-[8px] sm:text-[10px] font-black uppercase tracking-widest text-center drop-shadow-md ${isSpinning ? "text-[#FFD700]/80" : "text-[#111] "}`}>
               {buttonText}
             </span>
           )}

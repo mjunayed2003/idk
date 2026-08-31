@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Anton, Manrope, Space_Mono } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "@/context/LanguageContext";
-import { ThemeProvider } from "@/context/ThemeContext";
 import { siteConfig } from "@/lib/site-config";
 
 const anton = Anton({
@@ -37,15 +36,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="bn" className="dark scroll-smooth">
+    <html lang="bn" className="scroll-smooth">
       <body
-        className={`${anton.variable} ${manrope.variable} ${spaceMono.variable} font-sans min-h-screen flex flex-col bg-[#0F172A] text-[#F8FAFC] selection:bg-[#E5A93C] selection:text-[#0F172A] antialiased relative`}
+        className={`${anton.variable} ${manrope.variable} ${spaceMono.variable} font-sans min-h-screen flex flex-col antialiased relative`}
       >
-        <ThemeProvider>
-          <LanguageProvider>
-            {children}
-          </LanguageProvider>
-        </ThemeProvider>
+        <LanguageProvider>
+          {children}
+        </LanguageProvider>
       </body>
     </html>
   );

@@ -1,7 +1,5 @@
 @import "tailwindcss";
 
-@custom-variant dark (&:where(.dark, .dark *));
-
 @theme {
   --font-display: var(--font-anton), Impact, sans-serif;
   --font-sans: var(--font-manrope), sans-serif;
@@ -21,11 +19,6 @@
 :root {
   --background: #F8FAFC;
   --foreground: #140000;
-}
-
-.dark {
-  --background: #0a0000;
-  --foreground: #F8FAFC;
 }
 
 body {
@@ -64,17 +57,6 @@ body {
 
 .luxury-card:hover {
   box-shadow: 0 20px 40px -15px rgba(255, 0, 0, 0.15);
-}
-
-.dark .luxury-card {
-  background: rgba(20, 0, 0, 0.6);
-  border-color: rgba(255, 0, 0, 0.2);
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
-}
-
-.dark .luxury-card:hover {
-  border-color: rgba(255, 0, 0, 0.4);
-  box-shadow: 0 20px 40px -15px rgba(255, 0, 0, 0.2);
 }
 
 /* Glow Utilities */

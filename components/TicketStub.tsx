@@ -40,7 +40,7 @@ export default function TicketStub({
       >
         {/* Left / Top Identifier Stub */}
         <div
-          className={`flex items-center justify-between bg-[#3D0000]/40 dark:bg-[#000000]/70 p-4 border-[#950101]/30 dark:border-[#950101]/40 ${
+          className={`flex items-center justify-between bg-[#3D0000]/40 p-4 border-[#950101]/30 ${
             orientation === "horizontal"
               ? "sm:w-28 sm:border-r border-b sm:border-b-0 sm:flex-col sm:justify-center"
               : "border-b"
@@ -63,7 +63,7 @@ export default function TicketStub({
                   <span>LIVE</span>
                 </div>
               ) : (
-                <div className="font-mono text-xs font-bold text-[#140000] dark:text-[#ffffff] sm:[writing-mode:vertical-rl] sm:rotate-180">
+                <div className="font-mono text-xs font-bold text-[#140000] sm:[writing-mode:vertical-rl] sm:rotate-180">
                   {serial || "PASS"}
                 </div>
               )}
@@ -72,7 +72,7 @@ export default function TicketStub({
         </div>
 
         {/* Main Content Area */}
-        <div className="flex-1 p-5 sm:p-6 text-[#140000] dark:text-[#ffffff] flex flex-col justify-between">
+        <div className="flex-1 p-5 sm:p-6 text-[#140000] flex flex-col justify-between">
           {children}
         </div>
       </div>

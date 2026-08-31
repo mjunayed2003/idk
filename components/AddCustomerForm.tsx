@@ -90,15 +90,15 @@ export default function AddCustomerForm({
     <div className="luxury-card p-6 sm:p-7 space-y-6">
       
       {/* Header */}
-      <div className="flex items-center gap-3 border-b border-[#950101]/30 dark:border-[#950101]/40 pb-4">
+      <div className="flex items-center gap-3 border-b border-[#950101]/30 pb-4">
         <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#FF0000] text-white font-black shadow-lg shadow-[#FF0000]/40 border border-[#FF0000]">
           <HiTicket className="h-6 w-6" />
         </div>
         <div>
-          <h3 className="text-lg font-bold text-[#140000] dark:text-[#ffffff] tracking-tight">
+          <h3 className="text-lg font-bold text-[#140000] tracking-tight">
             {t.issueTicketTitle}
           </h3>
-          <p className="text-xs text-[#950101] dark:text-[#ffffff]/70 font-sans">
+          <p className="text-xs text-[#950101] font-sans">
             {t.issueTicketSub}
           </p>
         </div>
@@ -106,7 +106,7 @@ export default function AddCustomerForm({
 
       {/* SUCCESS CONFIRMATION BANNER */}
       {lastCreatedCustomer && (
-        <div className="rounded-2xl border border-[#FF0000]/40 bg-[#FF0000]/15 dark:bg-[#3D0000]/60 p-4 space-y-3">
+        <div className="rounded-2xl border border-[#FF0000]/40 bg-[#FF0000]/15 p-4 space-y-3">
           <div className="flex items-start justify-between gap-2">
             <div className="space-y-1">
               <span className="flex items-center gap-1.5 text-xs font-bold text-[#FF0000]">
@@ -116,8 +116,8 @@ export default function AddCustomerForm({
               <div className="font-mono text-xl sm:text-2xl font-black text-[#FF0000]">
                 {lastCreatedCustomer.code}
               </div>
-              <p className="text-xs text-[#140000] dark:text-[#ffffff]/80 font-sans">
-                Assigned to: <strong className="text-[#140000] dark:text-[#ffffff]">{lastCreatedCustomer.name}</strong> ({lastCreatedCustomer.phone})
+              <p className="text-xs text-[#140000] font-sans">
+                Assigned to: <strong className="text-[#140000] ">{lastCreatedCustomer.name}</strong> ({lastCreatedCustomer.phone})
               </p>
             </div>
 
@@ -155,7 +155,7 @@ export default function AddCustomerForm({
           <div>
             <label
               htmlFor="customerName"
-              className="mb-1.5 flex items-center gap-2 text-xs font-sans font-bold text-[#140000] dark:text-[#ffffff]"
+              className="mb-1.5 flex items-center gap-2 text-xs font-sans font-bold text-[#140000] "
             >
               <HiUser className="h-4.5 w-4.5 text-[#FF0000]" />
               {t.customerNameLabel}
@@ -167,7 +167,7 @@ export default function AddCustomerForm({
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder={t.customerNamePlaceholder}
-              className="w-full rounded-2xl border border-[#950101]/30 dark:border-white/10 bg-[#faf8f8] dark:bg-[#000000] px-4 py-3 text-sm text-[#140000] dark:text-[#ffffff] placeholder-[#950101]/60 dark:placeholder-slate-500 transition focus:border-[#FF0000] focus:outline-none shadow-inner"
+              className="w-full rounded-2xl border border-[#950101]/30 bg-[#faf8f8] px-4 py-3 text-sm text-[#140000] placeholder-[#950101]/60 transition focus:border-[#FF0000] focus:outline-none shadow-inner"
             />
           </div>
 
@@ -175,7 +175,7 @@ export default function AddCustomerForm({
           <div>
             <label
               htmlFor="customerPhone"
-              className="mb-1.5 flex items-center gap-2 text-xs font-sans font-bold text-[#140000] dark:text-[#ffffff]"
+              className="mb-1.5 flex items-center gap-2 text-xs font-sans font-bold text-[#140000] "
             >
               <HiPhone className="h-4.5 w-4.5 text-[#FF0000]" />
               {t.phoneLabel}
@@ -187,7 +187,7 @@ export default function AddCustomerForm({
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               placeholder={t.phonePlaceholder}
-              className="w-full rounded-2xl border border-[#950101]/30 dark:border-white/10 bg-[#faf8f8] dark:bg-[#000000] px-4 py-3 text-sm font-mono text-[#140000] dark:text-[#ffffff] placeholder-[#950101]/60 dark:placeholder-slate-500 transition focus:border-[#FF0000] focus:outline-none shadow-inner"
+              className="w-full rounded-2xl border border-[#950101]/30 bg-[#faf8f8] px-4 py-3 text-sm font-mono text-[#140000] placeholder-[#950101]/60 transition focus:border-[#FF0000] focus:outline-none shadow-inner"
             />
           </div>
         </div>
@@ -196,7 +196,7 @@ export default function AddCustomerForm({
         <div>
           <label
             htmlFor="productPurchased"
-            className="mb-1.5 flex items-center gap-2 text-xs font-sans font-bold text-[#140000] dark:text-[#ffffff]"
+            className="mb-1.5 flex items-center gap-2 text-xs font-sans font-bold text-[#140000] "
           >
             <HiShoppingBag className="h-4.5 w-4.5 text-[#FF0000]" />
             {t.productLabel}
@@ -208,7 +208,7 @@ export default function AddCustomerForm({
             value={product}
             onChange={(e) => setProduct(e.target.value)}
             placeholder={t.productPlaceholder}
-            className="w-full rounded-2xl border border-[#950101]/30 dark:border-white/10 bg-[#faf8f8] dark:bg-[#000000] px-4 py-3 text-sm text-[#140000] dark:text-[#ffffff] placeholder-[#950101]/60 dark:placeholder-slate-500 transition focus:border-[#FF0000] focus:outline-none shadow-inner"
+            className="w-full rounded-2xl border border-[#950101]/30 bg-[#faf8f8] px-4 py-3 text-sm text-[#140000] placeholder-[#950101]/60 transition focus:border-[#FF0000] focus:outline-none shadow-inner"
           />
         </div>
 
@@ -216,7 +216,7 @@ export default function AddCustomerForm({
         <div>
           <label
             htmlFor="customerAddress"
-            className="mb-1.5 flex items-center gap-2 text-xs font-sans font-bold text-[#140000] dark:text-[#ffffff]"
+            className="mb-1.5 flex items-center gap-2 text-xs font-sans font-bold text-[#140000] "
           >
             <HiMapPin className="h-4.5 w-4.5 text-[#FF0000]" />
             {t.addressLabel}
@@ -228,7 +228,7 @@ export default function AddCustomerForm({
             value={address}
             onChange={(e) => setAddress(e.target.value)}
             placeholder={t.addressPlaceholder}
-            className="w-full rounded-2xl border border-[#950101]/30 dark:border-white/10 bg-[#faf8f8] dark:bg-[#000000] px-4 py-3 text-sm text-[#140000] dark:text-[#ffffff] placeholder-[#950101]/60 dark:placeholder-slate-500 transition focus:border-[#FF0000] focus:outline-none shadow-inner"
+            className="w-full rounded-2xl border border-[#950101]/30 bg-[#faf8f8] px-4 py-3 text-sm text-[#140000] placeholder-[#950101]/60 transition focus:border-[#FF0000] focus:outline-none shadow-inner"
           />
         </div>
 

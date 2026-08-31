@@ -4,7 +4,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { siteConfig } from "@/lib/site-config";
 import { useLanguage } from "@/context/LanguageContext";
-import { useTheme } from "@/context/ThemeContext";
 import { 
   HiOutlineTicket, 
   HiOutlineTrophy, 
@@ -21,7 +20,6 @@ export default function Navbar() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { language, toggleLanguage, t } = useLanguage();
-  const { theme, toggleTheme } = useTheme();
 
   const navLinks = [
     { href: "/", label: t.navRaffleArena, icon: HiOutlineTicket },
@@ -30,7 +28,7 @@ export default function Navbar() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-slate-200/90 dark:border-[#3D0000] bg-white/95 dark:bg-[#000000]/90 backdrop-blur-xl transition-all">
+    <header className="sticky top-0 z-50 w-full border-b border-slate-200/90 bg-white/95 backdrop-blur-xl transition-all">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3.5 sm:px-6">
         
         {/* Brand Logo & Name */}
@@ -43,10 +41,10 @@ export default function Navbar() {
           </div>
           
           <div className="flex flex-col">
-            <span className="font-bold text-lg text-[#140000] dark:text-[#ffffff] tracking-tight leading-tight group-hover:text-[#FF0000] dark:group-hover:text-[#FF0000] transition-colors">
+            <span className="font-bold text-lg text-[#140000] tracking-tight leading-tight group-hover:text-[#FF0000] :text-[#FF0000] transition-colors">
               {siteConfig.shopName}
             </span>
-            <span className="text-[11px] font-semibold text-[#950101] dark:text-[#ffffff]/70">
+            <span className="text-[11px] font-semibold text-[#950101] ">
               {language === "bn" ? "কাস্টমার লয়ালটি র‌্যাফেল" : "Customer Reward Raffle"}
             </span>
           </div>
@@ -54,7 +52,7 @@ export default function Navbar() {
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-2">
-          <nav className="flex items-center gap-1.5 p-1 rounded-2xl bg-slate-100/90 dark:bg-[#3D0000]/60 border border-slate-200 dark:border-[#950101]/30" aria-label="Main Navigation">
+          <nav className="flex items-center gap-1.5 p-1 rounded-2xl bg-slate-100/90 border border-slate-200 " aria-label="Main Navigation">
             {navLinks.map((link) => {
               const Icon = link.icon;
               const isActive = pathname === link.href;
@@ -66,7 +64,7 @@ export default function Navbar() {
                   className={`flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-bold transition-all ${
                     isActive
                       ? "bg-[#FF0000] text-white shadow-md shadow-[#FF0000]/30 border border-[#FF0000]"
-                      : "text-[#140000] dark:text-[#ffffff]/80 hover:text-[#FF0000] dark:hover:text-white hover:bg-white dark:hover:bg-white/[0.06]"
+                      : "text-[#140000] hover:text-[#FF0000] :text-white hover:bg-white :bg-white/[0.06]"
                   }`}
                 >
                   <Icon className={`h-4 w-4 ${isActive ? "text-white" : "text-[#FF0000]"}`} />
@@ -77,12 +75,12 @@ export default function Navbar() {
           </nav>
 
           {/* Language Switcher Only (No Dark Button) */}
-          <div className="ml-1 pl-2 border-l border-slate-200 dark:border-[#3D0000] flex items-center gap-1.5">
+          <div className="ml-1 pl-2 border-l border-slate-200 flex items-center gap-1.5">
             {/* Language Switcher */}
             <button
               type="button"
               onClick={toggleLanguage}
-              className="flex items-center gap-1.5 rounded-xl border border-slate-200 dark:border-[#950101]/30 bg-white dark:bg-[#3D0000]/50 hover:bg-slate-50 dark:hover:bg-[#3D0000] px-3 py-2 text-xs font-bold text-[#140000] dark:text-[#ffffff] transition-all shadow-xs"
+              className="flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 :bg-[#3D0000] px-3 py-2 text-xs font-bold text-[#140000] transition-all shadow-xs"
             >
               <HiOutlineLanguage className="h-4 w-4 text-[#FF0000]" />
               <span>{language === "bn" ? "English" : "বাংলা"}</span>
@@ -95,7 +93,7 @@ export default function Navbar() {
           <button
             type="button"
             onClick={toggleLanguage}
-            className="flex items-center gap-1 rounded-xl border border-slate-200 dark:border-[#950101]/30 bg-white dark:bg-[#3D0000]/50 px-2.5 py-1.5 text-xs font-bold text-[#140000] dark:text-[#ffffff]"
+            className="flex items-center gap-1 rounded-xl border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-bold text-[#140000] "
           >
             <HiOutlineLanguage className="h-4 w-4 text-[#FF0000]" />
             <span>{language === "bn" ? "EN" : "বাং"}</span>
@@ -104,7 +102,7 @@ export default function Navbar() {
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 dark:border-[#950101]/30 bg-white dark:bg-[#3D0000]/50 text-[#140000] dark:text-[#ffffff]"
+            className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white text-[#140000] "
             aria-label="Toggle navigation menu"
           >
             {mobileMenuOpen ? <HiOutlineXMark className="h-5 w-5" /> : <HiOutlineBars3 className="h-5 w-5" />}
@@ -114,7 +112,7 @@ export default function Navbar() {
 
       {/* Mobile Menu Drawer */}
       {mobileMenuOpen && (
-        <div className="border-b border-slate-200 dark:border-[#3D0000] bg-white/95 dark:bg-[#000000]/95 backdrop-blur-2xl px-4 pt-2 pb-4 md:hidden">
+        <div className="border-b border-slate-200 bg-white/95 backdrop-blur-2xl px-4 pt-2 pb-4 md:hidden">
           <div className="flex flex-col space-y-1.5">
             {navLinks.map((link) => {
               const Icon = link.icon;
@@ -128,7 +126,7 @@ export default function Navbar() {
                   className={`flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-semibold transition ${
                     isActive
                       ? "bg-[#FF0000] text-white border border-[#FF0000]"
-                      : "text-[#140000] dark:text-[#ffffff]/80 hover:bg-slate-100 dark:hover:bg-white/[0.06]"
+                      : "text-[#140000] hover:bg-slate-100 :bg-white/[0.06]"
                   }`}
                 >
                   <Icon className={`h-5 w-5 ${isActive ? "text-white" : "text-[#FF0000]"}`} />

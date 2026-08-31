@@ -96,12 +96,12 @@ export default function CustomerTable({
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder={t.searchPlaceholder}
-            className="w-full rounded-2xl border border-slate-200 dark:border-[#950101]/40 bg-white dark:bg-[#000000] pl-10 pr-4 py-2.5 text-xs text-[#140000] dark:text-[#ffffff] placeholder-[#950101]/60 dark:placeholder-slate-400 focus:border-[#FF0000] focus:outline-none shadow-xs"
+            className="w-full rounded-2xl border border-slate-200 bg-white pl-10 pr-4 py-2.5 text-xs text-[#140000] placeholder-[#950101]/60 focus:border-[#FF0000] focus:outline-none shadow-xs"
           />
         </div>
 
         {/* Status Filter Tabs */}
-        <div className="flex items-center gap-1.5 p-1 rounded-2xl bg-slate-100 dark:bg-[#000000] border border-slate-200 dark:border-[#950101]/40 w-full sm:w-auto overflow-x-auto">
+        <div className="flex items-center gap-1.5 p-1 rounded-2xl bg-slate-100 border border-slate-200 w-full sm:w-auto overflow-x-auto">
           {[
             { key: "all", label: t.allTab },
             { key: "active", label: t.activeTab },
@@ -115,7 +115,7 @@ export default function CustomerTable({
               className={`rounded-xl px-3.5 py-1.5 text-xs font-sans font-bold uppercase tracking-wider transition ${
                 statusFilter === item.key
                   ? "bg-[#FF0000] text-white shadow-md shadow-[#FF0000]/30 font-black border border-[#FF0000]"
-                  : "text-[#140000] dark:text-[#ffffff]/70 hover:text-[#FF0000] dark:hover:text-[#ffffff] hover:bg-white dark:hover:bg-white/[0.06]"
+                  : "text-[#140000] hover:text-[#FF0000] :text-[#ffffff] hover:bg-white :bg-white/[0.06]"
               }`}
             >
               {item.label}
@@ -125,11 +125,11 @@ export default function CustomerTable({
       </div>
 
       {/* Main Table Card */}
-      <div className="overflow-hidden rounded-3xl border border-slate-200 dark:border-[#950101]/40 bg-white dark:bg-[#3D0000]/90 backdrop-blur-xl shadow-xl">
+      <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white backdrop-blur-xl shadow-xl">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse text-xs">
             <thead>
-              <tr className="border-b border-slate-200 dark:border-[#950101]/40 bg-slate-50 dark:bg-[#140000]/60 text-[11px] font-sans font-bold uppercase tracking-wider text-[#950101] dark:text-[#ffffff]/70">
+              <tr className="border-b border-slate-200 bg-slate-50 text-[11px] font-sans font-bold uppercase tracking-wider text-[#950101] ">
                 <th className="px-6 py-4">{t.thCustomer}</th>
                 <th className="px-6 py-4">{t.thProduct}</th>
                 <th className="px-6 py-4">{t.thCode}</th>
@@ -138,10 +138,10 @@ export default function CustomerTable({
                 <th className="px-6 py-4 text-right">{t.thAction}</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100 dark:divide-white/[0.05]">
+            <tbody className="divide-y divide-slate-100 ">
               {filteredCustomers.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="px-6 py-12 text-center text-[#950101] dark:text-[#ffffff]/70">
+                  <td colSpan={6} className="px-6 py-12 text-center text-[#950101] ">
                     <p className="font-semibold text-sm">{language === "bn" ? "কোন কাস্টমার পাওয়া যায়নি" : "No matching customers found"}</p>
                     <p className="text-xs mt-1">{language === "bn" ? "অনুগ্রহ করে সঠিক নাম বা ফোন দিয়ে খুঁজুন" : "Try searching by a different name, phone, or code"}</p>
                   </td>
@@ -154,16 +154,16 @@ export default function CustomerTable({
                   return (
                     <tr
                       key={customer.id}
-                      className="hover:bg-slate-50/80 dark:hover:bg-white/[0.03] transition-colors"
+                      className="hover:bg-slate-50/80 :bg-white/[0.03] transition-colors"
                     >
                       {/* Name & Phone */}
                       <td className="px-6 py-4">
                         <div className="space-y-0.5">
-                          <div className="font-bold text-sm text-[#140000] dark:text-[#ffffff] flex items-center gap-1.5">
+                          <div className="font-bold text-sm text-[#140000] flex items-center gap-1.5">
                             <HiOutlineUser className="h-4 w-4 text-[#FF0000]" />
                             <span>{customer.name}</span>
                           </div>
-                          <div className="flex items-center gap-1 text-[11px] text-[#950101] dark:text-[#ffffff]/70 font-mono">
+                          <div className="flex items-center gap-1 text-[11px] text-[#950101] font-mono">
                             <HiOutlinePhone className="h-3 w-3 text-[#FF0000]" />
                             <span>{customer.phone}</span>
                           </div>
@@ -173,12 +173,12 @@ export default function CustomerTable({
                       {/* Purchased Product */}
                       <td className="px-6 py-4">
                         <div className="space-y-0.5">
-                          <div className="font-medium text-[#140000] dark:text-[#ffffff] flex items-center gap-1.5">
+                          <div className="font-medium text-[#140000] flex items-center gap-1.5">
                             <HiOutlineShoppingBag className="h-4 w-4 text-[#FF0000]" />
                             <span>{customer.product}</span>
                           </div>
                           {customer.address && (
-                            <div className="flex items-center gap-1 text-[11px] text-[#950101] dark:text-[#ffffff]/70 truncate max-w-[200px]">
+                            <div className="flex items-center gap-1 text-[11px] text-[#950101] truncate max-w-[200px]">
                               <HiOutlineMapPin className="h-3 w-3 text-[#950101] shrink-0" />
                               <span>{customer.address}</span>
                             </div>
@@ -188,7 +188,7 @@ export default function CustomerTable({
 
                       {/* Ticket Number */}
                       <td className="px-6 py-4">
-                        <span className="font-mono text-sm font-black text-[#FF0000] tracking-wider px-3 py-1 rounded-xl bg-[#FF0000]/15 dark:bg-[#FF0000]/20 border border-[#FF0000]/30 inline-block">
+                        <span className="font-mono text-sm font-black text-[#FF0000] tracking-wider px-3 py-1 rounded-xl bg-[#FF0000]/15 border border-[#FF0000]/30 inline-block">
                           {customer.code}
                         </span>
                       </td>
@@ -203,7 +203,7 @@ export default function CustomerTable({
                       </td>
 
                       {/* Date */}
-                      <td className="px-6 py-4 font-mono text-[11px] text-[#950101] dark:text-[#ffffff]/70">
+                      <td className="px-6 py-4 font-mono text-[11px] text-[#950101] ">
                         <div className="flex items-center gap-1.5">
                           <HiOutlineCalendarDays className="h-4 w-4 text-[#FF0000]" />
                           <span>
@@ -226,7 +226,7 @@ export default function CustomerTable({
                               ? "bg-[#3D0000] text-white"
                               : smsState === "sending"
                               ? "bg-[#FF0000]/15 text-[#FF0000]"
-                              : "bg-white dark:bg-[#000000]/60 hover:bg-[#FF0000] hover:text-white text-[#140000] dark:text-[#ffffff] border border-slate-200 dark:border-[#950101]/40 shadow-xs"
+                              : "bg-white hover:bg-[#FF0000] hover:text-white text-[#140000] border border-slate-200 shadow-xs"
                           }`}
                         >
                           {smsState === "sent" ? (
@@ -252,7 +252,7 @@ export default function CustomerTable({
       </div>
 
       {/* Counter summary */}
-      <div className="flex items-center justify-between text-xs text-[#950101] dark:text-[#ffffff]/70 font-medium px-2">
+      <div className="flex items-center justify-between text-xs text-[#950101] font-medium px-2">
         <span>
           {t.showingSummary
             .replace("{count}", toBnNum(filteredCustomers.length))
