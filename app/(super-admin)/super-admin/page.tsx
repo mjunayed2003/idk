@@ -72,11 +72,11 @@ export default function AdminPage() {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (password === "admin123" || password === "admin" || password === "idk2026") {
+    if (password === "superadmin" || password === "idk2026") {
       setIsAuthenticated(true);
       setAuthError(false);
       if (typeof window !== "undefined") {
-        sessionStorage.setItem("idk_admin_auth", "true");
+        sessionStorage.setItem("idk_super_admin_auth", "true");
       }
     } else {
       setAuthError(true);
@@ -86,14 +86,14 @@ export default function AdminPage() {
   const handleQuickDemoUnlock = () => {
     setIsAuthenticated(true);
     if (typeof window !== "undefined") {
-      sessionStorage.setItem("idk_admin_auth", "true");
+      sessionStorage.setItem("idk_super_admin_auth", "true");
     }
   };
 
   const handleLogout = () => {
     setIsAuthenticated(false);
     if (typeof window !== "undefined") {
-      sessionStorage.removeItem("idk_admin_auth");
+      sessionStorage.removeItem("idk_super_admin_auth");
     }
   };
 
@@ -117,8 +117,8 @@ export default function AdminPage() {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const auth = sessionStorage.getItem("idk_admin_auth");
-      if (auth === "true") {
+      const isAuth = sessionStorage.getItem("idk_super_admin_auth");
+      if (isAuth === "true") {
         setIsAuthenticated(true);
       }
     }
@@ -175,12 +175,12 @@ export default function AdminPage() {
             <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#FF0000] text-white font-bold shadow-lg shadow-[#FF0000]/40 border border-[#FF0000]">
               <HiOutlineLockClosed className="h-7 w-7" />
             </div>
-            <h1 className="text-2xl font-bold tracking-tight text-[#140000] dark:text-[#ffffff]">
-              {t.adminAuthHeading}
-            </h1>
-            <p className="text-xs text-[#950101] dark:text-[#ffffff]/70">
-              {t.adminAuthSub}
-            </p>
+            <h1 className="mb-2 text-center text-2xl font-bold text-[#ffffff]">
+            Super Admin Login
+          </h1>
+          <p className="mb-6 text-center text-sm text-[#ffffff]/70">
+            Enter the super admin password (superadmin) to access the system.
+          </p>
           </div>
 
           <form onSubmit={handleLogin} className="space-y-4">
@@ -255,72 +255,10 @@ export default function AdminPage() {
   return (
     <div className="min-h-screen pb-16">
       
-      {/* Top Admin Navigation Header */}
-      <div className="border-b border-[#950101]/20 dark:border-[#3D0000] bg-white/95 dark:bg-[#000000]/85 backdrop-blur-xl sticky top-0 z-40">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-3.5 flex flex-wrap items-center justify-between gap-4">
-          
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#FF0000] text-white font-bold shadow-lg shadow-[#FF0000]/40 border border-[#FF0000]">
-              <HiOutlineShieldCheck className="h-6 w-6" />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="font-bold text-base sm:text-lg text-[#140000] dark:text-[#ffffff]">
-                  {siteConfig.shopName} Admin Center
-                </span>
-                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#FF0000]/15 border border-[#FF0000]/30 text-[#FF0000]">
-                  ● Authenticated
-                </span>
-              </div>
-              <span className="text-xs text-[#950101] dark:text-[#ffffff]/70 font-medium hidden sm:inline">
-                Manage Customers, Grand Prizes, Draw Schedule & Live Tumbler
-              </span>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <Link
-              href="/admin/draw"
-              className="inline-flex items-center gap-2 rounded-xl bg-[#FF0000] hover:bg-[#d60000] text-white px-4 py-2 text-xs font-bold transition-all shadow-md shadow-[#FF0000]/30 border border-[#FF0000]"
-            >
-              <HiOutlineSparkles className="h-4.5 w-4.5 text-white" />
-              <span>{t.navDrawBooth}</span>
-            </Link>
-
-            <Link
-              href="/"
-              target="_blank"
-              className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/[0.05] hover:bg-slate-50 dark:hover:bg-white/[0.1] px-3 py-2 text-xs font-semibold text-[#140000] dark:text-[#ffffff] transition"
-              title="View Public Store"
-            >
-              <HiOutlineEye className="h-4 w-4" />
-              <span className="hidden sm:inline">View Public Store</span>
-            </Link>
-
-            <button
-              type="button"
-              onClick={handleResetData}
-              title="Reset mock data"
-              className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/[0.05] hover:bg-slate-50 dark:hover:bg-white/[0.1] px-3 py-2 text-xs font-semibold text-[#140000] dark:text-[#ffffff] transition"
-            >
-              <HiOutlineArrowPath className="h-4 w-4 text-[#FF0000]" />
-              <span className="hidden sm:inline">Reset</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={handleLogout}
-              className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/[0.05] hover:bg-rose-500/20 hover:border-rose-500 hover:text-rose-400 px-3 py-2 text-xs font-semibold text-[#140000] dark:text-[#ffffff] transition"
-              title="Logout"
-            >
-              <HiOutlineArrowLeftOnRectangle className="h-4 w-4" />
-              <span>Logout</span>
-            </button>
-          </div>
-        </div>
-
-        {/* Tab Navigation Menu */}
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex overflow-x-auto space-x-1 sm:space-x-2 border-t border-[#950101]/20 dark:border-[#3D0000] pt-1.5 pb-2">
+      {/* Header Actions & Tab Navigation Menu */}
+      <div className="border-b border-[#950101]/20 dark:border-[#3D0000] bg-white/95 dark:bg-[#000000]/85 backdrop-blur-xl sticky top-0 z-40 pt-2 pb-2">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex overflow-x-auto space-x-1 sm:space-x-2 scrollbar-hide">
           {[
             { id: "overview", label: language === "bn" ? "ড্যাশবোর্ড ওভারভিউ" : "Overview", icon: HiOutlineTv },
             { id: "customers", label: language === "bn" ? "কাস্টমার ও টিকেট" : "Customers & Tickets", icon: HiOutlineUsers },
@@ -346,6 +284,19 @@ export default function AdminPage() {
               </button>
             );
           })}
+          </div>
+          
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={handleResetData}
+              title="Reset mock data"
+              className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/[0.05] hover:bg-slate-50 dark:hover:bg-white/[0.1] px-3 py-2 text-xs font-semibold text-[#140000] dark:text-[#ffffff] transition"
+            >
+              <HiOutlineArrowPath className="h-4 w-4 text-[#FF0000]" />
+              <span className="hidden sm:inline">Reset System Data</span>
+            </button>
+          </div>
         </div>
       </div>
 

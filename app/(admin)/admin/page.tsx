@@ -1,0 +1,134 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { Customer } from "@/lib/types";
+import { getCustomers } from "@/lib/data";
+import { useLanguage } from "@/context/LanguageContext";
+import AddCustomerForm from "@/components/AddCustomerForm";
+import CustomerTable from "@/components/CustomerTable";
+import { HiOutlineLockClosed, HiOutlineUserPlus } from "react-icons/hi2";
+
+export default function AdminPage() {
+  const { language, t } = useLanguage();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [password, setPassword] = useState("");
+  const [authError, setAuthError] = useState(false);
+  const [customers, setCustomers] = useState<Customer[]>([]);
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (password === "admin") {
+      setIsAuthenticated(true);
+      setAuthError(false);
+      if (typeof window !== "undefined") {
+        sessionStorage.setItem("idk_data_entry_auth", "true");
+      }
+    } else {
+      setAuthError(true);
+    }
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    if (typeof window !== "undefined") {
+      sessionStorage.removeItem("idk_data_entry_auth");
+    }
+  };
+
+  const loadData = async () => {
+    setCustomers(await getCustomers());
+  };
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const isAuth = sessionStorage.getItem("idk_data_entry_auth");
+      if (isAuth === "true") {
+        setIsAuthenticated(true);
+      }
+    }
+    loadData();
+    const interval = setInterval(loadData, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  if (!isAuthenticated) {
+    return (
+      <div className="flex min-h-[80vh] flex-col items-center justify-center p-4">
+        <div className="w-full max-w-md rounded-2xl border border-slate-200 dark:border-[#950101]/30 bg-white dark:bg-[#000000]/85 p-8 backdrop-blur-xl shadow-xl">
+          <div className="mb-6 flex justify-center">
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#FF0000]/10 text-[#FF0000] border border-[#FF0000]/20">
+              <HiOutlineLockClosed className="h-8 w-8" />
+            </div>
+          </div>
+          <h1 className="mb-2 text-center text-2xl font-bold text-[#140000] dark:text-[#ffffff]">
+            Admin Login
+          </h1>
+          <p className="mb-6 text-center text-sm text-[#950101] dark:text-[#ffffff]/70">
+            Enter the admin password (admin) to access data entry.
+          </p>
+
+          <form onSubmit={handleLogin} className="space-y-4">
+            <div>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Password"
+                className="w-full rounded-2xl border bg-[#faf8f8] dark:bg-[#000000] px-4 py-3 text-sm text-[#140000] dark:text-[#ffffff] placeholder-[#950101]/60 dark:placeholder-slate-500 transition focus:outline-none shadow-inner border-[#950101]/30 dark:border-white/10 focus:border-[#FF0000]"
+              />
+              {authError && (
+                <p className="mt-2 text-sm text-[#FF0000]">
+                  Invalid password. Please try again.
+                </p>
+              )}
+            </div>
+            <button
+              type="submit"
+              className="w-full rounded-2xl bg-[#FF0000] hover:bg-[#d60000] py-3 text-center text-xs font-black uppercase text-white transition-all shadow-lg shadow-[#FF0000]/40 border border-[#FF0000]"
+            >
+              Login
+            </button>
+          </form>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="mx-auto max-w-6xl p-4 sm:p-6 lg:p-8 space-y-8 animate-in fade-in duration-500">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+          <h1 className="text-2xl sm:text-3xl font-black text-[#140000] dark:text-[#ffffff] tracking-tight flex items-center gap-3">
+            <HiOutlineUserPlus className="h-8 w-8 text-[#FF0000]" />
+            Add New Contacts
+          </h1>
+          <p className="text-[#950101] dark:text-[#ffffff]/80 mt-1">Enter customer details to generate raffle tickets.</p>
+        </div>
+        <button
+          onClick={handleLogout}
+          className="text-sm text-[#950101] dark:text-[#ffffff]/80 hover:text-[#FF0000] dark:hover:text-white transition-colors border border-slate-200 dark:border-[#950101]/30 rounded-lg px-4 py-2 hover:bg-slate-50 dark:hover:bg-[#3D0000]/50"
+        >
+          Logout
+        </button>
+      </div>
+
+      <div className="grid lg:grid-cols-3 gap-6 lg:gap-8">
+        <div className="lg:col-span-1">
+          <AddCustomerForm onCustomerAdded={loadData} />
+        </div>
+        <div className="lg:col-span-2">
+          <div className="rounded-2xl border border-slate-200 dark:border-[#950101]/30 bg-white dark:bg-[#000000]/85 backdrop-blur-xl shadow-xl overflow-hidden flex flex-col h-full">
+            <div className="p-4 sm:p-5 border-b border-slate-200 dark:border-[#950101]/30 bg-slate-50 dark:bg-[#3D0000]/40">
+              <h3 className="font-bold text-[#140000] dark:text-[#ffffff] flex items-center gap-2">
+                Recently Added
+              </h3>
+            </div>
+            <div className="flex-1 p-0 sm:p-4">
+              <CustomerTable customers={customers.slice(0, 10)} />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
