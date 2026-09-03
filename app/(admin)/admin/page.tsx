@@ -1,8 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Customer } from "@/lib/types";
-import { getCustomers } from "@/lib/data";
+import { useLoginMutation, useGetAllCustomersQuery } from "@/lib/store";
 import { useLanguage } from "@/context/LanguageContext";
 import AddCustomerForm from "@/components/AddCustomerForm";
 import CustomerTable from "@/components/CustomerTable";
@@ -14,42 +13,40 @@ export default function AdminPage() {
   const [password, setPassword] = useState("");
   const [authError, setAuthError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [customers, setCustomers] = useState<Customer[]>([]);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const [login, { isLoading: isLoggingIn }] = useLoginMutation();
+  const { data: customers = [], refetch } = useGetAllCustomersQuery(undefined, {
+    skip: !isAuthenticated,
+    pollingInterval: 5000,
+  });
+
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (password === "admin") {
-      setIsAuthenticated(true);
-      setAuthError(false);
-      if (typeof window !== "undefined") {
-        sessionStorage.setItem("idk_data_entry_auth", "true");
+    try {
+      const res = await login({ email: "admin@example.com", password }).unwrap();
+      if (res.access_token) {
+        localStorage.setItem("token", res.access_token);
+        setIsAuthenticated(true);
+        setAuthError(false);
+        refetch();
       }
-    } else {
+    } catch (err) {
       setAuthError(true);
     }
   };
 
   const handleLogout = () => {
     setIsAuthenticated(false);
-    if (typeof window !== "undefined") {
-      sessionStorage.removeItem("idk_data_entry_auth");
-    }
-  };
-
-  const loadData = async () => {
-    setCustomers(await getCustomers());
+    localStorage.removeItem("token");
   };
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const isAuth = sessionStorage.getItem("idk_data_entry_auth");
-      if (isAuth === "true") {
+      const token = localStorage.getItem("token");
+      if (token) {
         setIsAuthenticated(true);
       }
     }
-    loadData();
-    const interval = setInterval(loadData, 5000);
-    return () => clearInterval(interval);
   }, []);
 
   if (!isAuthenticated) {
@@ -65,7 +62,7 @@ export default function AdminPage() {
             Admin Login
           </h1>
           <p className="mb-6 text-center text-sm text-[#950101] ">
-            Enter the admin password (admin) to access data entry.
+            Enter the admin password (admin123) to access data entry.
           </p>
 
           <form onSubmit={handleLogin} className="space-y-4">
@@ -128,7 +125,7 @@ export default function AdminPage() {
 
       <div className="flex flex-col items-center gap-6 lg:gap-8">
         <div className="w-full max-w-2xl">
-          <AddCustomerForm onCustomerAdded={loadData} />
+          <AddCustomerForm onCustomerAdded={refetch} />
         </div>
         <div className="w-full">
           <div className="rounded-2xl border border-slate-200 bg-white backdrop-blur-xl shadow-xl overflow-hidden flex flex-col h-full">

@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Draw } from "@/lib/types";
-import { getPastDraws } from "@/lib/data";
+import { useGetDrawHistoryQuery } from "@/lib/store";
 import { useLanguage } from "@/context/LanguageContext";
 import WinnerTicket from "@/components/WinnerTicket";
 import Link from "next/link";
@@ -18,24 +17,11 @@ import {
 
 export default function ResultsPage() {
   const { language, t } = useLanguage();
-  const [draws, setDraws] = useState<Draw[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { data: draws = [], isLoading: loading, refetch } = useGetDrawHistoryQuery(undefined);
 
-  const loadDraws = async () => {
-    setLoading(true);
-    try {
-      const data = await getPastDraws();
-      setDraws(data);
-    } catch (err) {
-      console.error("Failed to load draws:", err);
-    } finally {
-      setLoading(false);
-    }
+  const loadDraws = () => {
+    refetch();
   };
-
-  useEffect(() => {
-    loadDraws();
-  }, []);
 
   const toBnNum = (n: number | string) => {
     if (language !== "bn") return String(n);
@@ -112,7 +98,7 @@ export default function ResultsPage() {
         </div>
       ) : (
         <div className="space-y-8">
-          {draws.map((draw, drawIndex) => (
+          {draws.map((draw: import('@/lib/types').Draw, drawIndex: number) => (
             <section
               key={draw.id}
               className="luxury-card p-6 sm:p-7 space-y-6 relative overflow-hidden"
@@ -150,9 +136,9 @@ export default function ResultsPage() {
 
               {/* 3 Winner Ticket Cards (1st, 2nd, 3rd) */}
               <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
-                {draw.winners
-                  .sort((a, b) => a.position - b.position)
-                  .map((winner) => {
+                {[...draw.winners]
+                  .sort((a: import('@/lib/types').DrawWinner, b: import('@/lib/types').DrawWinner) => a.position - b.position)
+                  .map((winner: import('@/lib/types').DrawWinner) => {
                     return (
                       <WinnerTicket
                         key={winner.customerId + winner.position}

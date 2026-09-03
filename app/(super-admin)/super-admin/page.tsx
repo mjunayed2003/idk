@@ -2,16 +2,16 @@
 
 import { useState, useEffect } from "react";
 import { Customer, Draw } from "@/lib/types";
+import { PrizeConfig } from "@/lib/types";
 import { 
-  getCustomers, 
-  resetToDefaultData, 
-  getNextDrawDate, 
-  saveNextDrawDate, 
-  getPrizes, 
-  savePrizes, 
-  PrizeConfig,
-  getPastDraws,
-} from "@/lib/data";
+  useGetAllCustomersQuery,
+  useGetDrawHistoryQuery,
+  useGetNextDrawDateQuery,
+  useSetNextDrawDateMutation,
+  useGetPrizesQuery,
+  useSetPrizesMutation,
+  useLoginMutation
+} from "@/lib/store";
 import { siteConfig } from "@/lib/site-config";
 import { useLanguage } from "@/context/LanguageContext";
 import AddCustomerForm from "@/components/AddCustomerForm";
@@ -46,11 +46,20 @@ export default function AdminPage() {
   const [authError, setAuthError] = useState(false);
   const [activeTab, setActiveTab] = useState<AdminTab>("overview");
   
-  // Data state
-  const [customers, setCustomers] = useState<Customer[]>([]);
-  const [pastDraws, setPastDraws] = useState<Draw[]>([]);
-  const [nextDrawDate, setNextDrawDate] = useState<string>("");
-  const [prizes, setPrizes] = useState<PrizeConfig | null>(null);
+  // Auth state
+  const [login] = useLoginMutation();
+
+  // RTK Query hooks
+  const { data: customers = [], refetch: refetchCustomers } = useGetAllCustomersQuery(undefined, { skip: !isAuthenticated });
+  const { data: pastDraws = [] } = useGetDrawHistoryQuery(undefined, { skip: !isAuthenticated });
+  const { data: nextDrawDateData } = useGetNextDrawDateQuery(undefined, { skip: !isAuthenticated });
+  const { data: prizesData } = useGetPrizesQuery(undefined, { skip: !isAuthenticated });
+  
+  const [setNextDrawDateMut] = useSetNextDrawDateMutation();
+  const [setPrizesMut] = useSetPrizesMutation();
+
+  const nextDrawDate = nextDrawDateData?.date || "";
+  const prizes = prizesData || null;
 
   // Form states
   const [customDateInput, setCustomDateInput] = useState("");
@@ -72,15 +81,16 @@ export default function AdminPage() {
       .join("");
   };
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (password === "superadmin" || password === "idk2026") {
-      setIsAuthenticated(true);
-      setAuthError(false);
-      if (typeof window !== "undefined") {
-        sessionStorage.setItem("idk_super_admin_auth", "true");
+    try {
+      const res = await login({ email: "admin@example.com", password }).unwrap();
+      if (res.access_token) {
+        localStorage.setItem("token", res.access_token);
+        setIsAuthenticated(true);
+        setAuthError(false);
       }
-    } else {
+    } catch (err) {
       setAuthError(true);
     }
   };
@@ -99,43 +109,37 @@ export default function AdminPage() {
     }
   };
 
-  const loadData = async () => {
-    try {
-      const custs = await getCustomers();
-      const draws = await getPastDraws();
-      const targetDate = await getNextDrawDate();
-      const p = await getPrizes();
-
-      setCustomers(custs);
-      setPastDraws(draws);
-      setNextDrawDate(targetDate);
-      setCustomDateInput(targetDate ? new Date(targetDate).toISOString().slice(0, 16) : "");
-      setPrizes(p);
-      setPrizeForm(p);
-    } catch (err) {
-      console.error("Failed to load admin data:", err);
+  const loadData = () => {
+    // handled by RTK query automatically, but we can set local form states
+    if (nextDrawDateData?.date) {
+      setCustomDateInput(new Date(nextDrawDateData.date).toISOString().slice(0, 16));
+    }
+    if (prizesData) {
+      setPrizeForm(prizesData);
     }
   };
 
   useEffect(() => {
+    if (nextDrawDateData?.date || prizesData) {
+      loadData();
+    }
+  }, [nextDrawDateData, prizesData]);
+
+  useEffect(() => {
     if (typeof window !== "undefined") {
-      const isAuth = sessionStorage.getItem("idk_super_admin_auth");
-      if (isAuth === "true") {
+      const isAuth = localStorage.getItem("token");
+      if (isAuth) {
         setIsAuthenticated(true);
       }
     }
-    loadData();
   }, []);
 
   const handleResetData = async () => {
-    if (confirm("Reset all data to sample records? This cannot be undone.")) {
-      await resetToDefaultData();
-      await loadData();
-    }
+    alert("Reset data not supported in production API yet.");
   };
 
   const handleCustomerAdded = () => {
-    loadData();
+    refetchCustomers();
   };
 
   const handleApplyPresetDays = async (days: number) => {
@@ -143,8 +147,7 @@ export default function AdminPage() {
     d.setDate(d.getDate() + days);
     d.setHours(20, 0, 0, 0); // 8:00 PM
     const isoString = d.toISOString();
-    await saveNextDrawDate(isoString);
-    setNextDrawDate(isoString);
+    await setNextDrawDateMut(isoString).unwrap();
     setCustomDateInput(d.toISOString().slice(0, 16));
     setDateSaveSuccess(true);
     setTimeout(() => setDateSaveSuccess(false), 3000);
@@ -154,16 +157,14 @@ export default function AdminPage() {
     e.preventDefault();
     if (!customDateInput) return;
     const isoString = new Date(customDateInput).toISOString();
-    await saveNextDrawDate(isoString);
-    setNextDrawDate(isoString);
+    await setNextDrawDateMut(isoString).unwrap();
     setDateSaveSuccess(true);
     setTimeout(() => setDateSaveSuccess(false), 3000);
   };
 
   const handleSavePrizes = async (e: React.FormEvent) => {
     e.preventDefault();
-    const updated = await savePrizes(prizeForm);
-    setPrizes(updated);
+    await setPrizesMut(prizeForm).unwrap();
     setPrizeSaveSuccess(true);
     setTimeout(() => setPrizeSaveSuccess(false), 3000);
   };
@@ -181,7 +182,7 @@ export default function AdminPage() {
             Super Admin Login
           </h1>
           <p className="mb-6 text-center text-sm text-[#ffffff]/70">
-            Enter the super admin password (superadmin) to access the system.
+            Enter the super admin password (admin123) to access the system.
           </p>
           </div>
 
@@ -253,8 +254,8 @@ export default function AdminPage() {
   }
 
   // ================= AUTHENTICATED ADMIN DASHBOARD =================
-  const activeCount = customers.filter((c) => c.status === "active").length;
-  const wonCount = customers.filter((c) => c.status === "won").length;
+  const activeCount = customers.filter((c: import('@/lib/types').Customer) => c.status === "active").length;
+  const wonCount = customers.filter((c: import('@/lib/types').Customer) => c.status === "won").length;
 
   const formattedDrawDate = nextDrawDate
     ? new Date(nextDrawDate).toLocaleDateString(language === "bn" ? "bn-BD" : "en-US", {
@@ -819,7 +820,7 @@ export default function AdminPage() {
               </div>
             ) : (
               <div className="space-y-6">
-                {pastDraws.map((draw) => (
+                {pastDraws.map((draw: import('@/lib/types').Draw) => (
                   <div key={draw.id} className="luxury-card p-6 space-y-4">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#950101]/20 pb-3">
                       <div>
@@ -832,9 +833,15 @@ export default function AdminPage() {
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      {draw.winners.map((winner) => (
-                        <WinnerTicket key={winner.code} winner={winner} />
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                      {draw.winners.map((winner: import('@/lib/types').DrawWinner) => (
+                        <div key={winner.customerId} className="rounded-xl bg-slate-50 border border-slate-200 p-3 space-y-1.5 shadow-inner">
+                          <span className="text-[10px] font-black uppercase tracking-widest text-[#FF0000]">
+                            {winner.position === 1 ? "1st Prize" : winner.position === 2 ? "2nd Prize" : "3rd Prize"}
+                          </span>
+                          <div className="font-bold text-sm text-[#140000]">{winner.name}</div>
+                          <div className="font-mono text-xs text-[#950101]">{winner.code}</div>
+                        </div>
                       ))}
                     </div>
                   </div>

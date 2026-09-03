@@ -37,6 +37,8 @@ export const metadata: Metadata = {
     "Official customer reward and digital raffle draw system for IDK electronics retail shop.",
 };
 
+import { StoreProvider } from "@/lib/store";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -47,9 +49,11 @@ export default function RootLayout({
       <body
         className={`${anton.variable} ${manrope.variable} ${spaceMono.variable} font-sans min-h-[100dvh] flex flex-col antialiased relative`}
       >
-        <LanguageProvider>
-          {children}
-        </LanguageProvider>
+        <StoreProvider>
+          <LanguageProvider>
+            {children}
+          </LanguageProvider>
+        </StoreProvider>
       </body>
     </html>
   );

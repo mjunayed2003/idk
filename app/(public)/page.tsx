@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { siteConfig } from "@/lib/site-config";
-import { getNextDrawDate, getActiveCustomers, getPrizes, PrizeConfig } from "@/lib/data";
+import { useGetNextDrawDateQuery, useGetActiveCustomersQuery, useGetPrizesQuery } from "@/lib/store";
 import { useLanguage } from "@/context/LanguageContext";
 import CountdownCard from "@/components/CountdownCard";
 import Link from "next/link";
@@ -21,21 +21,12 @@ import {
 
 export default function HomePage() {
   const { language, t } = useLanguage();
-  const [nextDrawDate, setNextDrawDate] = useState<string>(new Date().toISOString());
-  const [activeCount, setActiveCount] = useState<number>(0);
-  const [prizeData, setPrizeData] = useState<PrizeConfig | null>(null);
+  const { data: dateData } = useGetNextDrawDateQuery(undefined);
+  const { data: activeData } = useGetActiveCustomersQuery(undefined);
+  const { data: prizeData } = useGetPrizesQuery(undefined);
 
-  useEffect(() => {
-    const load = async () => {
-      const date = await getNextDrawDate();
-      const active = await getActiveCustomers();
-      const p = await getPrizes();
-      setNextDrawDate(date);
-      setActiveCount(active.length);
-      setPrizeData(p);
-    };
-    load();
-  }, []);
+  const nextDrawDate = dateData?.date || new Date().toISOString();
+  const activeCount = activeData?.length || 0;
 
   const toBnNum = (n: number | string) => {
     if (language !== "bn") return String(n);

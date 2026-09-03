@@ -1,8 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { addCustomer, sendTicketSmsNotification } from "@/lib/data";
+import { useAddCustomerMutation } from "@/lib/store";
 import { useLanguage } from "@/context/LanguageContext";
+
+const sendTicketSmsNotification = async (phone: string, code: string, name: string) => {
+  await new Promise(resolve => setTimeout(resolve, 800));
+  return true;
+};
+
 import {
   HiTicket,
   HiUser,
@@ -35,6 +41,7 @@ export default function AddCustomerForm({
     product: string;
   } | null>(null);
 
+  const [addCustomer] = useAddCustomerMutation();
   const [smsSending, setSmsSending] = useState(false);
   const [smsSuccess, setSmsSuccess] = useState<boolean | null>(null);
 
@@ -51,7 +58,7 @@ export default function AddCustomerForm({
         phone,
         product,
         address,
-      });
+      }).unwrap();
 
       setLastCreatedCustomer(newCust);
       setName("");

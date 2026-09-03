@@ -25,3 +25,9 @@ export interface Draw {
   title: string;
   winners: DrawWinner[];
 }
+
+export interface PrizeConfig {
+  first: { title: string; highlight: string; warranty?: string };
+  second: { title: string; highlight: string; warranty?: string };
+  third: { title: string; highlight: string; warranty?: string };
+}

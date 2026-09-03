@@ -2,8 +2,12 @@
 
 import { useState } from "react";
 import { Customer, CustomerStatus } from "@/lib/types";
-import { sendTicketSmsNotification } from "@/lib/data";
 import { useLanguage } from "@/context/LanguageContext";
+
+const sendTicketSmsNotification = async (phone: string, code: string, name: string) => {
+  await new Promise(resolve => setTimeout(resolve, 800));
+  return true;
+};
 import {
   HiMagnifyingGlass,
   HiOutlineUser,
@@ -80,6 +84,11 @@ export default function CustomerTable({
         return {
           label: t.statusExpired,
           classes: "bg-[#3D0000]/20 text-[#950101] border-[#3D0000]/40",
+        };
+      default:
+        return {
+          label: status || "Unknown",
+          classes: "bg-slate-100 text-slate-500 border-slate-200",
         };
     }
   };

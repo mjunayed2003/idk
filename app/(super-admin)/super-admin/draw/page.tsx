@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Customer, DrawWinner } from "@/lib/types";
-import { getActiveCustomers, runSingleDrawSelection, saveDrawResult } from "@/lib/data";
+import { useGetActiveCustomersQuery, useSaveDrawResultMutation, useLoginMutation } from "@/lib/store";
 import { useLanguage } from "@/context/LanguageContext";
 import WinnerTicket from "@/components/WinnerTicket";
 import CasinoWheel from "@/components/CasinoWheel";
@@ -23,13 +23,15 @@ export default function DrawBoothPage() {
   const { language, t } = useLanguage();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState("");
-  const [activeCustomers, setActiveCustomers] = useState<Customer[]>([]);
-  const [loading, setLoading] = useState(true);
   const [isDrawing, setIsDrawing] = useState(false);
   const [drawTitle, setDrawTitle] = useState("");
   const [selectedWinners, setSelectedWinners] = useState<DrawWinner[]>([]);
   const [savedSuccess, setSavedSuccess] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
+  const [login] = useLoginMutation();
+  const { data: activeCustomers = [], isLoading: loading, refetch: refetchActive } = useGetActiveCustomersQuery(undefined, { skip: !isAuthenticated });
+  const [saveDrawResultApi] = useSaveDrawResultMutation();
 
   const toBnNum = (n: number | string) => {
     if (language !== "bn") return String(n);
@@ -49,22 +51,25 @@ export default function DrawBoothPage() {
     }
   }, []);
 
-  const loadActive = async () => {
-    setLoading(true);
+  const loadActive = () => {
     setErrorMsg(null);
-    try {
-      const active = await getActiveCustomers();
-      setActiveCustomers(active);
-    } catch (err) {
-      console.error("Failed to load active customers:", err);
-    } finally {
-      setLoading(false);
-    }
+    refetchActive();
   };
 
-  useEffect(() => {
-    loadActive();
-  }, []);
+  const runSingleDrawSelection = async (position: 1 | 2 | 3, excludeIds: string[]): Promise<DrawWinner> => {
+    const available = activeCustomers.filter((c: Customer) => !excludeIds.includes(c.id));
+    if (available.length === 0) throw new Error("No eligible customers left");
+    const randomIndex = Math.floor(Math.random() * available.length);
+    const winner = available[randomIndex];
+    const defaultPrizes = ["Grand Champion", "1st Runner Up", "2nd Runner Up"];
+    return {
+      position,
+      customerId: winner.id,
+      name: winner.name,
+      code: winner.code,
+      prize: defaultPrizes[position - 1],
+    };
+  };
 
   const handleRunSingleDraw = async (position: 1 | 2 | 3) => {
     if (activeCustomers.length < 1) {
@@ -110,11 +115,18 @@ export default function DrawBoothPage() {
   };
 
   const handleSaveDraw = async () => {
-    if (!selectedWinners) return;
+    if (!selectedWinners || selectedWinners.length === 0) return;
     try {
-      await saveDrawResult(drawTitle, selectedWinners);
+      await saveDrawResultApi({
+        title: drawTitle,
+        winners: selectedWinners.map(w => ({
+          position: w.position,
+          customerId: w.customerId,
+          prizeDetails: w.prize
+        }))
+      }).unwrap();
       setSavedSuccess(true);
-      await loadActive();
+      refetchActive();
     } catch (err) {
       console.error("Error saving draw result:", err);
     }
@@ -146,11 +158,16 @@ export default function DrawBoothPage() {
           </div>
 
           <form
-            onSubmit={(e) => {
+            onSubmit={async (e) => {
               e.preventDefault();
-              if (password === "admin123" || password === "admin" || password === "idk2026") {
-                setIsAuthenticated(true);
-                sessionStorage.setItem("idk_admin_auth", "true");
+              try {
+                const res = await login({ email: "admin@example.com", password }).unwrap();
+                if (res.access_token) {
+                  localStorage.setItem("token", res.access_token);
+                  setIsAuthenticated(true);
+                }
+              } catch (err) {
+                // Ignore error for now
               }
             }}
             className="space-y-4"
@@ -304,7 +321,7 @@ export default function DrawBoothPage() {
               {t.qualifyingTickets}
             </span>
             <div className="flex flex-wrap items-center justify-center gap-2 max-h-40 overflow-y-auto p-1 scrollbar-thin scrollbar-thumb-[#FF0000]/20 scrollbar-track-transparent">
-              {activeCustomers.map((cust) => (
+              {activeCustomers.map((cust: Customer) => (
                 <span
                   key={cust.id}
                   className="rounded-xl bg-white px-3 py-1.5 text-xs font-mono text-[#140000] border border-slate-200 shadow-xs hover:border-[#FF0000] transition-colors"
