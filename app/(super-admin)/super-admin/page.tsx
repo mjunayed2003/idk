@@ -17,6 +17,7 @@ import { useLanguage } from "@/context/LanguageContext";
 import AddCustomerForm from "@/components/AddCustomerForm";
 import CustomerTable from "@/components/CustomerTable";
 import WinnerTicket from "@/components/WinnerTicket";
+import AdminChatManager from "@/components/AdminChatManager";
 import Link from "next/link";
 import {
   HiOutlineLockClosed,
@@ -34,9 +35,10 @@ import {
   HiOutlineEye,
   HiOutlineEyeSlash,
   HiOutlineTv,
+  HiOutlineChatBubbleLeftRight,
 } from "react-icons/hi2";
 
-type AdminTab = "overview" | "customers" | "schedule" | "prizes" | "history";
+type AdminTab = "overview" | "customers" | "schedule" | "prizes" | "history" | "chat";
 
 export default function AdminPage() {
   const { language, t } = useLanguage();
@@ -278,6 +280,7 @@ export default function AdminPage() {
           {[
             { id: "overview", label: language === "bn" ? "ড্যাশবোর্ড ওভারভিউ" : "Overview", icon: HiOutlineTv },
             { id: "customers", label: language === "bn" ? "কাস্টমার ও টিকেট" : "Customers & Tickets", icon: HiOutlineUsers },
+            { id: "chat", label: language === "bn" ? "লাইভ চ্যাট ও ব্লক" : "Live Chat & Block", icon: HiOutlineChatBubbleLeftRight },
             { id: "schedule", label: language === "bn" ? "ড্র শিডিউল ও কাউন্টডাউন" : "Draw Schedule", icon: HiOutlineCalendarDays },
             { id: "prizes", label: language === "bn" ? "পুরস্কার কনফিগারেশন" : "Prize Pool Config", icon: HiOutlineGift },
             { id: "history", label: language === "bn" ? "বিজয়ীদের ইতিহাস" : "Draw History", icon: HiOutlineTrophy },
@@ -848,6 +851,13 @@ export default function AdminPage() {
                 ))}
               </div>
             )}
+          </div>
+        )}
+
+        {/* ================= TAB: LIVE CHAT & BLOCK ================= */}
+        {activeTab === "chat" && (
+          <div className="space-y-6 max-w-7xl mx-auto">
+            <AdminChatManager adminRole="SUPER_ADMIN" adminName="Super Admin" />
           </div>
         )}
 

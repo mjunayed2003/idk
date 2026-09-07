@@ -8,6 +8,7 @@ export interface Customer {
   product: string;
   code: string;
   status: CustomerStatus;
+  isBlocked?: boolean;
   createdAt: string; // ISO date
 }
 

@@ -204,11 +204,18 @@ export default function CustomerTable({
 
                       {/* Status */}
                       <td className="px-6 py-4">
-                        <span
-                          className={`inline-flex items-center px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider border ${badge.classes}`}
-                        >
-                          {badge.label}
-                        </span>
+                        <div className="flex flex-col gap-1 items-start">
+                          <span
+                            className={`inline-flex items-center px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider border ${badge.classes}`}
+                          >
+                            {badge.label}
+                          </span>
+                          {customer.isBlocked && (
+                            <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[9px] font-black uppercase tracking-wider bg-rose-100 text-rose-700 border border-rose-200">
+                              {language === "bn" ? "চ্যাট ব্লকড" : "Chat Blocked"}
+                            </span>
+                          )}
+                        </div>
                       </td>
 
                       {/* Date */}
