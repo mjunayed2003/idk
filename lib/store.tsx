@@ -55,6 +55,14 @@ export const api = createApi({
       }),
       invalidatesTags: ['Customers'],
     }),
+    acceptCustomer: builder.mutation<import('./types').Customer, { id: string, sendSms: boolean }>({
+      query: (data) => ({
+        url: `customer/${data.id}/accept`,
+        method: 'PUT',
+        body: { sendSms: data.sendSms },
+      }),
+      invalidatesTags: ['Customers'],
+    }),
 
     // Draw
     runDraw: builder.mutation<any, void>({
@@ -110,6 +118,7 @@ export const {
   useGetAllCustomersQuery,
   useAddCustomerMutation,
   useDeleteCustomerMutation,
+  useAcceptCustomerMutation,
   useRunDrawMutation,
   useSaveDrawResultMutation,
   useGetDrawHistoryQuery,

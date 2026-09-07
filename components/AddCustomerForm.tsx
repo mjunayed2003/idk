@@ -21,10 +21,12 @@ import {
 
 interface AddCustomerFormProps {
   onCustomerAdded?: () => void;
+  userRole?: "admin" | "super-admin";
 }
 
 export default function AddCustomerForm({
   onCustomerAdded,
+  userRole,
 }: AddCustomerFormProps) {
   const { t } = useLanguage();
   const [name, setName] = useState("");
@@ -70,10 +72,12 @@ export default function AddCustomerForm({
         onCustomerAdded();
       }
 
-      setSmsSending(true);
-      const sent = await sendTicketSmsNotification(newCust.phone, newCust.code, newCust.name);
-      setSmsSuccess(sent);
-      setSmsSending(false);
+      if (userRole !== "admin") {
+        setSmsSending(true);
+        const sent = await sendTicketSmsNotification(newCust.phone, newCust.code, newCust.name);
+        setSmsSuccess(sent);
+        setSmsSending(false);
+      }
     } catch (err) {
       console.error("Error creating customer ticket:", err);
     } finally {
@@ -129,27 +133,29 @@ export default function AddCustomerForm({
             </div>
 
             {/* Manual SMS Dispatch Button */}
-            <div className="flex flex-col gap-2 w-full sm:w-auto">
-              <button
-                type="button"
-                onClick={handleManualSms}
-                disabled={smsSending || smsSuccess === true}
-                className={`inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-xs font-sans font-bold shadow-xs transition-all ${
-                  smsSuccess
-                    ? "bg-[#3D0000] text-white cursor-default"
-                    : "bg-[#FF0000] hover:bg-[#d60000] text-white shadow-[#FF0000]/30 border border-[#FF0000]"
-                }`}
-              >
-                <HiPaperAirplane className="h-4.5 w-4.5" />
-                <span>
-                  {smsSending
-                    ? t.sendingSms
-                    : smsSuccess
-                    ? t.smsDispatched
-                    : t.sendSmsBtn}
-                </span>
-              </button>
-            </div>
+            {userRole !== "admin" && (
+              <div className="flex flex-col gap-2 w-full sm:w-auto">
+                <button
+                  type="button"
+                  onClick={handleManualSms}
+                  disabled={smsSending || smsSuccess === true}
+                  className={`inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-xs font-sans font-bold shadow-xs transition-all ${
+                    smsSuccess
+                      ? "bg-[#3D0000] text-white cursor-default"
+                      : "bg-[#FF0000] hover:bg-[#d60000] text-white shadow-[#FF0000]/30 border border-[#FF0000]"
+                  }`}
+                >
+                  <HiPaperAirplane className="h-4.5 w-4.5" />
+                  <span>
+                    {smsSending
+                      ? t.sendingSms
+                      : smsSuccess
+                      ? t.smsDispatched
+                      : t.sendSmsBtn}
+                  </span>
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}

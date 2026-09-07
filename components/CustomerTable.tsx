@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Customer, CustomerStatus } from "@/lib/types";
 import { useLanguage } from "@/context/LanguageContext";
+import { useAcceptCustomerMutation } from "@/lib/store";
 
 const sendTicketSmsNotification = async (phone: string, code: string, name: string) => {
   await new Promise(resolve => setTimeout(resolve, 800));
@@ -22,15 +23,19 @@ import {
 interface CustomerTableProps {
   customers: Customer[];
   onCustomerUpdated?: () => void;
+  userRole?: "admin" | "super-admin";
 }
 
 export default function CustomerTable({
   customers,
+  onCustomerUpdated,
+  userRole,
 }: CustomerTableProps) {
   const { language, t } = useLanguage();
   const [searchTerm, setSearchTerm] = useState("");
-  const [statusFilter, setStatusFilter] = useState<CustomerStatus | "all">("all");
+  const [statusFilter, setStatusFilter] = useState<CustomerStatus | "pending" | "all">("all");
   const [smsSendingMap, setSmsSendingMap] = useState<Record<string, "sending" | "sent" | "idle">>({});
+  const [acceptCustomer] = useAcceptCustomerMutation();
 
   const filteredCustomers = customers.filter((customer) => {
     const matchesSearch =
@@ -56,6 +61,17 @@ export default function CustomerTable({
       }
     } catch {
       setSmsSendingMap((prev) => ({ ...prev, [customer.id]: "idle" }));
+    }
+  };
+
+  const handleAccept = async (id: string, sendSms: boolean) => {
+    try {
+      await acceptCustomer({ id, sendSms }).unwrap();
+      if (onCustomerUpdated) {
+        onCustomerUpdated();
+      }
+    } catch (err) {
+      console.error("Failed to accept customer", err);
     }
   };
 
@@ -85,6 +101,11 @@ export default function CustomerTable({
           label: t.statusExpired,
           classes: "bg-[#3D0000]/20 text-[#950101] border-[#3D0000]/40",
         };
+      case "pending":
+        return {
+          label: language === "bn" ? "পেন্ডিং" : "Pending",
+          classes: "bg-amber-100 text-amber-700 border-amber-200",
+        };
       default:
         return {
           label: status || "Unknown",
@@ -113,6 +134,7 @@ export default function CustomerTable({
         <div className="flex items-center gap-1.5 p-1 rounded-2xl bg-slate-100 border border-slate-200 w-full sm:w-auto overflow-x-auto">
           {[
             { key: "all", label: t.allTab },
+            { key: "pending", label: language === "bn" ? "পেন্ডিং" : "Pending" },
             { key: "active", label: t.activeTab },
             { key: "won", label: t.wonTab },
             { key: "expired", label: t.expiredTab },
@@ -144,7 +166,9 @@ export default function CustomerTable({
                 <th className="px-6 py-4">{t.thCode}</th>
                 <th className="px-6 py-4">{t.thStatus}</th>
                 <th className="px-6 py-4">{t.thDate}</th>
-                <th className="px-6 py-4 text-right">{t.thAction}</th>
+                {userRole !== "admin" && (
+                  <th className="px-6 py-4 text-right">{t.thAction}</th>
+                )}
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 ">
@@ -232,32 +256,53 @@ export default function CustomerTable({
                       </td>
 
                       {/* SMS Action */}
-                      <td className="px-6 py-4 text-right">
-                        <button
-                          type="button"
-                          onClick={() => handleSendSms(customer)}
-                          disabled={smsState === "sending" || smsState === "sent"}
-                          className={`inline-flex items-center gap-2 rounded-xl px-3.5 py-2 font-sans text-xs font-bold tracking-wide transition ${
-                            smsState === "sent"
-                              ? "bg-[#3D0000] text-white"
-                              : smsState === "sending"
-                              ? "bg-[#FF0000]/15 text-[#FF0000]"
-                              : "bg-white hover:bg-[#FF0000] hover:text-white text-[#140000] border border-slate-200 shadow-xs"
-                          }`}
-                        >
-                          {smsState === "sent" ? (
-                            <>
-                              <HiCheckCircle className="h-4 w-4 text-[#FF0000]" />
-                              <span>{t.btnSent}</span>
-                            </>
+                      {userRole !== "admin" && (
+                        <td className="px-6 py-4 text-right">
+                          {userRole === "super-admin" && customer.status === "pending" ? (
+                            <div className="flex flex-col gap-2 items-end">
+                              <label className="flex items-center gap-1.5 text-[10px] font-bold text-[#950101] cursor-pointer">
+                                <input type="checkbox" className="accent-[#FF0000]" id={`sms-check-${customer.id}`} />
+                                {language === "bn" ? "এসএমএস পাঠান" : "Send SMS"}
+                              </label>
+                              <button
+                                onClick={() => {
+                                  const sendSms = (document.getElementById(`sms-check-${customer.id}`) as HTMLInputElement).checked;
+                                  handleAccept(customer.id, sendSms);
+                                }}
+                                className="inline-flex items-center gap-2 rounded-xl bg-[#FF0000] hover:bg-[#d60000] px-3.5 py-1.5 font-sans text-xs font-bold tracking-wide transition text-white border border-[#FF0000] shadow-xs"
+                              >
+                                <HiCheckCircle className="h-4 w-4" />
+                                <span>{language === "bn" ? "গ্রহণ করুন" : "Accept"}</span>
+                              </button>
+                            </div>
                           ) : (
-                            <>
-                              <HiPaperAirplane className="h-4 w-4" />
-                              <span>{smsState === "sending" ? t.sendingSms : t.btnSendSms}</span>
-                            </>
+                            <button
+                              type="button"
+                              onClick={() => handleSendSms(customer)}
+                              disabled={smsState === "sending" || smsState === "sent"}
+                              className={`inline-flex items-center gap-2 rounded-xl px-3.5 py-2 font-sans text-xs font-bold tracking-wide transition ${
+                                smsState === "sent"
+                                  ? "bg-[#3D0000] text-white"
+                                  : smsState === "sending"
+                                  ? "bg-[#FF0000]/15 text-[#FF0000]"
+                                  : "bg-white hover:bg-[#FF0000] hover:text-white text-[#140000] border border-slate-200 shadow-xs"
+                              }`}
+                            >
+                              {smsState === "sent" ? (
+                                <>
+                                  <HiCheckCircle className="h-4 w-4 text-[#FF0000]" />
+                                  <span>{t.btnSent}</span>
+                                </>
+                              ) : (
+                                <>
+                                  <HiPaperAirplane className="h-4 w-4" />
+                                  <span>{smsState === "sending" ? t.sendingSms : t.btnSendSms}</span>
+                                </>
+                              )}
+                            </button>
                           )}
-                        </button>
-                      </td>
+                        </td>
+                      )}
                     </tr>
                   );
                 })

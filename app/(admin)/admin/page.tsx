@@ -159,7 +159,7 @@ export default function AdminPage() {
       {currentTab === "contacts" ? (
         <div className="flex flex-col items-center gap-6 lg:gap-8">
           <div className="w-full max-w-2xl">
-            <AddCustomerForm onCustomerAdded={refetch} />
+            <AddCustomerForm onCustomerAdded={refetch} userRole="admin" />
           </div>
           <div className="w-full">
             <div className="rounded-2xl border border-slate-200 bg-white backdrop-blur-xl shadow-xl overflow-hidden flex flex-col h-full">
@@ -169,7 +169,7 @@ export default function AdminPage() {
                 </h3>
               </div>
               <div className="flex-1 p-0 sm:p-4">
-                <CustomerTable customers={customers.slice(0, 10)} />
+                <CustomerTable customers={customers.slice(0, 10)} userRole="admin" />
               </div>
             </div>
           </div>

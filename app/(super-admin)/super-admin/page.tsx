@@ -492,7 +492,7 @@ export default function AdminPage() {
                 </button>
               </div>
 
-              <CustomerTable customers={customers.slice(0, 5)} />
+              <CustomerTable customers={customers.slice(0, 5)} userRole="super-admin" />
             </div>
 
           </div>
@@ -508,6 +508,7 @@ export default function AdminPage() {
               <CustomerTable 
                 customers={customers} 
                 onCustomerUpdated={loadData} 
+                userRole="super-admin"
               />
             </div>
           </div>
