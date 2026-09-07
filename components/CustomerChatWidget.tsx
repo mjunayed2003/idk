@@ -13,6 +13,7 @@ import {
   HiOutlineSparkles,
   HiOutlineShieldCheck,
   HiArrowPath,
+  HiOutlineArrowPath,
 } from "react-icons/hi2";
 
 export default function CustomerChatWidget() {
@@ -211,41 +212,41 @@ export default function CustomerChatWidget() {
             setIsOpen(true);
             setUnreadCount(0);
           }}
-          className="group relative flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-tr from-[#950101] via-[#FF0000] to-[#FF4D4D] text-white shadow-2xl shadow-[#FF0000]/40 transition-all duration-300 hover:scale-110 active:scale-95"
+          className="group relative flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-tr from-[#022C22] via-[#064E3B] to-[#044333] text-white shadow-2xl shadow-[#064E3B]/40 border-2 border-[#D4AF37] transition-all duration-300 hover:scale-110 active:scale-95"
           aria-label="Open Chat"
         >
-          <HiChatBubbleLeftRight className="h-7 w-7 transition-transform group-hover:scale-110" />
+          <HiChatBubbleLeftRight className="h-7 w-7 text-[#D4AF37] transition-transform group-hover:scale-110" />
 
           {/* Unread badge */}
           {unreadCount > 0 && (
-            <span className="absolute -top-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full bg-black text-[11px] font-black text-white ring-2 ring-white animate-bounce">
+            <span className="absolute -top-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full bg-[#D4AF37] text-[11px] font-black text-[#022C22] ring-2 ring-white animate-bounce">
               {unreadCount}
             </span>
           )}
 
           {/* Online ripple */}
           <span className="absolute -top-0.5 -left-0.5 flex h-3.5 w-3.5">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-emerald-500 border-2 border-white"></span>
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#D4AF37] opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-[#064E3B] border-2 border-white"></span>
           </span>
         </button>
       )}
 
       {/* Chat Box Container */}
       {isOpen && (
-        <div className="flex h-[540px] w-[360px] sm:w-[400px] flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-2xl transition-all duration-300 animate-in fade-in slide-in-from-bottom-6">
+        <div className="flex h-[540px] w-[360px] sm:w-[400px] flex-col overflow-hidden rounded-3xl border border-[#D4AF37]/40 bg-white shadow-2xl transition-all duration-300 animate-in fade-in slide-in-from-bottom-6">
           {/* Header */}
-          <div className="flex items-center justify-between border-b border-white/10 bg-gradient-to-r from-[#140000] via-[#3D0000] to-[#950101] px-5 py-3.5 text-white shadow-md">
+          <div className="flex items-center justify-between border-b border-[#D4AF37]/30 bg-gradient-to-r from-[#022C22] via-[#064E3B] to-[#022C22] px-5 py-3.5 text-white shadow-md">
             <div className="flex items-center gap-3">
-              <div className="relative flex h-10 w-10 items-center justify-center rounded-2xl bg-[#FF0000] text-white font-black text-sm shadow-md">
+              <div className="relative flex h-10 w-10 items-center justify-center rounded-2xl bg-[#064E3B] text-[#D4AF37] font-black text-sm shadow-md border border-[#D4AF37]">
                 <HiOutlineSparkles className="h-5 w-5" />
-                <span className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full bg-emerald-400 border-2 border-[#140000]" />
+                <span className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full bg-emerald-400 border-2 border-[#022C22]" />
               </div>
               <div className="flex flex-col">
                 <span className="text-sm font-black tracking-tight leading-tight">
                   {language === "bn" ? "আইডিকে হেল্প ডেস্ক" : "IDK Support Chat"}
                 </span>
-                <span className="text-[10px] text-red-200/90 font-medium flex items-center gap-1">
+                <span className="text-[10px] text-[#D4AF37] font-medium flex items-center gap-1">
                   <span>{language === "bn" ? "অ্যাডমিন ও সুপার অ্যাডমিন লাইভ" : "Admin & Super Admin Online"}</span>
                 </span>
               </div>
@@ -259,7 +260,7 @@ export default function CustomerChatWidget() {
                   title={language === "bn" ? "সেশন রিসেট করুন" : "Change User"}
                   className="rounded-xl p-1.5 text-white/70 hover:bg-white/10 hover:text-white transition"
                 >
-                  <HiArrowPath className="h-4 w-4" />
+                  <HiOutlineArrowPath className="h-4 w-4" />
                 </button>
               )}
               <button
@@ -277,13 +278,13 @@ export default function CustomerChatWidget() {
             /* Identification Screen */
             <div className="flex flex-1 flex-col justify-center p-6 bg-slate-50/50">
               <div className="mb-4 text-center">
-                <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#FF0000]/10 text-[#FF0000]">
-                  <HiChatBubbleLeftRight className="h-6 w-6" />
+                <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#064E3B]/10 text-[#064E3B] border border-[#D4AF37]/30">
+                  <HiChatBubbleLeftRight className="h-6 w-6 text-[#D4AF37]" />
                 </div>
-                <h3 className="text-base font-bold text-[#140000]">
+                <h3 className="text-base font-bold text-[#022C22]">
                   {language === "bn" ? "লাইভ সাপোর্টে স্বাগতম" : "Start Live Chat"}
                 </h3>
-                <p className="mt-1 text-xs text-slate-500">
+                <p className="mt-1 text-xs text-[#065F46]">
                   {language === "bn"
                     ? "আমাদের অ্যাডমিনদের সাথে কথা বলতে আপনার নাম এবং ফোন নম্বর দিন।"
                     : "Connect directly with our Admin and Super Admin team."}
@@ -292,7 +293,7 @@ export default function CustomerChatWidget() {
 
               <form onSubmit={handleStartChat} className="space-y-3.5">
                 <div>
-                  <label className="mb-1 block text-xs font-bold text-slate-700">
+                  <label className="mb-1 block text-xs font-bold text-[#022C22]">
                     {language === "bn" ? "আপনার নাম" : "Your Name"}
                   </label>
                   <div className="relative">
@@ -303,13 +304,13 @@ export default function CustomerChatWidget() {
                       value={nameInput}
                       onChange={(e) => setNameInput(e.target.value)}
                       placeholder={language === "bn" ? "যেমন: তানভীর আহমেদ" : "e.g. John Doe"}
-                      className="w-full rounded-xl border border-slate-200 bg-white pl-10 pr-3 py-2 text-xs text-slate-800 placeholder-slate-400 focus:border-[#FF0000] focus:outline-none shadow-xs"
+                      className="w-full rounded-xl border border-slate-200 bg-white pl-10 pr-3 py-2 text-xs text-slate-800 placeholder-slate-400 focus:border-[#064E3B] focus:outline-none shadow-xs"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="mb-1 block text-xs font-bold text-slate-700">
+                  <label className="mb-1 block text-xs font-bold text-[#022C22]">
                     {language === "bn" ? "মোবাইল নম্বর" : "Mobile Number"}
                   </label>
                   <div className="relative">
@@ -320,7 +321,7 @@ export default function CustomerChatWidget() {
                       value={phoneInput}
                       onChange={(e) => setPhoneInput(e.target.value)}
                       placeholder="01XXXXXXXXX"
-                      className="w-full rounded-xl border border-slate-200 bg-white pl-10 pr-3 py-2 text-xs text-slate-800 placeholder-slate-400 focus:border-[#FF0000] focus:outline-none shadow-xs"
+                      className="w-full rounded-xl border border-slate-200 bg-white pl-10 pr-3 py-2 text-xs text-slate-800 placeholder-slate-400 focus:border-[#064E3B] focus:outline-none shadow-xs"
                     />
                   </div>
                 </div>
@@ -334,7 +335,7 @@ export default function CustomerChatWidget() {
                 <button
                   type="submit"
                   disabled={isSubmittingAuth}
-                  className="w-full rounded-xl bg-gradient-to-r from-[#950101] to-[#FF0000] py-2.5 text-xs font-black uppercase tracking-wider text-white shadow-md shadow-[#FF0000]/25 transition hover:brightness-110 disabled:opacity-50"
+                  className="w-full rounded-xl bg-gradient-to-r from-[#022C22] to-[#064E3B] py-2.5 text-xs font-black uppercase tracking-wider text-white shadow-md shadow-[#064E3B]/25 transition hover:brightness-110 disabled:opacity-50 border border-[#D4AF37]"
                 >
                   {isSubmittingAuth
                     ? language === "bn"
@@ -365,7 +366,7 @@ export default function CustomerChatWidget() {
               <div className="flex-1 overflow-y-auto p-4 space-y-3">
                 {messages.length === 0 ? (
                   <div className="flex h-full flex-col items-center justify-center text-center text-slate-400">
-                    <HiChatBubbleLeftRight className="h-10 w-10 text-slate-300 mb-2" />
+                    <HiChatBubbleLeftRight className="h-10 w-10 text-[#D4AF37]/50 mb-2" />
                     <p className="text-xs font-medium">
                       {language === "bn"
                         ? "কথোপকথন শুরু করতে একটি বার্তা পাঠান।"
@@ -387,7 +388,7 @@ export default function CustomerChatWidget() {
                           <div className="mb-1 flex items-center gap-1.5 text-[10px] font-bold">
                             <span
                               className={`inline-flex items-center gap-0.5 rounded-md px-1.5 py-0.5 text-[9px] uppercase tracking-wider text-white ${
-                                isSuperAdmin ? "bg-amber-600" : "bg-[#FF0000]"
+                                isSuperAdmin ? "bg-[#D4AF37] text-[#022C22] font-black" : "bg-[#064E3B]"
                               }`}
                             >
                               <HiOutlineShieldCheck className="h-3 w-3" />
@@ -406,7 +407,7 @@ export default function CustomerChatWidget() {
                         <div
                           className={`max-w-[80%] rounded-2xl px-3.5 py-2 text-xs leading-relaxed shadow-xs ${
                             isMe
-                              ? "bg-gradient-to-r from-[#950101] to-[#FF0000] text-white rounded-br-xs"
+                              ? "bg-gradient-to-r from-[#022C22] to-[#064E3B] text-white rounded-br-xs border border-[#D4AF37]/30"
                               : "bg-white text-slate-800 border border-slate-200 rounded-bl-xs"
                           }`}
                         >
@@ -447,13 +448,13 @@ export default function CustomerChatWidget() {
                         ? "আপনার মেসেজ লিখুন..."
                         : "Type your message..."
                     }
-                    className="flex-1 rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-xs text-slate-800 placeholder-slate-400 focus:border-[#FF0000] focus:bg-white focus:outline-none disabled:bg-slate-100 disabled:cursor-not-allowed"
+                    className="flex-1 rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-xs text-slate-800 placeholder-slate-400 focus:border-[#064E3B] focus:bg-white focus:outline-none disabled:bg-slate-100 disabled:cursor-not-allowed"
                   />
 
                   <button
                     type="submit"
                     disabled={isBlocked || !inputText.trim()}
-                    className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#FF0000] text-white shadow-md shadow-[#FF0000]/25 transition hover:scale-105 active:scale-95 disabled:opacity-40 disabled:hover:scale-100"
+                    className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#064E3B] hover:bg-[#043c2e] text-[#D4AF37] shadow-md shadow-[#064E3B]/25 transition hover:scale-105 active:scale-95 disabled:opacity-40 disabled:hover:scale-100 border border-[#D4AF37]"
                   >
                     <HiPaperAirplane className="h-4 w-4" />
                   </button>

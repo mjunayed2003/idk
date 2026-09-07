@@ -250,7 +250,7 @@ export default function AdminChatManager({
         <div className="border-b border-slate-200 bg-white p-4 space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#FF0000] text-white shadow-sm">
+              <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#064E3B] text-[#D4AF37] shadow-sm">
                 <HiOutlineChatBubbleLeftRight className="h-4 w-4" />
               </div>
               <h2 className="text-sm font-black uppercase tracking-wider text-slate-800">
@@ -274,7 +274,7 @@ export default function AdminChatManager({
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder={language === "bn" ? "নাম বা ফোন দিয়ে খুঁজুন..." : "Search customer or phone..."}
-              className="w-full rounded-xl border border-slate-200 bg-slate-50 pl-9 pr-3 py-2 text-xs text-slate-800 placeholder-slate-400 focus:border-[#FF0000] focus:bg-white focus:outline-none"
+              className="w-full rounded-xl border border-slate-200 bg-slate-50 pl-9 pr-3 py-2 text-xs text-slate-800 placeholder-slate-400 focus:border-[#064E3B] focus:bg-white focus:outline-none"
             />
           </div>
         </div>
@@ -298,7 +298,7 @@ export default function AdminChatManager({
                   onClick={() => handleSelectCustomer(c.id)}
                   className={`w-full text-left p-3.5 transition flex flex-col gap-1.5 ${
                     isSelected
-                      ? "bg-white border-l-4 border-l-[#FF0000] shadow-xs"
+                      ? "bg-white border-l-4 border-l-[#064E3B] shadow-xs"
                       : "hover:bg-white/80"
                   }`}
                 >
@@ -350,7 +350,7 @@ export default function AdminChatManager({
             {/* Active Customer Header */}
             <div className="flex items-center justify-between border-b border-slate-200 bg-white px-6 py-4">
               <div className="flex items-center gap-3">
-                <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#FF0000]/10 text-[#FF0000] font-black text-sm">
+                <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#064E3B]/10 text-[#064E3B] font-black text-sm">
                   {selectedCustomer.name.slice(0, 2).toUpperCase()}
                 </div>
                 <div>
@@ -375,7 +375,7 @@ export default function AdminChatManager({
                     </span>
                     {selectedCustomer.code && (
                       <span className="flex items-center gap-1">
-                        <HiOutlineTicket className="h-3 w-3 text-[#FF0000]" />
+                        <HiOutlineTicket className="h-3 w-3 text-[#D4AF37]" />
                         {selectedCustomer.code}
                       </span>
                     )}
@@ -453,7 +453,7 @@ export default function AdminChatManager({
                               ? "bg-slate-200 text-slate-700"
                               : isSuper
                               ? "bg-amber-600 text-white"
-                              : "bg-[#FF0000] text-white"
+                              : "bg-[#064E3B] text-[#D4AF37]"
                           }`}
                         >
                           {isFromCustomer
@@ -475,7 +475,7 @@ export default function AdminChatManager({
                         className={`max-w-[75%] rounded-2xl px-4 py-2.5 text-xs leading-relaxed shadow-xs ${
                           isFromCustomer
                             ? "bg-white text-slate-800 border border-slate-200 rounded-tl-xs"
-                            : "bg-gradient-to-r from-[#950101] to-[#FF0000] text-white rounded-tr-xs"
+                            : "bg-gradient-to-r from-[#022C22] to-[#064E3B] text-white border border-[#D4AF37]/30 rounded-tr-xs"
                         }`}
                       >
                         <p className="whitespace-pre-wrap break-words">{msg.text}</p>
@@ -499,13 +499,13 @@ export default function AdminChatManager({
                       ? `${selectedCustomer.name}-কে উত্তর লিখুন...`
                       : `Reply to ${selectedCustomer.name}...`
                   }
-                  className="flex-1 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs text-slate-800 placeholder-slate-400 focus:border-[#FF0000] focus:bg-white focus:outline-none"
+                  className="flex-1 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs text-slate-800 placeholder-slate-400 focus:border-[#064E3B] focus:bg-white focus:outline-none"
                 />
 
                 <button
                   type="submit"
                   disabled={!replyText.trim()}
-                  className="flex items-center gap-2 rounded-xl bg-[#FF0000] px-5 py-3 text-xs font-black uppercase tracking-wider text-white shadow-md shadow-[#FF0000]/25 transition hover:scale-105 active:scale-95 disabled:opacity-40 disabled:hover:scale-100"
+                  className="flex items-center gap-2 rounded-xl bg-[#064E3B] hover:bg-[#022C22] px-5 py-3 text-xs font-black uppercase tracking-wider text-[#D4AF37] shadow-md shadow-[#064E3B]/25 transition hover:scale-105 active:scale-95 disabled:opacity-40 disabled:hover:scale-100 border border-[#D4AF37]/40"
                 >
                   <span>{language === "bn" ? "পাঠান" : "Send"}</span>
                   <HiPaperAirplane className="h-4 w-4" />
@@ -517,7 +517,7 @@ export default function AdminChatManager({
           /* Empty selection state */
           <div className="flex h-full flex-col items-center justify-center p-8 text-center text-slate-400">
             <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-3xl bg-slate-100 text-slate-400">
-              <HiOutlineChatBubbleLeftRight className="h-8 w-8 text-[#FF0000]" />
+              <HiOutlineChatBubbleLeftRight className="h-8 w-8 text-[#064E3B]" />
             </div>
             <h3 className="text-sm font-bold text-slate-700">
               {language === "bn" ? "কথোপকথন নির্বাচন করুন" : "Select a Customer Conversation"}

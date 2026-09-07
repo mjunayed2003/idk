@@ -7,8 +7,8 @@ export default function AdminLayout({
 }) {
   return (
     <>
-      <div className="fixed top-0 left-1/4 -translate-x-1/2 w-96 h-96 bg-[#FF0000]/20 rounded-full blur-3xl pointer-events-none -z-10" />
-      <div className="fixed bottom-0 right-1/4 translate-x-1/2 w-80 h-80 bg-[#3D0000]/30 rounded-full blur-3xl pointer-events-none -z-10" />
+      <div className="fixed top-0 left-1/4 -translate-x-1/2 w-96 h-96 bg-[#064E3B]/15 rounded-full blur-3xl pointer-events-none -z-10" />
+      <div className="fixed bottom-0 right-1/4 translate-x-1/2 w-80 h-80 bg-[#D4AF37]/15 rounded-full blur-3xl pointer-events-none -z-10" />
 
       <div className="min-h-[100dvh] flex flex-col relative z-0">
         <AdminNavbar />

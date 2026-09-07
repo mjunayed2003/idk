@@ -36,15 +36,15 @@ export default function Navbar() {
           href="/" 
           className="flex items-center gap-3 group"
         >
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#FF0000] text-white font-black text-sm tracking-wider shadow-lg shadow-[#FF0000]/30 border border-[#FF0000] group-hover:scale-105 transition-transform">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#064E3B] text-[#D4AF37] font-black text-sm tracking-wider shadow-lg shadow-[#064E3B]/30 border border-[#D4AF37] group-hover:scale-105 transition-transform">
             IDK
           </div>
           
           <div className="flex flex-col">
-            <span className="font-bold text-lg text-[#140000] tracking-tight leading-tight group-hover:text-[#FF0000] :text-[#FF0000] transition-colors">
+            <span className="font-bold text-lg text-[#022C22] tracking-tight leading-tight group-hover:text-[#064E3B] transition-colors">
               {siteConfig.shopName}
             </span>
-            <span className="text-[11px] font-semibold text-[#950101] ">
+            <span className="text-[11px] font-semibold text-[#065F46]">
               {language === "bn" ? "কাস্টমার লয়ালটি র‌্যাফেল" : "Customer Reward Raffle"}
             </span>
           </div>
@@ -52,7 +52,7 @@ export default function Navbar() {
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-2">
-          <nav className="flex items-center gap-1.5 p-1 rounded-2xl bg-slate-100/90 border border-slate-200 " aria-label="Main Navigation">
+          <nav className="flex items-center gap-1.5 p-1 rounded-2xl bg-slate-100/90 border border-slate-200" aria-label="Main Navigation">
             {navLinks.map((link) => {
               const Icon = link.icon;
               const isActive = pathname === link.href;
@@ -63,26 +63,25 @@ export default function Navbar() {
                   href={link.href}
                   className={`flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-bold transition-all ${
                     isActive
-                      ? "bg-[#FF0000] text-white shadow-md shadow-[#FF0000]/30 border border-[#FF0000]"
-                      : "text-[#140000] hover:text-[#FF0000] :text-white hover:bg-white :bg-white/[0.06]"
+                      ? "bg-[#064E3B] text-white shadow-md shadow-[#064E3B]/30 border border-[#D4AF37]"
+                      : "text-[#022C22] hover:text-[#064E3B] hover:bg-white"
                   }`}
                 >
-                  <Icon className={`h-4 w-4 ${isActive ? "text-white" : "text-[#FF0000]"}`} />
+                  <Icon className={`h-4 w-4 ${isActive ? "text-[#D4AF37]" : "text-[#064E3B]"}`} />
                   <span>{link.label}</span>
                 </Link>
               );
             })}
           </nav>
 
-          {/* Language Switcher Only (No Dark Button) */}
+          {/* Language Switcher */}
           <div className="ml-1 pl-2 border-l border-slate-200 flex items-center gap-1.5">
-            {/* Language Switcher */}
             <button
               type="button"
               onClick={toggleLanguage}
-              className="flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 :bg-[#3D0000] px-3 py-2 text-xs font-bold text-[#140000] transition-all shadow-xs"
+              className="flex items-center gap-1.5 rounded-xl border border-[#D4AF37]/40 bg-white hover:bg-slate-50 px-3 py-2 text-xs font-bold text-[#022C22] transition-all shadow-xs"
             >
-              <HiOutlineLanguage className="h-4 w-4 text-[#FF0000]" />
+              <HiOutlineLanguage className="h-4 w-4 text-[#D4AF37]" />
               <span>{language === "bn" ? "English" : "বাংলা"}</span>
             </button>
           </div>
@@ -93,16 +92,16 @@ export default function Navbar() {
           <button
             type="button"
             onClick={toggleLanguage}
-            className="flex items-center gap-1 rounded-xl border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-bold text-[#140000] "
+            className="flex items-center gap-1 rounded-xl border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-bold text-[#022C22]"
           >
-            <HiOutlineLanguage className="h-4 w-4 text-[#FF0000]" />
+            <HiOutlineLanguage className="h-4 w-4 text-[#D4AF37]" />
             <span>{language === "bn" ? "EN" : "বাং"}</span>
           </button>
 
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white text-[#140000] "
+            className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white text-[#022C22]"
             aria-label="Toggle navigation menu"
           >
             {mobileMenuOpen ? <HiOutlineXMark className="h-5 w-5" /> : <HiOutlineBars3 className="h-5 w-5" />}
@@ -125,11 +124,11 @@ export default function Navbar() {
                   onClick={() => setMobileMenuOpen(false)}
                   className={`flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-semibold transition ${
                     isActive
-                      ? "bg-[#FF0000] text-white border border-[#FF0000]"
-                      : "text-[#140000] hover:bg-slate-100 :bg-white/[0.06]"
+                      ? "bg-[#064E3B] text-white border border-[#D4AF37]"
+                      : "text-[#022C22] hover:bg-slate-100"
                   }`}
                 >
-                  <Icon className={`h-5 w-5 ${isActive ? "text-white" : "text-[#FF0000]"}`} />
+                  <Icon className={`h-5 w-5 ${isActive ? "text-[#D4AF37]" : "text-[#064E3B]"}`} />
                   <span>{link.label}</span>
                 </Link>
               );

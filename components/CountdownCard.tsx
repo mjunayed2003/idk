@@ -95,36 +95,36 @@ export default function CountdownCard({
     >
       <div className="flex flex-col space-y-4">
         
-        {/* Header Ribbon with RED LIVE Indicator */}
-        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#950101]/30 pb-3">
-          <div className="flex items-center gap-2 rounded-full bg-[#FF0000]/15 border border-[#FF0000]/40 px-3 py-1">
+        {/* Header Ribbon with LIVE Indicator */}
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#D4AF37]/30 pb-3">
+          <div className="flex items-center gap-2 rounded-full bg-[#064E3B]/10 border border-[#D4AF37]/50 px-3 py-1">
             <span className="flex h-2.5 w-2.5 relative">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FF0000] opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#FF0000]"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#D4AF37] opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#D4AF37]"></span>
             </span>
-            <span className="font-mono text-xs font-black uppercase tracking-wider text-[#FF0000]">
+            <span className="font-mono text-xs font-black uppercase tracking-wider text-[#064E3B]">
               LIVE DRAW
             </span>
           </div>
 
           {/* High Contrast Date Pill */}
-          <div className="flex items-center gap-1.5 rounded-full bg-white border border-slate-200 px-3.5 py-1.5 font-mono text-xs font-bold text-[#140000] shadow-xs">
-            <HiOutlineCalendarDays className="h-4 w-4 text-[#FF0000]" />
+          <div className="flex items-center gap-1.5 rounded-full bg-white border border-[#D4AF37]/40 px-3.5 py-1.5 font-mono text-xs font-bold text-[#022C22] shadow-xs">
+            <HiOutlineCalendarDays className="h-4 w-4 text-[#D4AF37]" />
             <span>{formattedDate}</span>
           </div>
         </div>
 
         {/* Big Display Title */}
         <div>
-          <h3 className="font-display text-3xl sm:text-4xl text-[#140000] tracking-wide uppercase leading-none">
+          <h3 className="font-display text-3xl sm:text-4xl text-[#022C22] tracking-wide uppercase leading-none">
             {t.nextDrawTitle}
           </h3>
-          <p className="text-xs text-[#950101] font-sans mt-1.5 font-medium">
+          <p className="text-xs text-[#065F46] font-sans mt-1.5 font-medium">
             {t.countdownDesc}
           </p>
         </div>
 
-        {/* Live Digits Box with Popping Flame Red Color */}
+        {/* Live Digits Box */}
         <div 
           className="grid grid-cols-4 gap-2 sm:gap-3 py-1"
           role="timer"
@@ -138,17 +138,17 @@ export default function CountdownCard({
           ].map((item, index) => (
             <div
               key={index}
-              className="flex flex-col items-center justify-center rounded-2xl bg-white border-2 border-slate-200 p-3 sm:p-4 shadow-md shadow-[#3D0000]/10 relative overflow-hidden group hover:border-[#FF0000] transition-colors"
+              className="flex flex-col items-center justify-center rounded-2xl bg-white border-2 border-[#D4AF37]/30 p-3 sm:p-4 shadow-md shadow-[#064E3B]/5 relative overflow-hidden group hover:border-[#D4AF37] transition-colors"
             >
-              <div className="absolute inset-0 bg-gradient-to-b from-[#FF0000]/10 to-transparent pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-b from-[#D4AF37]/10 to-transparent pointer-events-none" />
               
-              {/* High Contrast Digits */}
-              <span className="font-mono text-2xl sm:text-4xl font-black tracking-tight text-[#FF0000] ">
+              {/* Digits */}
+              <span className="font-mono text-2xl sm:text-4xl font-black tracking-tight text-[#064E3B]">
                 {mounted ? toBnNum(item.val) : "--"}
               </span>
               
-              {/* High Contrast Label */}
-              <span className="font-sans text-[10px] sm:text-[11px] font-extrabold text-[#950101] tracking-widest mt-1 uppercase">
+              {/* Label */}
+              <span className="font-sans text-[10px] sm:text-[11px] font-extrabold text-[#065F46] tracking-widest mt-1 uppercase">
                 {item.label}
               </span>
             </div>
@@ -156,18 +156,18 @@ export default function CountdownCard({
         </div>
 
         {/* Footer info & CTA */}
-        <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-[#950101]/30 ">
-          <div className="flex items-center gap-1.5 text-xs text-[#950101] font-sans font-medium">
-            <HiOutlineClock className="h-4 w-4 text-[#FF0000] shrink-0" />
+        <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-[#D4AF37]/30">
+          <div className="flex items-center gap-1.5 text-xs text-[#065F46] font-sans font-medium">
+            <HiOutlineClock className="h-4 w-4 text-[#D4AF37] shrink-0" />
             <span>{t.drawNotice}</span>
           </div>
           
           <Link
             href="/results"
-            className="inline-flex items-center gap-1.5 rounded-xl bg-[#FF0000] hover:bg-[#d60000] text-white px-4 py-2 text-xs font-bold transition-all shadow-md shadow-[#FF0000]/30 border border-[#FF0000]"
+            className="inline-flex items-center gap-1.5 rounded-xl bg-[#064E3B] hover:bg-[#043c2e] text-white px-4 py-2 text-xs font-bold transition-all shadow-md shadow-[#064E3B]/30 border border-[#D4AF37]"
           >
             <span>{t.viewPastDrawsBtn}</span>
-            <HiOutlineArrowRight className="h-3.5 w-3.5" />
+            <HiOutlineArrowRight className="h-3.5 w-3.5 text-[#D4AF37]" />
           </Link>
         </div>
       </div>

@@ -17,14 +17,14 @@ export default function AdminNavbar() {
         
         {/* Brand Logo & Name */}
         <Link href="/admin" className="flex items-center gap-3 group">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#FF0000] text-white font-black text-sm tracking-wider shadow-lg shadow-[#FF0000]/30 border border-[#FF0000] group-hover:scale-105 transition-transform">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#064E3B] text-[#D4AF37] font-black text-sm tracking-wider shadow-lg shadow-[#064E3B]/30 border border-[#D4AF37] group-hover:scale-105 transition-transform">
             IDK
           </div>
           <div className="flex flex-col">
-            <span className="font-bold text-lg text-[#140000] tracking-tight leading-tight group-hover:text-[#FF0000] :text-[#FF0000] transition-colors">
+            <span className="font-bold text-lg text-[#022C22] tracking-tight leading-tight group-hover:text-[#064E3B] transition-colors">
               {siteConfig.shopName}
             </span>
-            <span className="text-[11px] font-semibold text-[#950101] ">
+            <span className="text-[11px] font-semibold text-[#065F46]">
               Admin Portal (Data Entry)
             </span>
           </div>
@@ -32,7 +32,7 @@ export default function AdminNavbar() {
 
         {/* Actions */}
         <div className="flex items-center gap-3">
-          <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#FF0000] text-white shadow-md shadow-[#FF0000]/30 border border-[#FF0000] text-xs font-bold">
+          <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#064E3B] text-[#D4AF37] shadow-md shadow-[#064E3B]/30 border border-[#D4AF37] text-xs font-bold">
             <HiOutlineUserPlus className="h-4 w-4" />
             <span>Add Contacts</span>
           </div>
@@ -40,9 +40,9 @@ export default function AdminNavbar() {
           <button
             type="button"
             onClick={toggleLanguage}
-            className="flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 :bg-[#3D0000] px-3 py-2 text-xs font-bold text-[#140000] transition-all shadow-xs"
+            className="flex items-center gap-1.5 rounded-xl border border-[#D4AF37]/40 bg-white hover:bg-slate-50 px-3 py-2 text-xs font-bold text-[#022C22] transition-all shadow-xs"
           >
-            <HiOutlineLanguage className="h-4 w-4 text-[#FF0000]" />
+            <HiOutlineLanguage className="h-4 w-4 text-[#D4AF37]" />
             <span>{language === "bn" ? "English" : "বাংলা"}</span>
           </button>
         </div>

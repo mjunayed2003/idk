@@ -30,6 +30,20 @@ export const api = createApi({
         body: credentials,
       }),
     }),
+    forgotPassword: builder.mutation<any, { identifier: string }>({
+      query: (body) => ({
+        url: 'auth/forgot-password',
+        method: 'POST',
+        body,
+      }),
+    }),
+    resetPassword: builder.mutation<any, { identifier: string; otp: string; newPassword: string }>({
+      query: (body) => ({
+        url: 'auth/reset-password',
+        method: 'POST',
+        body,
+      }),
+    }),
     
     // Customers
     getActiveCustomers: builder.query<import('./types').Customer[], void>({
@@ -114,6 +128,8 @@ export const api = createApi({
 
 export const {
   useLoginMutation,
+  useForgotPasswordMutation,
+  useResetPasswordMutation,
   useGetActiveCustomersQuery,
   useGetAllCustomersQuery,
   useAddCustomerMutation,

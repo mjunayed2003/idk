@@ -101,15 +101,15 @@ export default function AddCustomerForm({
     <div className="luxury-card p-6 sm:p-7 space-y-6">
       
       {/* Header */}
-      <div className="flex items-center gap-3 border-b border-[#950101]/30 pb-4">
-        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#FF0000] text-white font-black shadow-lg shadow-[#FF0000]/40 border border-[#FF0000]">
+      <div className="flex items-center gap-3 border-b border-[#D4AF37]/30 pb-4">
+        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#064E3B] text-[#D4AF37] font-black shadow-lg shadow-[#064E3B]/30 border border-[#D4AF37]">
           <HiTicket className="h-6 w-6" />
         </div>
         <div>
-          <h3 className="text-lg font-bold text-[#140000] tracking-tight">
+          <h3 className="text-lg font-bold text-[#022C22] tracking-tight">
             {t.issueTicketTitle}
           </h3>
-          <p className="text-xs text-[#950101] font-sans">
+          <p className="text-xs text-[#065F46] font-sans">
             {t.issueTicketSub}
           </p>
         </div>
@@ -117,18 +117,18 @@ export default function AddCustomerForm({
 
       {/* SUCCESS CONFIRMATION BANNER */}
       {lastCreatedCustomer && (
-        <div className="rounded-2xl border border-[#FF0000]/40 bg-[#FF0000]/15 p-4 space-y-3">
+        <div className="rounded-2xl border border-[#D4AF37] bg-[#F0FDF4] p-4 space-y-3">
           <div className="flex items-start justify-between gap-2">
             <div className="space-y-1">
-              <span className="flex items-center gap-1.5 text-xs font-bold text-[#FF0000]">
-                <HiOutlineCheckCircle className="h-4 w-4" />
+              <span className="flex items-center gap-1.5 text-xs font-bold text-[#064E3B]">
+                <HiOutlineCheckCircle className="h-4 w-4 text-[#D4AF37]" />
                 {t.ticketGeneratedSuccess}
               </span>
-              <div className="font-mono text-xl sm:text-2xl font-black text-[#FF0000]">
+              <div className="font-mono text-xl sm:text-2xl font-black text-[#064E3B]">
                 {lastCreatedCustomer.code}
               </div>
-              <p className="text-xs text-[#140000] font-sans">
-                Assigned to: <strong className="text-[#140000] ">{lastCreatedCustomer.name}</strong> ({lastCreatedCustomer.phone})
+              <p className="text-xs text-[#022C22] font-sans">
+                Assigned to: <strong className="text-[#022C22]">{lastCreatedCustomer.name}</strong> ({lastCreatedCustomer.phone})
               </p>
             </div>
 
@@ -141,11 +141,11 @@ export default function AddCustomerForm({
                   disabled={smsSending || smsSuccess === true}
                   className={`inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-xs font-sans font-bold shadow-xs transition-all ${
                     smsSuccess
-                      ? "bg-[#3D0000] text-white cursor-default"
-                      : "bg-[#FF0000] hover:bg-[#d60000] text-white shadow-[#FF0000]/30 border border-[#FF0000]"
+                      ? "bg-[#022C22] text-white cursor-default"
+                      : "bg-[#064E3B] hover:bg-[#043c2e] text-white shadow-[#064E3B]/30 border border-[#D4AF37]"
                   }`}
                 >
-                  <HiPaperAirplane className="h-4.5 w-4.5" />
+                  <HiPaperAirplane className="h-4.5 w-4.5 text-[#D4AF37]" />
                   <span>
                     {smsSending
                       ? t.sendingSms
@@ -168,9 +168,9 @@ export default function AddCustomerForm({
           <div>
             <label
               htmlFor="customerName"
-              className="mb-1.5 flex items-center gap-2 text-xs font-sans font-bold text-[#140000] "
+              className="mb-1.5 flex items-center gap-2 text-xs font-sans font-bold text-[#022C22]"
             >
-              <HiUser className="h-4.5 w-4.5 text-[#FF0000]" />
+              <HiUser className="h-4.5 w-4.5 text-[#D4AF37]" />
               {t.customerNameLabel}
             </label>
             <input
@@ -180,7 +180,7 @@ export default function AddCustomerForm({
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder={t.customerNamePlaceholder}
-              className="w-full rounded-2xl border border-[#950101]/30 bg-[#faf8f8] px-4 py-3 text-sm text-[#140000] placeholder-[#950101]/60 transition focus:border-[#FF0000] focus:outline-none shadow-inner"
+              className="w-full rounded-2xl border border-[#D4AF37]/40 bg-[#faf8f8] px-4 py-3 text-sm text-[#022C22] placeholder-[#065F46]/60 transition focus:border-[#064E3B] focus:outline-none shadow-inner"
             />
           </div>
 
@@ -188,9 +188,9 @@ export default function AddCustomerForm({
           <div>
             <label
               htmlFor="customerPhone"
-              className="mb-1.5 flex items-center gap-2 text-xs font-sans font-bold text-[#140000] "
+              className="mb-1.5 flex items-center gap-2 text-xs font-sans font-bold text-[#022C22]"
             >
-              <HiPhone className="h-4.5 w-4.5 text-[#FF0000]" />
+              <HiPhone className="h-4.5 w-4.5 text-[#D4AF37]" />
               {t.phoneLabel}
             </label>
             <input
@@ -200,7 +200,7 @@ export default function AddCustomerForm({
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               placeholder={t.phonePlaceholder}
-              className="w-full rounded-2xl border border-[#950101]/30 bg-[#faf8f8] px-4 py-3 text-sm font-mono text-[#140000] placeholder-[#950101]/60 transition focus:border-[#FF0000] focus:outline-none shadow-inner"
+              className="w-full rounded-2xl border border-[#D4AF37]/40 bg-[#faf8f8] px-4 py-3 text-sm font-mono text-[#022C22] placeholder-[#065F46]/60 transition focus:border-[#064E3B] focus:outline-none shadow-inner"
             />
           </div>
         </div>
@@ -209,9 +209,9 @@ export default function AddCustomerForm({
         <div>
           <label
             htmlFor="productPurchased"
-            className="mb-1.5 flex items-center gap-2 text-xs font-sans font-bold text-[#140000] "
+            className="mb-1.5 flex items-center gap-2 text-xs font-sans font-bold text-[#022C22]"
           >
-            <HiShoppingBag className="h-4.5 w-4.5 text-[#FF0000]" />
+            <HiShoppingBag className="h-4.5 w-4.5 text-[#D4AF37]" />
             {t.productLabel}
           </label>
           <input
@@ -221,7 +221,7 @@ export default function AddCustomerForm({
             value={product}
             onChange={(e) => setProduct(e.target.value)}
             placeholder={t.productPlaceholder}
-            className="w-full rounded-2xl border border-[#950101]/30 bg-[#faf8f8] px-4 py-3 text-sm text-[#140000] placeholder-[#950101]/60 transition focus:border-[#FF0000] focus:outline-none shadow-inner"
+            className="w-full rounded-2xl border border-[#D4AF37]/40 bg-[#faf8f8] px-4 py-3 text-sm text-[#022C22] placeholder-[#065F46]/60 transition focus:border-[#064E3B] focus:outline-none shadow-inner"
           />
         </div>
 
@@ -229,9 +229,9 @@ export default function AddCustomerForm({
         <div>
           <label
             htmlFor="customerAddress"
-            className="mb-1.5 flex items-center gap-2 text-xs font-sans font-bold text-[#140000] "
+            className="mb-1.5 flex items-center gap-2 text-xs font-sans font-bold text-[#022C22]"
           >
-            <HiMapPin className="h-4.5 w-4.5 text-[#FF0000]" />
+            <HiMapPin className="h-4.5 w-4.5 text-[#D4AF37]" />
             {t.addressLabel}
           </label>
           <input
@@ -241,7 +241,7 @@ export default function AddCustomerForm({
             value={address}
             onChange={(e) => setAddress(e.target.value)}
             placeholder={t.addressPlaceholder}
-            className="w-full rounded-2xl border border-[#950101]/30 bg-[#faf8f8] px-4 py-3 text-sm text-[#140000] placeholder-[#950101]/60 transition focus:border-[#FF0000] focus:outline-none shadow-inner"
+            className="w-full rounded-2xl border border-[#D4AF37]/40 bg-[#faf8f8] px-4 py-3 text-sm text-[#022C22] placeholder-[#065F46]/60 transition focus:border-[#064E3B] focus:outline-none shadow-inner"
           />
         </div>
 
@@ -250,9 +250,9 @@ export default function AddCustomerForm({
           <button
             type="submit"
             disabled={isSubmitting}
-            className="flex w-full items-center justify-center gap-2 rounded-2xl bg-[#FF0000] hover:bg-[#d60000] active:scale-[0.99] py-3.5 text-sm font-black font-sans uppercase tracking-wider text-white shadow-lg shadow-[#FF0000]/40 transition-all disabled:opacity-50 border border-[#FF0000]"
+            className="flex w-full items-center justify-center gap-2 rounded-2xl bg-[#064E3B] hover:bg-[#043c2e] active:scale-[0.99] py-3.5 text-sm font-black font-sans uppercase tracking-wider text-white shadow-lg shadow-[#064E3B]/30 transition-all disabled:opacity-50 border border-[#D4AF37]"
           >
-            <HiTicket className="h-5 w-5 text-white" />
+            <HiTicket className="h-5 w-5 text-[#D4AF37]" />
             <span>{isSubmitting ? "Generating Ticket..." : t.createTicketBtn}</span>
           </button>
         </div>
