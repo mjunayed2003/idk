@@ -89,22 +89,22 @@ export default function CustomerTable({
       case "active":
         return {
           label: t.statusActive,
-          classes: "bg-[#FF0000]/15 text-[#FF0000] border-[#FF0000]/40",
+          classes: "bg-[#064E3B]/10 text-[#064E3B] border-[#064E3B]/30",
         };
       case "won":
         return {
           label: t.statusWon,
-          classes: "bg-[#950101]/25 text-[#FF0000] border-[#950101]/50",
+          classes: "bg-[#D4AF37]/20 text-[#022C22] border-[#D4AF37]",
         };
       case "expired":
         return {
           label: t.statusExpired,
-          classes: "bg-[#3D0000]/20 text-[#950101] border-[#3D0000]/40",
+          classes: "bg-slate-100 text-slate-500 border-slate-200",
         };
       case "pending":
         return {
           label: language === "bn" ? "পেন্ডিং" : "Pending",
-          classes: "bg-amber-100 text-amber-700 border-amber-200",
+          classes: "bg-amber-100 text-amber-800 border-amber-300",
         };
       default:
         return {
@@ -120,13 +120,13 @@ export default function CustomerTable({
       <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
         {/* Search Bar */}
         <div className="relative w-full sm:w-80">
-          <HiMagnifyingGlass className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-[#FF0000]" />
+          <HiMagnifyingGlass className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-[#D4AF37]" />
           <input
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder={t.searchPlaceholder}
-            className="w-full rounded-2xl border border-slate-200 bg-white pl-10 pr-4 py-2.5 text-base sm:text-xs text-[#140000] placeholder-[#950101]/60 focus:border-[#FF0000] focus:outline-none shadow-xs"
+            className="w-full rounded-2xl border border-[#D4AF37]/30 bg-white pl-10 pr-4 py-2.5 text-base sm:text-xs text-[#022C22] placeholder-[#065F46]/60 focus:border-[#064E3B] focus:outline-none shadow-xs"
           />
         </div>
 
@@ -145,8 +145,8 @@ export default function CustomerTable({
               onClick={() => setStatusFilter(item.key as CustomerStatus | "all")}
               className={`rounded-xl px-3.5 py-1.5 text-xs font-sans font-bold uppercase tracking-wider transition ${
                 statusFilter === item.key
-                  ? "bg-[#FF0000] text-white shadow-md shadow-[#FF0000]/30 font-black border border-[#FF0000]"
-                  : "text-[#140000] hover:text-[#FF0000] :text-[#ffffff] hover:bg-white :bg-white/[0.06]"
+                  ? "bg-[#064E3B] text-white shadow-md shadow-[#064E3B]/30 font-black border border-[#D4AF37]"
+                  : "text-[#022C22] hover:text-[#064E3B] hover:bg-white"
               }`}
             >
               {item.label}
@@ -160,7 +160,7 @@ export default function CustomerTable({
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse text-xs">
             <thead>
-              <tr className="border-b border-slate-200 bg-slate-50 text-[11px] font-sans font-bold uppercase tracking-wider text-[#950101] ">
+              <tr className="border-b border-slate-200 bg-slate-50 text-[11px] font-sans font-bold uppercase tracking-wider text-[#065F46]">
                 <th className="px-6 py-4">{t.thCustomer}</th>
                 <th className="px-6 py-4">{t.thProduct}</th>
                 <th className="px-6 py-4">{t.thCode}</th>
@@ -171,10 +171,10 @@ export default function CustomerTable({
                 )}
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100 ">
+            <tbody className="divide-y divide-slate-100">
               {filteredCustomers.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="px-6 py-12 text-center text-[#950101] ">
+                  <td colSpan={6} className="px-6 py-12 text-center text-[#065F46]">
                     <p className="font-semibold text-sm">{language === "bn" ? "কোন কাস্টমার পাওয়া যায়নি" : "No matching customers found"}</p>
                     <p className="text-xs mt-1">{language === "bn" ? "অনুগ্রহ করে সঠিক নাম বা ফোন দিয়ে খুঁজুন" : "Try searching by a different name, phone, or code"}</p>
                   </td>
@@ -187,17 +187,17 @@ export default function CustomerTable({
                   return (
                     <tr
                       key={customer.id}
-                      className="hover:bg-slate-50/80 :bg-white/[0.03] transition-colors"
+                      className="hover:bg-slate-50/80 transition-colors"
                     >
                       {/* Name & Phone */}
                       <td className="px-6 py-4">
                         <div className="space-y-0.5">
-                          <div className="font-bold text-sm text-[#140000] flex items-center gap-1.5">
-                            <HiOutlineUser className="h-4 w-4 text-[#FF0000]" />
+                          <div className="font-bold text-sm text-[#022C22] flex items-center gap-1.5">
+                            <HiOutlineUser className="h-4 w-4 text-[#D4AF37]" />
                             <span>{customer.name}</span>
                           </div>
-                          <div className="flex items-center gap-1 text-[11px] text-[#950101] font-mono">
-                            <HiOutlinePhone className="h-3 w-3 text-[#FF0000]" />
+                          <div className="flex items-center gap-1 text-[11px] text-[#065F46] font-mono">
+                            <HiOutlinePhone className="h-3 w-3 text-[#D4AF37]" />
                             <span>{customer.phone}</span>
                           </div>
                         </div>
@@ -206,13 +206,13 @@ export default function CustomerTable({
                       {/* Purchased Product */}
                       <td className="px-6 py-4">
                         <div className="space-y-0.5">
-                          <div className="font-medium text-[#140000] flex items-center gap-1.5">
-                            <HiOutlineShoppingBag className="h-4 w-4 text-[#FF0000]" />
+                          <div className="font-medium text-[#022C22] flex items-center gap-1.5">
+                            <HiOutlineShoppingBag className="h-4 w-4 text-[#D4AF37]" />
                             <span>{customer.product}</span>
                           </div>
                           {customer.address && (
-                            <div className="flex items-center gap-1 text-[11px] text-[#950101] truncate max-w-[200px]">
-                              <HiOutlineMapPin className="h-3 w-3 text-[#950101] shrink-0" />
+                            <div className="flex items-center gap-1 text-[11px] text-[#065F46] truncate max-w-[200px]">
+                              <HiOutlineMapPin className="h-3 w-3 text-[#065F46] shrink-0" />
                               <span>{customer.address}</span>
                             </div>
                           )}
@@ -221,7 +221,7 @@ export default function CustomerTable({
 
                       {/* Ticket Number */}
                       <td className="px-6 py-4">
-                        <span className="font-mono text-sm font-black text-[#FF0000] tracking-wider px-3 py-1 rounded-xl bg-[#FF0000]/15 border border-[#FF0000]/30 inline-block">
+                        <span className="font-mono text-sm font-black text-[#064E3B] tracking-wider px-3 py-1 rounded-xl bg-[#D4AF37]/15 border border-[#D4AF37]/40 inline-block">
                           {customer.code}
                         </span>
                       </td>
@@ -243,9 +243,9 @@ export default function CustomerTable({
                       </td>
 
                       {/* Date */}
-                      <td className="px-6 py-4 font-mono text-[11px] text-[#950101] ">
+                      <td className="px-6 py-4 font-mono text-[11px] text-[#065F46]">
                         <div className="flex items-center gap-1.5">
-                          <HiOutlineCalendarDays className="h-4 w-4 text-[#FF0000]" />
+                          <HiOutlineCalendarDays className="h-4 w-4 text-[#D4AF37]" />
                           <span>
                             {new Date(customer.createdAt).toLocaleDateString(
                               language === "bn" ? "bn-BD" : "en-US",
@@ -260,8 +260,8 @@ export default function CustomerTable({
                         <td className="px-6 py-4 text-right">
                           {userRole === "super-admin" && customer.status === "pending" ? (
                             <div className="flex flex-col gap-2 items-end">
-                              <label className="flex items-center gap-1.5 text-[10px] font-bold text-[#950101] cursor-pointer">
-                                <input type="checkbox" className="accent-[#FF0000]" id={`sms-check-${customer.id}`} />
+                              <label className="flex items-center gap-1.5 text-[10px] font-bold text-[#065F46] cursor-pointer">
+                                <input type="checkbox" className="accent-[#064E3B]" id={`sms-check-${customer.id}`} />
                                 {language === "bn" ? "এসএমএস পাঠান" : "Send SMS"}
                               </label>
                               <button
@@ -269,9 +269,9 @@ export default function CustomerTable({
                                   const sendSms = (document.getElementById(`sms-check-${customer.id}`) as HTMLInputElement).checked;
                                   handleAccept(customer.id, sendSms);
                                 }}
-                                className="inline-flex items-center gap-2 rounded-xl bg-[#FF0000] hover:bg-[#d60000] px-3.5 py-1.5 font-sans text-xs font-bold tracking-wide transition text-white border border-[#FF0000] shadow-xs"
+                                className="inline-flex items-center gap-2 rounded-xl bg-[#064E3B] hover:bg-[#043c2e] px-3.5 py-1.5 font-sans text-xs font-bold tracking-wide transition text-white border border-[#D4AF37] shadow-xs"
                               >
-                                <HiCheckCircle className="h-4 w-4" />
+                                <HiCheckCircle className="h-4 w-4 text-[#D4AF37]" />
                                 <span>{language === "bn" ? "গ্রহণ করুন" : "Accept"}</span>
                               </button>
                             </div>
@@ -282,15 +282,15 @@ export default function CustomerTable({
                               disabled={smsState === "sending" || smsState === "sent"}
                               className={`inline-flex items-center gap-2 rounded-xl px-3.5 py-2 font-sans text-xs font-bold tracking-wide transition ${
                                 smsState === "sent"
-                                  ? "bg-[#3D0000] text-white"
+                                  ? "bg-[#022C22] text-white"
                                   : smsState === "sending"
-                                  ? "bg-[#FF0000]/15 text-[#FF0000]"
-                                  : "bg-white hover:bg-[#FF0000] hover:text-white text-[#140000] border border-slate-200 shadow-xs"
+                                  ? "bg-[#064E3B]/15 text-[#064E3B]"
+                                  : "bg-white hover:bg-[#064E3B] hover:text-white text-[#022C22] border border-slate-200 shadow-xs"
                               }`}
                             >
                               {smsState === "sent" ? (
                                 <>
-                                  <HiCheckCircle className="h-4 w-4 text-[#FF0000]" />
+                                  <HiCheckCircle className="h-4 w-4 text-[#D4AF37]" />
                                   <span>{t.btnSent}</span>
                                 </>
                               ) : (
@@ -313,7 +313,7 @@ export default function CustomerTable({
       </div>
 
       {/* Counter summary */}
-      <div className="flex items-center justify-between text-xs text-[#950101] font-medium px-2">
+      <div className="flex items-center justify-between text-xs text-[#065F46] font-medium px-2">
         <span>
           {t.showingSummary
             .replace("{count}", toBnNum(filteredCustomers.length))

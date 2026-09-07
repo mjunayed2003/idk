@@ -20,14 +20,14 @@ export default function SuperAdminNavbar() {
         
         {/* Brand Logo & Name */}
         <div className="flex items-center gap-3 group">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#FF0000] text-white font-black text-sm tracking-wider shadow-lg shadow-[#FF0000]/30 border border-[#FF0000] group-hover:scale-105 transition-transform">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#064E3B] text-[#D4AF37] font-black text-sm tracking-wider shadow-lg shadow-[#064E3B]/30 border border-[#D4AF37] group-hover:scale-105 transition-transform">
             IDK
           </div>
           <div className="flex flex-col">
-            <span className="font-bold text-lg text-[#140000] tracking-tight leading-tight group-hover:text-[#FF0000] :text-[#FF0000] transition-colors">
+            <span className="font-bold text-lg text-[#022C22] tracking-tight leading-tight group-hover:text-[#064E3B] transition-colors">
               {siteConfig.shopName}
             </span>
-            <span className="text-[11px] font-semibold text-[#950101] ">
+            <span className="text-[11px] font-semibold text-[#065F46]">
               Super Admin Console
             </span>
           </div>
@@ -40,22 +40,22 @@ export default function SuperAdminNavbar() {
               href="/super-admin"
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
                 pathname === "/super-admin" 
-                  ? "bg-[#FF0000] text-white shadow-md shadow-[#FF0000]/30 border border-[#FF0000]" 
-                  : "bg-slate-100/90 text-[#140000] border border-slate-200 hover:text-[#FF0000] :text-white hover:bg-white :bg-white/[0.06]"
+                  ? "bg-[#064E3B] text-white shadow-md shadow-[#064E3B]/30 border border-[#D4AF37]" 
+                  : "bg-slate-100/90 text-[#022C22] border border-slate-200 hover:text-[#064E3B] hover:bg-white"
               }`}
             >
-              <HiOutlineWrenchScrewdriver className={`h-4 w-4 ${pathname === "/super-admin" ? "text-white" : "text-[#FF0000]"}`} />
+              <HiOutlineWrenchScrewdriver className={`h-4 w-4 ${pathname === "/super-admin" ? "text-[#D4AF37]" : "text-[#064E3B]"}`} />
               <span>Dashboard</span>
             </Link>
             <Link 
               href="/super-admin/draw"
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
                 pathname === "/super-admin/draw" 
-                  ? "bg-[#FF0000] text-white shadow-md shadow-[#FF0000]/30 border border-[#FF0000]" 
-                  : "bg-slate-100/90 text-[#140000] border border-slate-200 hover:text-[#FF0000] :text-white hover:bg-white :bg-white/[0.06]"
+                  ? "bg-[#064E3B] text-white shadow-md shadow-[#064E3B]/30 border border-[#D4AF37]" 
+                  : "bg-slate-100/90 text-[#022C22] border border-slate-200 hover:text-[#064E3B] hover:bg-white"
               }`}
             >
-              <HiOutlinePlay className={`h-4 w-4 ${pathname === "/super-admin/draw" ? "text-white" : "text-[#FF0000]"}`} />
+              <HiOutlinePlay className={`h-4 w-4 ${pathname === "/super-admin/draw" ? "text-[#D4AF37]" : "text-[#064E3B]"}`} />
               <span>Live Draw</span>
             </Link>
           </div>
@@ -63,9 +63,9 @@ export default function SuperAdminNavbar() {
           <button
             type="button"
             onClick={toggleLanguage}
-            className="flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 :bg-[#3D0000] px-3 py-2 text-xs font-bold text-[#140000] transition-all shadow-xs"
+            className="flex items-center gap-1.5 rounded-xl border border-[#D4AF37]/40 bg-white hover:bg-slate-50 px-3 py-2 text-xs font-bold text-[#022C22] transition-all shadow-xs"
           >
-            <HiOutlineLanguage className="h-4 w-4 text-[#FF0000]" />
+            <HiOutlineLanguage className="h-4 w-4 text-[#D4AF37]" />
             <span>{language === "bn" ? "English" : "বাংলা"}</span>
           </button>
           <button
@@ -75,7 +75,7 @@ export default function SuperAdminNavbar() {
                 window.location.reload();
               }
             }}
-            className="text-xs text-[#950101] border border-slate-200 bg-white hover:bg-slate-50 :bg-[#3D0000] px-3 py-2 rounded-xl transition font-bold"
+            className="text-xs text-[#064E3B] hover:text-[#D4AF37] border border-[#D4AF37]/40 bg-white hover:bg-slate-50 px-3 py-2 rounded-xl transition font-bold"
           >
             Logout
           </button>

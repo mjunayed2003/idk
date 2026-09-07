@@ -6,19 +6,15 @@
   --font-mono: var(--font-space-mono), monospace;
 }
 
-@import "tailwindcss";
-
 @custom-variant dark (&:where(.dark, .dark *));
-
-@theme {
-  --font-display: var(--font-anton), Impact, sans-serif;
-  --font-sans: var(--font-manrope), sans-serif;
-  --font-mono: var(--font-space-mono), monospace;
-}
 
 :root {
   --background: #F8FAFC;
-  --foreground: #140000;
+  --foreground: #022C22;
+  --dark-green: #064E3B;
+  --dark-green-deep: #022C22;
+  --gold: #D4AF37;
+  --gold-light: #FBBF24;
 }
 
 body {
@@ -31,37 +27,46 @@ body {
 }
 
 /* =========================================================================
-   LUXURY SURFACES & BACKGROUNDS
+   LUXURY SURFACES & BACKGROUNDS (DARK GREEN + WHITE + GOLD)
    ========================================================================= */
 .luxury-bg {
   background-color: var(--background);
   background-image: 
-    radial-gradient(at 0% 0%, #FF000015 0px, transparent 50%),
-    radial-gradient(at 100% 0%, #95010115 0px, transparent 50%),
-    radial-gradient(at 50% 50%, #FF00000A 0px, transparent 55%),
-    linear-gradient(to right, #FF000008 1px, transparent 1px),
-    linear-gradient(to bottom, #FF000008 1px, transparent 1px);
+    radial-gradient(at 0% 0%, #064E3B18 0px, transparent 50%),
+    radial-gradient(at 100% 0%, #D4AF3722 0px, transparent 50%),
+    radial-gradient(at 50% 50%, #064E3B0C 0px, transparent 55%),
+    linear-gradient(to right, #064E3B0A 1px, transparent 1px),
+    linear-gradient(to bottom, #064E3B0A 1px, transparent 1px);
   background-size: 100% 100%, 100% 100%, 100% 100%, 48px 48px, 48px 48px;
   background-attachment: fixed;
 }
 
 .luxury-card {
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 0, 0, 0.1);
+  border: 1px solid rgba(212, 175, 55, 0.25);
   border-radius: 1.25rem;
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 30px -10px rgba(6, 78, 59, 0.08);
   transition: all 0.25s ease;
 }
 
 .luxury-card:hover {
-  box-shadow: 0 20px 40px -15px rgba(255, 0, 0, 0.15);
+  border-color: rgba(212, 175, 55, 0.5);
+  box-shadow: 0 20px 40px -15px rgba(212, 175, 55, 0.2);
 }
 
 /* Glow Utilities */
+.gold-glow {
+  box-shadow: 0 0 35px -5px rgba(212, 175, 55, 0.35), 0 0 1px 1px rgba(212, 175, 55, 0.25) inset;
+}
+
+.green-glow {
+  box-shadow: 0 0 35px -5px rgba(6, 78, 59, 0.35), 0 0 1px 1px rgba(6, 78, 59, 0.2) inset;
+}
+
 .crimson-glow {
-  box-shadow: 0 0 35px -5px rgba(255, 0, 0, 0.3), 0 0 1px 1px rgba(255, 0, 0, 0.2) inset;
+  box-shadow: 0 0 35px -5px rgba(212, 175, 55, 0.35), 0 0 1px 1px rgba(212, 175, 55, 0.25) inset;
 }
 
 /* Custom Scrollbar */
@@ -75,12 +80,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #FF000040;
+  background: #064E3B40;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #FF000080;
+  background: #064E3B80;
 }
 
 /* Accessible focus states */
@@ -89,12 +94,12 @@ button:focus-visible,
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible {
-  outline: 2px solid #FF0000;
+  outline: 2px solid #D4AF37;
   outline-offset: 2px;
 }
 
 /* Text selections */
 ::selection {
-  background-color: #FF0000;
-  color: #ffffff;
+  background-color: #064E3B;
+  color: #D4AF37;
 }

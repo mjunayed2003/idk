@@ -49,27 +49,27 @@ export default function LiveDrawPage() {
     <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 space-y-12 sm:space-y-16 flex flex-col items-center">
       {/* Title */}
       <div className="text-center space-y-4 mb-16 relative z-10 animate-in fade-in slide-in-from-bottom-8 duration-700 w-full">
-        <span className="inline-block px-4 py-1.5 rounded-full bg-gradient-to-r from-[#FF0000]/20 to-transparent border border-[#FF0000]/30 text-[#FF0000] text-sm font-bold tracking-widest uppercase shadow-[0_0_15px_rgba(255,0,0,0.3)]">
+        <span className="inline-block px-4 py-1.5 rounded-full bg-gradient-to-r from-[#064E3B]/15 to-[#D4AF37]/10 border border-[#D4AF37]/40 text-[#064E3B] text-sm font-bold tracking-widest uppercase shadow-[0_0_15px_rgba(212,175,55,0.2)]">
           {language === "bn" ? "লাইভ কাস্টমার ড্র" : "Live Customer Draw"}
         </span>
         <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tighter drop-shadow-2xl">
-          <span className="text-[#140000] ">
+          <span className="text-[#022C22]">
             {language === "bn" ? "গ্র্যান্ড মেগা" : "GRAND MEGA"}{" "}
           </span>
-          <span className="text-transparent bg-clip-text bg-gradient-to-br from-[#FF0000] via-[#FF3333] to-[#950101] filter drop-shadow-[0_0_20px_rgba(255,0,0,0.5)]">
+          <span className="text-transparent bg-clip-text bg-gradient-to-br from-[#064E3B] via-[#047857] to-[#D4AF37] filter drop-shadow-[0_2px_15px_rgba(6,78,59,0.3)]">
             {language === "bn" ? "লটারি ড্র" : "LOTTERY DRAW"}
           </span>
         </h1>
-        <p className="text-[#950101] font-medium text-lg sm:text-xl tracking-wide max-w-2xl mx-auto">
+        <p className="text-[#065F46] font-medium text-lg sm:text-xl tracking-wide max-w-2xl mx-auto">
           {language === "bn" 
             ? "আপনার টিকিটের দিকে চোখ রাখুন, বিজয়ী হতে পারেন আপনিও!"
             : "Keep an eye on your ticket, you could be the next winner!"}
         </p>
       </div>
 
-      <div className="w-full max-w-5xl luxury-card bg-white/50 backdrop-blur-md p-8 sm:p-12 lg:p-16 relative overflow-hidden shadow-[0_0_50px_rgba(255,0,0,0.1)] border border-[#FF0000]/20 min-h-[600px]">
+      <div className="w-full max-w-5xl luxury-card bg-white/90 backdrop-blur-md p-8 sm:p-12 lg:p-16 relative overflow-hidden shadow-[0_4px_30px_rgba(6,78,59,0.08)] border border-[#D4AF37]/30 min-h-[600px]">
         {/* Glow */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-full max-w-[800px] h-[400px] bg-[#FF0000]/10 blur-[120px] rounded-[100%] pointer-events-none"></div>
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-full max-w-[800px] h-[400px] bg-[#064E3B]/10 blur-[120px] rounded-[100%] pointer-events-none"></div>
         
         {/* Wheel Display */}
         <div className="flex flex-col items-center justify-center relative z-10 scale-100 sm:scale-125 origin-top mb-32 mt-8">
@@ -81,10 +81,10 @@ export default function LiveDrawPage() {
 
         {/* Winner Reveal Area */}
         {selectedWinners.length > 0 && (
-          <div className="mt-32 pt-12 border-t-2 border-dashed border-[#FF0000]/30 space-y-8 animate-in fade-in slide-in-from-top-8 duration-500 relative z-10 text-center">
+          <div className="mt-32 pt-12 border-t-2 border-dashed border-[#D4AF37]/40 space-y-8 animate-in fade-in slide-in-from-top-8 duration-500 relative z-10 text-center">
             
             <h2 className="text-2xl sm:text-3xl font-black tracking-widest uppercase mb-8">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700] via-[#FFF8DC] to-[#B8860B] drop-shadow-[0_2px_10px_rgba(255,215,0,0.4)]">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#B45309] via-[#D4AF37] to-[#064E3B] drop-shadow-[0_2px_10px_rgba(212,175,55,0.3)]">
                 {language === "bn" ? "বিজয়ী তালিকা" : "Official Winners"}
               </span>
             </h2>

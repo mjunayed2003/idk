@@ -145,14 +145,14 @@ export default function DrawBoothPage() {
     return (
       <div className="mx-auto max-w-md px-4 py-16 sm:py-24">
         <div className="luxury-card p-8 text-center space-y-6">
-          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#FF0000] text-white font-bold shadow-lg shadow-[#FF0000]/40 border border-[#FF0000] mx-auto">
+          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#064E3B] text-[#D4AF37] font-bold shadow-lg shadow-[#064E3B]/25 border border-[#D4AF37]/40 mx-auto">
             <HiOutlineLockClosed className="h-7 w-7" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold tracking-tight text-[#140000] ">
+            <h1 className="text-2xl font-bold tracking-tight text-[#022C22]">
               {t.restrictedTitle}
             </h1>
-            <p className="text-xs text-[#950101] mt-1">
+            <p className="text-xs text-[#065F46] mt-1">
               {t.restrictedSub}
             </p>
           </div>
@@ -177,11 +177,11 @@ export default function DrawBoothPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Passcode (admin123)"
-              className="w-full rounded-2xl border border-[#950101]/30 bg-[#faf8f8] px-4 py-3 text-sm text-[#140000] font-mono placeholder-[#950101]/60 focus:border-[#FF0000] focus:outline-none shadow-inner"
+              className="w-full rounded-2xl border border-slate-200 bg-[#faf8f8] px-4 py-3 text-sm text-[#022C22] font-mono placeholder-slate-400 focus:border-[#064E3B] focus:outline-none shadow-inner"
             />
             <button
               type="submit"
-              className="w-full rounded-2xl bg-[#FF0000] hover:bg-[#d60000] py-3 text-xs font-black uppercase text-white shadow-lg shadow-[#FF0000]/40 transition-all border border-[#FF0000]"
+              className="w-full rounded-2xl bg-[#064E3B] hover:bg-[#022C22] py-3 text-xs font-black uppercase text-[#D4AF37] shadow-lg shadow-[#064E3B]/25 transition-all border border-[#D4AF37]/40"
             >
               {t.enterBtn}
             </button>
@@ -193,7 +193,7 @@ export default function DrawBoothPage() {
               setIsAuthenticated(true);
               sessionStorage.setItem("idk_admin_auth", "true");
             }}
-            className="text-xs text-[#FF0000] hover:underline font-semibold"
+            className="text-xs text-[#064E3B] hover:underline font-semibold"
           >
             {t.demoUnlockBtn}
           </button>
@@ -206,24 +206,24 @@ export default function DrawBoothPage() {
     <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 space-y-8">
       
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#950101]/20 pb-5">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-5">
         <div>
           <Link
             href="/super-admin"
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#950101] hover:text-[#FF0000] :text-white transition-colors mb-2"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#065F46] hover:text-[#064E3B] transition-colors mb-2"
           >
             <HiOutlineArrowLeft className="h-3.5 w-3.5" />
             <span>{language === "bn" ? "অ্যাডমিন পোর্টালে ফিরুন" : "Return to Admin Portal"}</span>
           </Link>
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#FF0000] text-white font-bold shadow-lg shadow-[#FF0000]/40 border border-[#FF0000]">
-              <HiOutlinePlay className="h-6 w-6 text-white" />
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#064E3B] text-[#D4AF37] font-bold shadow-lg shadow-[#064E3B]/25 border border-[#D4AF37]/40">
+              <HiOutlinePlay className="h-6 w-6 text-[#D4AF37]" />
             </div>
             <div>
-              <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#140000] ">
+              <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#022C22]">
                 {t.drawBoothHeading}
               </h1>
-              <p className="text-xs sm:text-sm text-[#950101] ">
+              <p className="text-xs sm:text-sm text-[#065F46]">
                 {t.drawBoothSub}
               </p>
             </div>
@@ -231,27 +231,27 @@ export default function DrawBoothPage() {
         </div>
 
         <div className="flex items-center gap-2.5">
-          <div className="flex items-center gap-2 rounded-2xl bg-[#FF0000]/15 px-4 py-2 border border-[#FF0000]/30 shadow-xs">
-            <HiOutlineTicket className="h-4.5 w-4.5 text-[#FF0000]" />
-            <span className="text-xs font-medium text-[#140000] ">
-              {t.activePoolMetric}: <strong className="text-[#FF0000] font-bold font-mono">{toBnNum(activeCustomers.length)}</strong>
+          <div className="flex items-center gap-2 rounded-2xl bg-[#D4AF37]/15 px-4 py-2 border border-[#D4AF37]/40 shadow-xs">
+            <HiOutlineTicket className="h-4.5 w-4.5 text-[#064E3B]" />
+            <span className="text-xs font-medium text-[#022C22]">
+              {t.activePoolMetric}: <strong className="text-[#064E3B] font-bold font-mono">{toBnNum(activeCustomers.length)}</strong>
             </span>
           </div>
 
           <button
             type="button"
             onClick={loadActive}
-            className="rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 :bg-white/[0.1] p-2.5 text-[#140000] transition shadow-xs"
+            className="rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 p-2.5 text-[#022C22] transition shadow-xs"
             title="Refresh count"
           >
-            <HiOutlineArrowPath className={`h-4 w-4 ${loading ? "animate-spin text-[#FF0000]" : "text-[#FF0000]"}`} />
+            <HiOutlineArrowPath className={`h-4 w-4 ${loading ? "animate-spin text-[#064E3B]" : "text-[#064E3B]"}`} />
           </button>
         </div>
       </div>
 
       {/* Error Banner */}
       {errorMsg && (
-        <div className="rounded-2xl border border-[#950101]/50 bg-[#3D0000]/50 p-4 text-xs text-white font-medium">
+        <div className="rounded-2xl border border-rose-200 bg-rose-50 p-4 text-xs text-rose-800 font-medium">
           ⚠️ {errorMsg}
         </div>
       )}
@@ -259,16 +259,16 @@ export default function DrawBoothPage() {
       {/* ================= SINGLE CARD LAYOUT ================= */}
       <div className="luxury-card p-6 sm:p-10 lg:p-12 text-center space-y-8 relative overflow-hidden">
         {/* Ambient glowing arena */}
-        <div className="absolute top-[20%] left-1/2 -translate-x-1/2 h-80 w-80 rounded-full bg-[#FF0000]/15 blur-3xl pointer-events-none" />
+        <div className="absolute top-[20%] left-1/2 -translate-x-1/2 h-80 w-80 rounded-full bg-[#064E3B]/10 blur-3xl pointer-events-none" />
         
         <div className="max-w-xl mx-auto space-y-2 relative z-10">
-          <span className="text-xs font-black uppercase tracking-widest text-[#FF0000]">
+          <span className="text-xs font-black uppercase tracking-widest text-[#064E3B]">
             {t.fairDraw}
           </span>
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-[#140000] ">
+          <h2 className="text-2xl sm:text-4xl font-extrabold text-[#022C22]">
             {t.drawBoothHeading}
           </h2>
-          <p className="text-xs sm:text-sm text-[#950101] font-sans">
+          <p className="text-xs sm:text-sm text-[#065F46] font-sans">
             {t.drawInstruction}
           </p>
         </div>
@@ -293,7 +293,7 @@ export default function DrawBoothPage() {
                   className={`px-6 py-3 rounded-2xl font-black uppercase tracking-wider text-[10px] sm:text-xs transition-all border shadow-lg flex items-center gap-2 ${
                     isDrawn
                       ? "bg-slate-100 text-slate-400 border-slate-200 cursor-not-allowed"
-                      : "bg-[#FF0000] hover:bg-[#d60000] text-white border-[#FF0000] shadow-[#FF0000]/30 hover:scale-105 active:scale-95"
+                      : "bg-[#064E3B] hover:bg-[#022C22] text-[#D4AF37] border-[#D4AF37]/40 shadow-[#064E3B]/25 hover:scale-105 active:scale-95"
                   }`}
                 >
                   {isDrawn ? (
@@ -308,7 +308,7 @@ export default function DrawBoothPage() {
           </div>
 
           {activeCustomers.length < 1 && (
-            <p className="text-xs text-[#FF0000] font-medium mt-2">
+            <p className="text-xs text-rose-600 font-medium mt-2">
               * {language === "bn" ? "ড্র করার জন্য কোনো গ্রাহক নেই" : "Not enough active customers"}
             </p>
           )}
@@ -316,17 +316,17 @@ export default function DrawBoothPage() {
 
         {/* Active tickets preview ticker - ONLY show when not drawn yet */}
         {selectedWinners.length === 0 && (
-          <div className="pt-6 border-t border-[#950101]/20 relative z-10">
-            <span className="text-xs font-bold text-[#950101] uppercase tracking-wider block mb-3">
+          <div className="pt-6 border-t border-slate-200 relative z-10">
+            <span className="text-xs font-bold text-[#065F46] uppercase tracking-wider block mb-3">
               {t.qualifyingTickets}
             </span>
-            <div className="flex flex-wrap items-center justify-center gap-2 max-h-40 overflow-y-auto p-1 scrollbar-thin scrollbar-thumb-[#FF0000]/20 scrollbar-track-transparent">
+            <div className="flex flex-wrap items-center justify-center gap-2 max-h-40 overflow-y-auto p-1 scrollbar-thin scrollbar-thumb-[#064E3B]/20 scrollbar-track-transparent">
               {activeCustomers.map((cust: Customer) => (
                 <span
                   key={cust.id}
-                  className="rounded-xl bg-white px-3 py-1.5 text-xs font-mono text-[#140000] border border-slate-200 shadow-xs hover:border-[#FF0000] transition-colors"
+                  className="rounded-xl bg-white px-3 py-1.5 text-xs font-mono text-[#022C22] border border-slate-200 shadow-xs hover:border-[#064E3B] transition-colors"
                 >
-                  <strong className="text-[#FF0000]">{cust.code}</strong> ({cust.name.split(" ")[0]})
+                  <strong className="text-[#064E3B]">{cust.code}</strong> ({cust.name.split(" ")[0]})
                 </span>
               ))}
             </div>
@@ -335,18 +335,18 @@ export default function DrawBoothPage() {
 
         {/* ================= WINNER REVEAL AREA (INSIDE THE SAME CARD) ================= */}
         {selectedWinners.length > 0 && (
-          <div className="mt-8 pt-8 border-t-2 border-dashed border-[#FF0000]/30 space-y-8 animate-in fade-in slide-in-from-top-8 duration-500 relative z-10 text-left">
+          <div className="mt-8 pt-8 border-t-2 border-dashed border-[#D4AF37]/40 space-y-8 animate-in fade-in slide-in-from-top-8 duration-500 relative z-10 text-left">
             
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2">
               <div className="flex items-center gap-3">
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#FF0000] text-white font-black shadow-lg shadow-[#FF0000]/40">
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#064E3B] text-[#D4AF37] font-black shadow-lg shadow-[#064E3B]/25 border border-[#D4AF37]/40">
                   <HiOutlineTrophy className="h-6 w-6" />
                 </span>
                 <div>
-                  <h3 className="text-xl sm:text-2xl font-bold text-[#140000] ">
+                  <h3 className="text-xl sm:text-2xl font-bold text-[#022C22]">
                     {t.winnersRevealedHeading}
                   </h3>
-                  <p className="text-[10px] sm:text-xs text-[#950101] uppercase tracking-wider font-bold">
+                  <p className="text-[10px] sm:text-xs text-[#065F46] uppercase tracking-wider font-bold">
                     {t.winnersRevealedSub}
                   </p>
                 </div>
@@ -359,7 +359,7 @@ export default function DrawBoothPage() {
                   value={drawTitle}
                   onChange={(e) => setDrawTitle(e.target.value)}
                   placeholder="Draw Title"
-                  className="rounded-2xl border border-slate-200 bg-[#faf8f8] px-4 py-2 text-xs text-[#140000] font-medium focus:border-[#FF0000] focus:outline-none shadow-inner w-full sm:w-64"
+                  className="rounded-2xl border border-slate-200 bg-[#faf8f8] px-4 py-2 text-xs text-[#022C22] font-medium focus:border-[#064E3B] focus:outline-none shadow-inner w-full sm:w-64"
                 />
               </div>
             </div>
@@ -378,10 +378,10 @@ export default function DrawBoothPage() {
             </div>
 
             {/* PERSIST & FINALIZE ACTION BANNER */}
-            <div className="rounded-3xl border border-[#FF0000]/40 bg-[#3D0000]/95 p-6 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xl">
+            <div className="rounded-3xl border border-[#D4AF37]/40 bg-gradient-to-r from-[#022C22] to-[#064E3B] p-6 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xl">
               <div className="flex items-center gap-3">
-                <div className="rounded-full bg-[#FF0000]/20 p-2">
-                  <HiOutlineCheckCircle className="h-6 w-6 text-[#FF0000]" />
+                <div className="rounded-full bg-[#D4AF37]/20 p-2">
+                  <HiOutlineCheckCircle className="h-6 w-6 text-[#D4AF37]" />
                 </div>
                 <div>
                   <h4 className="text-sm font-bold text-white">{t.readyToSaveTitle}</h4>
@@ -392,12 +392,12 @@ export default function DrawBoothPage() {
               <div className="flex flex-wrap items-center gap-3 w-full sm:w-auto">
                 {savedSuccess ? (
                   <div className="flex flex-col sm:flex-row items-center gap-2 w-full">
-                    <span className="rounded-2xl bg-[#FF0000]/20 border border-[#FF0000]/40 px-4 py-2.5 text-xs font-bold text-[#FF0000] text-center w-full sm:w-auto">
+                    <span className="rounded-2xl bg-[#D4AF37]/20 border border-[#D4AF37]/40 px-4 py-2.5 text-xs font-bold text-[#D4AF37] text-center w-full sm:w-auto">
                       {t.drawPersistedNotice}
                     </span>
                     <Link
                       href="/results"
-                      className="flex items-center justify-center gap-1.5 rounded-2xl bg-[#FF0000] hover:bg-[#d60000] px-5 py-2.5 text-xs font-bold text-white transition shadow-md shadow-[#FF0000]/30 border border-[#FF0000] w-full sm:w-auto"
+                      className="flex items-center justify-center gap-1.5 rounded-2xl bg-[#D4AF37] hover:bg-[#B45309] px-5 py-2.5 text-xs font-bold text-[#022C22] transition shadow-md border border-[#D4AF37] w-full sm:w-auto"
                     >
                       <HiOutlineEye className="h-4 w-4" />
                       <span>{t.viewArchiveBtn}</span>
@@ -415,7 +415,7 @@ export default function DrawBoothPage() {
                     <button
                       type="button"
                       onClick={handleSaveDraw}
-                      className="flex-[2] rounded-2xl bg-gradient-to-r from-[#FF0000] to-[#950101] hover:from-[#d60000] hover:to-[#7a0000] text-white px-5 py-3 text-[10px] sm:text-xs font-black uppercase tracking-wider transition-all shadow-lg shadow-[#FF0000]/40 border border-[#FF0000]"
+                      className="flex-[2] rounded-2xl bg-gradient-to-r from-[#D4AF37] to-[#B45309] hover:from-[#e5c158] hover:to-[#92400e] text-[#022C22] px-5 py-3 text-[10px] sm:text-xs font-black uppercase tracking-wider transition-all shadow-lg shadow-[#022C22]/40 border border-[#D4AF37]"
                     >
                       {t.saveDrawBtn}
                     </button>
